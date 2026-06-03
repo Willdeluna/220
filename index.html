@@ -5456,17 +5456,34 @@ let filterToCurrentImageDots = false;
             aircraft_part
         `;
 
+        // Supabase/PostgREST returns at most 1000 rows per request. Page
+        // through with .range() and concatenate so every MEL row loads,
+        // no matter how many are in the table.
+        async function fetchAllBoogers6(columns) {
+          const PAGE = 1000;
+          let all = [], start = 0;
+          for (;;) {
+            const res = await supabaseClient
+              .from("boogers6")
+              .select(columns)
+              .order("id", { ascending: true })
+              .range(start, start + PAGE - 1);
+            if (res.error) return { data: null, error: res.error };
+            const batch = res.data || [];
+            all = all.concat(batch);
+            if (batch.length < PAGE) break;
+            start += PAGE;
+          }
+          return { data: all, error: null };
+        }
+
         // Try with dispatch_label first; fall back if the column doesn't exist yet
         let data, error;
-        ({ data, error } = await supabaseClient
-          .from("boogers6")
-          .select(BASE_COLUMNS + ", dispatch_label, dispatch_placard"));
+        ({ data, error } = await fetchAllBoogers6(BASE_COLUMNS + ", dispatch_label, dispatch_placard"));
 
         if (error && /dispatch_label|dispatch_placard/i.test(error.message || "")) {
           console.warn("dispatch_label/dispatch_placard column not present yet; loading without it.");
-          ({ data, error } = await supabaseClient
-            .from("boogers6")
-            .select(BASE_COLUMNS));
+          ({ data, error } = await fetchAllBoogers6(BASE_COLUMNS));
         }
 
         if (error) throw error;
