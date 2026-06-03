@@ -693,6 +693,12 @@
       padding: 10px 12px;
     }
 
+    .mel-cb-block {
+      border-color: rgba(255, 210, 127, 0.75);
+      border-left-width: 3px;
+    }
+    .mel-cb-block .mel-procedure-summary { color: #ffd27f; }
+
     .mel-procedure-summary {
       cursor: pointer;
       font-weight: bold;
@@ -1392,7 +1398,7 @@
     // images/36/chapter36.png, images/38/chapter38.png, etc.
     // The extra chapter thumbnails are inserted in the thumbnail bar after image/chapter 35.
     const AVAILABLE_CHAPTER_IMAGES = [
-      "00", "25", "26", "27", "28", "29", "30",
+      "00", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
       "31", "32", "33", "34", "35"
     ];
 
@@ -1406,6 +1412,10 @@
     // "22": { count: 60, prefix: "1" },
     // "23": { count: 80, prefix: "1" },
     const CHAPTER_FOLDER_CONFIG = {
+      "21": { count: 80, prefix: "21" },
+      "22": { count: 80, prefix: "22" },
+      "23": { count: 80, prefix: "23" },
+      "24": { count: 80, prefix: "24" },
       "25": { count: 80, prefix: "25" },
       "26": { count: 80, prefix: "26" },
       "27": { count: 80, prefix: "27" },
@@ -2551,6 +2561,20 @@ let filterToCurrentImageDots = false;
       </details>`;
     }
 
+    function renderCbBlock(text) {
+      const t = String(text || "").trim();
+      if (!t || t === "\u2014") return "";
+      const parts = t.split(";").map(s => s.trim()).filter(Boolean);
+      const label = parts.length > 1 ? `Circuit Breakers (${parts.length})` : "Circuit Breaker";
+      const list = parts.map(p => `<li>${escapeHtml(p)}</li>`).join("");
+      return `<details class="mel-procedure-block mel-cb-block">
+        <summary class="mel-procedure-summary">${label}</summary>
+        <div class="mel-procedure-inner">
+          <ul class="mel-procedure-steps">${list}</ul>
+        </div>
+      </details>`;
+    }
+
     function renderProcedureBlock(procedures, rowId) {
       const list = Array.isArray(procedures) ? procedures : [];
 
@@ -2762,7 +2786,7 @@ let filterToCurrentImageDots = false;
             <td data-label="Kind">${escapeHtml(item.kind || "—")}</td>
             <td data-label="MEL" class="mel-col">${escapeHtml(item.mel_reference || "—")}${renderDispatchPill(item.dispatch_label)}</td>
             <td data-label="Resets">${renderResetsBlock(item.troubleshooting_steps)}</td>
-            <td data-label="Notes" class="notes-cell">${formatNotesWithCheckboxes(item.notes || "", item.id)}${renderProcedureBlock(item.procedures, item.id)}</td>
+            <td data-label="Notes" class="notes-cell">${formatNotesWithCheckboxes(item.notes || "", item.id)}${renderCbBlock(item.circuit_breakers)}${renderProcedureBlock(item.procedures, item.id)}</td>
             <td data-label="Action" class="action-col">
               <button class="image-btn" type="button" onclick="startSetDot(${item.id})">Set Dot</button>
               <button class="image-btn" type="button" onclick="previewMel(${item.id})">View</button>
@@ -5477,9 +5501,14 @@ let filterToCurrentImageDots = false;
           return { data: all, error: null };
         }
 
-        // Try with dispatch_label first; fall back if the column doesn't exist yet
+        // Try with the optional columns first; fall back if any don't exist yet.
         let data, error;
-        ({ data, error } = await fetchAllBoogers6(BASE_COLUMNS + ", dispatch_label, dispatch_placard"));
+        ({ data, error } = await fetchAllBoogers6(BASE_COLUMNS + ", dispatch_label, dispatch_placard, circuit_breakers"));
+
+        if (error && /circuit_breakers/i.test(error.message || "")) {
+          console.warn("circuit_breakers column not present yet; retrying without it.");
+          ({ data, error } = await fetchAllBoogers6(BASE_COLUMNS + ", dispatch_label, dispatch_placard"));
+        }
 
         if (error && /dispatch_label|dispatch_placard/i.test(error.message || "")) {
           console.warn("dispatch_label/dispatch_placard column not present yet; loading without it.");
