@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 38 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,159,28,0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(98,216,255,0.13), transparent 26%),
+        radial-gradient(circle at 52% 100%, rgba(140,255,177,0.07), transparent 26%),
+        linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 18px 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 0 22px var(--soft);
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      color: var(--orange);
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16);
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .hero-strip {
+      max-width: 1180px;
+      margin: 24px auto 8px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 0 34px rgba(255,159,28,.24);
+      border-color: var(--orange);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      border: 1px solid rgba(255,159,28,.28);
+      border-radius: 50%;
+    }
+
+    .hero-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .hero-title { color: var(--amber); font-size: 1.25rem; font-weight: 900; }
+    .hero-text { color: var(--muted); margin-top: 8px; line-height: 1.42; }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px 48px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .system-section {
+      border: 1px solid var(--line);
+      background: rgba(9,9,9,.88);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .system-section::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: .75;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75));
+      font-size: 1.65rem;
+      box-shadow: inset 0 0 18px rgba(255,159,28,.12);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--orange);
+      font-size: 1.2rem;
+      letter-spacing: .01em;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .idea-card {
+      border: 1px solid rgba(255,159,28,.28);
+      background: linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding: 13px 14px;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card:hover {
+      transform: translateX(8px) scale(1.025);
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06));
+      box-shadow: 0 0 26px rgba(255,159,28,.21);
+    }
+
+    .idea-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
+
+    .idea-card:hover::after { transform: translateX(120%); }
+
+    .main-idea {
+      display: block;
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .arrow {
+      color: var(--orange);
+      font-weight: 900;
+      margin-right: 4px;
+    }
+
+    .real-world {
+      display: block;
+      color: #ead9b8;
+      line-height: 1.42;
+      font-size: .96rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .memory-map {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memory-map h2 { font-size: 1.45rem; margin-bottom: 14px; }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .map-card {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-7px) rotate(-.5deg);
+      box-shadow: 0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12);
+    }
+
+    .map-number {
+      color: var(--blue);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .map-title {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin: 4px 0 8px;
+    }
+
+    .map-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #ead9b8;
+      line-height: 1.65;
+    }
+
+    .fail-list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fail-chip {
+      border: 1px solid rgba(255,95,86,.55);
+      background: rgba(255,95,86,.08);
+      color: #ffd6d3;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .fail-chip:hover {
+      transform: scale(1.06);
+      background: rgba(255,95,86,.18);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 26px 18px 38px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-strip, .map-grid { grid-template-columns: 1fr; }
+      .section-grid { grid-template-columns: 1fr; }
+      .fail-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      main { padding: 18px 10px 34px; }
+      header { padding-top: 24px; }
+      .system-section, .memory-map { border-radius: 18px; padding: 14px; }
+      .fail-list { grid-template-columns: 1fr; }
+      .idea-card:hover { transform: scale(1.015); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 38 • Water & Waste</div>
+    <h1>Water In, Waste Out — Logic Controlled</h1>
+    <p class="subtitle">A fast interactive study page for the A220 potable water system, vacuum waste system, WWSC logic, freeze protection, servicing modes, sensors, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">💧</div><div class="hero-title">Potable Water</div><div class="hero-text">Stores, pressurizes, heats, fills, drains, and distributes clean water to lavs and galleys.</div></div>
+    <div class="hero-card"><div class="hero-icon">💩</div><div class="hero-title">Vacuum Waste</div><div class="hero-text">Uses vacuum logic, flush valves, level sensors, and tank protection to remove waste.</div></div>
+    <div class="hero-card"><div class="hero-icon">🧠</div><div class="hero-title">WWSC Logic</div><div class="hero-text">The controller is the brain: sensors in, commands out, protection always active.</div></div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Big Picture — What ATA 38 Does</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 38 is an integrated utility system</span><span class="real-world"><span class="arrow">→</span>Provides potable water, waste collection, disposal, and freeze protection.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Controlled by the WWSC</span><span class="real-world"><span class="arrow">→</span>Water & Waste System Controller runs pumps, valves, heaters, sensors, and fault monitoring.</span></div>
+<div class="idea-card"><span class="main-idea">Not just plumbing</span><span class="real-world"><span class="arrow">→</span>It is a controlled logic system with sensors, automation, and display communication.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧩</div><h2>System Architecture</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Two main subsystems</span><span class="real-world"><span class="arrow">→</span>Potable water system and vacuum waste system.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">WWSC communicates with DMC and CMS</span><span class="real-world"><span class="arrow">→</span>Water/waste status and faults can show on cabin and maintenance displays.</span></div>
+<div class="idea-card"><span class="main-idea">Data-driven system</span><span class="real-world"><span class="arrow">→</span>Command, sensor feedback, and controller logic decide what happens.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">💧</div><h2>Potable Water System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Single aft potable water tank</span><span class="real-world"><span class="arrow">→</span>About 42 gallons usable, located aft fuselage below the floor.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Supplies lavs and galleys</span><span class="real-world"><span class="arrow">→</span>Feeds lav sinks, galleys, coffee makers, and toilet rinse.</span></div>
+<div class="idea-card"><span class="main-idea">Electrically measured level</span><span class="real-world"><span class="arrow">→</span>Capacitance probe sends tank level to WWSC and CMS display.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚙️</div><h2>Water Distribution & Pumps</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Two electric pumps installed</span><span class="real-world"><span class="arrow">→</span>Normally one active and one standby.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Automatic pump switching</span><span class="real-world"><span class="arrow">→</span>If a pump fault is detected, WWSC can switch to the standby pump.</span></div>
+<div class="idea-card"><span class="main-idea">Recirculation loop</span><span class="real-world"><span class="arrow">→</span>Keeps water moving and helps keep pumps cool even with low demand.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🎛️</div><h2>Operation Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">System only works when conditions are valid</span><span class="real-world"><span class="arrow">→</span>Needs power, water available, and correct service-panel/door status.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Pump inhibited if tank is empty</span><span class="real-world"><span class="arrow">→</span>Protects the pump and prevents dry running.</span></div>
+<div class="idea-card"><span class="main-idea">Service panel affects behavior</span><span class="real-world"><span class="arrow">→</span>Door open or wrong mode can inhibit normal operation.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚰</div><h2>Fill / Drain System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Service panel has FILL / FLIGHT / DRAIN</span><span class="real-world"><span class="arrow">→</span>The system reconfigures itself depending on selected mode.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Motorized 4-port valve directs flow</span><span class="real-world"><span class="arrow">→</span>Fill, flight operation, and drain are controlled by valve logic.</span></div>
+<div class="idea-card"><span class="main-idea">FILL mode disables pumps</span><span class="real-world"><span class="arrow">→</span>Prevents improper pressurization during servicing.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">❄️</div><h2>Freeze Protection</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">System is heated</span><span class="real-world"><span class="arrow">→</span>Tank, valves, lines, and drain masts use freeze protection.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Temperature logic controls heaters</span><span class="real-world"><span class="arrow">→</span>Heaters turn on around cold conditions and turn off when warm enough.</span></div>
+<div class="idea-card"><span class="main-idea">Heater faults matter</span><span class="real-world"><span class="arrow">→</span>Failed heaters can lead to freezing and multiple water-system complaints.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚻</div><h2>Lav & Galley Water</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Local shutoff valves isolate stations</span><span class="real-world"><span class="arrow">→</span>Useful for troubleshooting one lav or galley without blaming the whole system.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Lav water feeds sink and toilet rinse</span><span class="real-world"><span class="arrow">→</span>Water side and waste side interact during the flush sequence.</span></div>
+<div class="idea-card"><span class="main-idea">Mixer/solenoid logic matters</span><span class="real-world"><span class="arrow">→</span>A “no water” complaint can be valve, sensor, or controller logic.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">💩</div><h2>Vacuum Waste System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Waste is moved by vacuum</span><span class="real-world"><span class="arrow">→</span>This is not a simple gravity waste system.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Cabin differential pressure helps in flight</span><span class="real-world"><span class="arrow">→</span>Vacuum generator assists on ground or low altitude.</span></div>
+<div class="idea-card"><span class="main-idea">115 VAC motor powers generator</span><span class="real-world"><span class="arrow">→</span>Electrical availability can affect toilet operation.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔄</div><h2>Flush Sequence</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Flush button starts a timed sequence</span><span class="real-world"><span class="arrow">→</span>Rinse water is added, then flush valve opens after a delay.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Waste is pulled to tank</span><span class="real-world"><span class="arrow">→</span>Vacuum moves waste through the lines into the waste tank.</span></div>
+<div class="idea-card"><span class="main-idea">Timing is critical</span><span class="real-world"><span class="arrow">→</span>Bad sequence timing can look like a weak flush or no flush.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🛢️</div><h2>Waste Tank & Level Monitoring</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Waste tank about 144 L usable</span><span class="real-world"><span class="arrow">→</span>Includes separator, deflectors, and rinse nozzles.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Ultrasonic sensors monitor 75% and 100%</span><span class="real-world"><span class="arrow">→</span>If full is detected, toilets may be disabled.</span></div>
+<div class="idea-card"><span class="main-idea">Fail-safe logic assumes full</span><span class="real-world"><span class="arrow">→</span>If level sensors fail, the system may protect itself by limiting operation.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧯</div><h2>Autodrain & Odor Protection</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Autodrain valves prevent backflow</span><span class="real-world"><span class="arrow">→</span>Float-ball logic helps stop odor and reverse flow.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Proper venting matters during servicing</span><span class="real-world"><span class="arrow">→</span>Waste tank draining needs correct service procedure and venting.</span></div>
+<div class="idea-card"><span class="main-idea">Simple mechanical parts still matter</span><span class="real-world"><span class="arrow">→</span>Not every issue is digital; valves and floats can stick.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance Reality</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Most issues are pumps, sensors, valves, heaters</span><span class="real-world"><span class="arrow">→</span>Complete structural failure is rare.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Waste faults often involve sensors or flush valves</span><span class="real-world"><span class="arrow">→</span>Level sensor and flush valve issues are common write-ups.</span></div>
+<div class="idea-card"><span class="main-idea">WWSC logic is central</span><span class="real-world"><span class="arrow">→</span>Always check controller status before replacing parts.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧭</div><h2>Troubleshooting Flow</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Start with CMS / messages</span><span class="real-world"><span class="arrow">→</span>Identify what the system thinks is wrong.</span><span class="tag">key idea</span></div>
+<div class="idea-card"><span class="main-idea">Separate water vs waste</span><span class="real-world"><span class="arrow">→</span>Do not chase the wrong side of the system.</span></div>
+<div class="idea-card"><span class="main-idea">Follow command → sensor → actuator → flow</span><span class="real-world"><span class="arrow">→</span>Trace the logic path and the physical flow together.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember A220 ATA 38</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Store Water</div><ul><li>Potable tank</li><li>Level probe</li><li>Service panel</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Move Water</div><ul><li>Pumps</li><li>Valves</li><li>Distribution lines</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Remove Waste</div><ul><li>Vacuum generator</li><li>Flush valve</li><li>Waste tank</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Protect System</div><ul><li>Heaters</li><li>Sensors</li><li>WWSC logic</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">WWSC is the brain<br><small>check logic first</small></div>
+        <div class="fail-chip">Water faults<br><small>pump / level / heater</small></div>
+        <div class="fail-chip">Waste faults<br><small>vacuum / valve / sensor</small></div>
+        <div class="fail-chip">Service panel<br><small>can change behavior</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>A220 ATA 38 quick-study page • Water, waste, WWSC logic, freeze protection, and line-maintenance troubleshooting.</footer>
+</body>
+</html>

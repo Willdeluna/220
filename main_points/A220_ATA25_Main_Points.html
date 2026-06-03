@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 25 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; font-family: Arial, Helvetica, sans-serif; color: var(--white);
+      background: radial-gradient(circle at 18% 0%, rgba(255,159,28,0.22), transparent 28%),
+                  radial-gradient(circle at 85% 18%, rgba(98,216,255,0.13), transparent 26%),
+                  radial-gradient(circle at 50% 100%, rgba(140,255,177,0.08), transparent 26%),
+                  linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+    body::before {
+      content:""; position: fixed; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px; mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+    header { max-width: 1180px; margin: 0 auto; padding: 36px 18px 18px; text-align: center; position: relative; }
+    .eyebrow { display:inline-flex; gap:8px; align-items:center; color:var(--amber); border:1px solid var(--line); background:rgba(0,0,0,.55); border-radius:999px; padding:8px 14px; box-shadow:0 0 22px var(--soft); font-weight:700; letter-spacing:.05em; text-transform:uppercase; font-size:.8rem; }
+    h1 { margin:18px 0 8px; color:var(--orange); font-size:clamp(2rem,6vw,4.8rem); line-height:.96; text-shadow:0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16); }
+    .subtitle { max-width: 860px; margin:0 auto; color:var(--muted); font-size:1.08rem; line-height:1.55; }
+    .hero-strip { max-width:1180px; margin:24px auto 8px; padding:0 18px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .hero-card { border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72)); border-radius:22px; padding:20px; min-height:140px; position:relative; overflow:hidden; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .hero-card:hover { transform:translateY(-8px) scale(1.015); box-shadow:0 0 34px rgba(255,159,28,.24); border-color:var(--orange); }
+    .hero-card::after { content:""; position:absolute; width:150px; height:150px; right:-58px; bottom:-58px; border:1px solid rgba(255,159,28,.28); border-radius:50%; }
+    .hero-icon { font-size:2.2rem; margin-bottom:8px; }
+    .hero-title { color:var(--amber); font-size:1.25rem; font-weight:900; }
+    .hero-text { color:var(--muted); margin-top:8px; line-height:1.42; }
+    main { max-width:1240px; margin:0 auto; padding:22px 18px 48px; }
+    .section-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .system-section { border:1px solid var(--line); background:rgba(9,9,9,.88); border-radius:24px; padding:18px; box-shadow:0 0 30px rgba(0,0,0,.35); position:relative; overflow:hidden; }
+    .system-section::before { content:""; position:absolute; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent); opacity:.75; }
+    .section-head { display:flex; align-items:center; gap:12px; margin-bottom:12px; position:relative; z-index:1; }
+    .section-icon { width:48px; height:48px; display:grid; place-items:center; border-radius:16px; border:1px solid var(--line); background:radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75)); font-size:1.65rem; box-shadow:inset 0 0 18px rgba(255,159,28,.12); }
+    h2 { margin:0; color:var(--orange); font-size:1.2rem; letter-spacing:.01em; }
+    .cards { display:grid; gap:10px; position:relative; z-index:1; }
+    .idea-card { border:1px solid rgba(255,159,28,.28); background:linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02)); border-radius:16px; padding:13px 14px; transition:transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease; cursor:default; position:relative; overflow:hidden; }
+    .idea-card:hover { transform:translateX(8px) scale(1.025); border-color:var(--orange); background:linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06)); box-shadow:0 0 26px rgba(255,159,28,.21); }
+    .idea-card::after { content:""; position:absolute; inset:0; background:linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent); transform:translateX(-120%); transition:transform .55s ease; }
+    .idea-card:hover::after { transform:translateX(120%); }
+    .main-idea { display:block; color:var(--amber); font-weight:900; font-size:1rem; margin-bottom:5px; }
+    .arrow { color:var(--orange); font-weight:900; margin-right:4px; }
+    .real-world { display:block; color:#ead9b8; line-height:1.42; font-size:.96rem; }
+    .tag { display:inline-block; margin-top:8px; color:#111; background:var(--orange); border-radius:999px; padding:3px 8px; font-size:.72rem; font-weight:900; text-transform:uppercase; letter-spacing:.04em; }
+    .wide { grid-column:1 / -1; }
+    .memory-map { margin-top:20px; border:1px solid var(--line); border-radius:28px; padding:22px; background:linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72)); position:relative; overflow:hidden; }
+    .memory-map h2 { font-size:1.45rem; margin-bottom:14px; }
+    .map-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .map-card { border:1px solid rgba(255,159,28,.38); border-radius:20px; padding:18px; background:rgba(0,0,0,.55); transition:transform .25s ease, box-shadow .25s ease; }
+    .map-card:hover { transform:translateY(-7px) rotate(-.5deg); box-shadow:0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12); }
+    .map-number { color:var(--blue); font-size:2rem; font-weight:900; }
+    .map-title { color:var(--amber); font-weight:900; font-size:1.2rem; margin:4px 0 8px; }
+    .map-card ul { margin:0; padding-left:18px; color:#ead9b8; line-height:1.65; }
+    .fail-list { margin-top:20px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .fail-chip { border:1px solid rgba(255,95,86,.55); background:rgba(255,95,86,.08); color:#ffd6d3; padding:14px; border-radius:16px; font-weight:800; text-align:center; transition:transform .2s ease, background .2s ease; }
+    .fail-chip:hover { transform:scale(1.06); background:rgba(255,95,86,.18); }
+    footer { text-align:center; color:var(--muted); padding:26px 18px 38px; }
+    @media (max-width:900px){ .hero-strip,.map-grid{grid-template-columns:1fr;} .section-grid{grid-template-columns:1fr;} .fail-list{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    @media (max-width:520px){ main{padding:18px 10px 34px;} header{padding-top:24px;} .system-section,.memory-map{border-radius:18px;padding:14px;} .fail-list{grid-template-columns:1fr;} .idea-card:hover{transform:scale(1.015);} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 25 • Equipment & Furnishings</div>
+    <h1>Cabin Safety, Structure & Interior Systems</h1>
+    <p class="subtitle">A quick interactive line-maintenance study page for seats, bins, PSUs, galleys, lavatories, emergency equipment, decompression panels, and cabin system interfaces.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">🪑</div><div class="hero-title">Support People</div><div class="hero-text">Seats, restraints, cabin layout, and crew equipment keep passengers and crew secure.</div></div>
+    <div class="hero-card"><div class="hero-icon">🚨</div><div class="hero-title">Support Safety</div><div class="hero-text">Emergency equipment, decompression panels, smoke detectors, and restraints affect dispatch and safety.</div></div>
+    <div class="hero-card"><div class="hero-icon">🔗</div><div class="hero-title">System Interfaces</div><div class="hero-text">ATA 25 ties into electrical, air, oxygen, fire protection, water, and waste systems.</div></div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">ATA 25 is not just “interior”</span><span class="real-world"><span class="arrow">→</span>It supports passengers, crew, evacuation, safety, and system interfaces.</span></div>
+        <div class="idea-card"><span class="main-idea">Cabin items can be structural</span><span class="real-world"><span class="arrow">→</span>Seats, bins, panels, and tracks must handle loads and stay secure.</span><span class="tag">safety system</span></div>
+        <div class="idea-card"><span class="main-idea">Customer configuration varies</span><span class="real-world"><span class="arrow">→</span>No two aircraft interiors are always exactly the same.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧑‍✈️</div><h2>Flight Deck Equipment</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Pilot seats are adjustable</span><span class="real-world"><span class="arrow">→</span>Electric movement plus mechanical backup supports proper sidestick position.</span></div>
+        <div class="idea-card"><span class="main-idea">Seat position affects control ergonomics</span><span class="real-world"><span class="arrow">→</span>Bad adjustment can feel like a control problem.</span></div>
+        <div class="idea-card"><span class="main-idea">Seat ECU faults may look mechanical</span><span class="real-world"><span class="arrow">→</span>Use the power cut switch and electrical checks before condemning hardware.</span><span class="tag">MX clue</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🚪</div><h2>Observer & Flight Deck Emergency Gear</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Observer seat must stow and lock correctly</span><span class="real-world"><span class="arrow">→</span>Improper stowage can become an obstruction or safety issue.</span></div>
+        <div class="idea-card"><span class="main-idea">Flight deck gear supports emergency escape</span><span class="real-world"><span class="arrow">→</span>Flashlights, crash axe, extinguisher, PBE, and escape rope must be accessible.</span></div>
+        <div class="idea-card"><span class="main-idea">Escape rope = crew exit path</span><span class="real-world"><span class="arrow">→</span>Allows flight crew escape without relying on normal doors.</span><span class="tag">do not miss</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🪑</div><h2>Passenger Seats & Tracks</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Seats mount to seat tracks</span><span class="real-world"><span class="arrow">→</span>Fittings, studs, locking plungers, and anti-rattle nuts keep the seat secure.</span></div>
+        <div class="idea-card"><span class="main-idea">Improper locking is serious</span><span class="real-world"><span class="arrow">→</span>Seat movement risk is a structural and safety concern.</span><span class="tag">dispatch impact</span></div>
+        <div class="idea-card"><span class="main-idea">Seat complaints are often installation issues</span><span class="real-world"><span class="arrow">→</span>Check track engagement, alignment, fittings, and hardware before blaming the seat.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧳</div><h2>Overhead Bins</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Bins carry baggage loads</span><span class="real-world"><span class="arrow">→</span>Tie rods and structural fittings support the load path.</span></div>
+        <div class="idea-card"><span class="main-idea">9G tie rods handle forward crash loads</span><span class="real-world"><span class="arrow">→</span>Bin structure matters during abnormal loads.</span><span class="tag">structural</span></div>
+        <div class="idea-card"><span class="main-idea">Opening issues often point to struts or latches</span><span class="real-world"><span class="arrow">→</span>Fast opening, hard closing, or loose bins usually have mechanical causes.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🎛️</div><h2>PSU — Passenger Service Units</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">PSUs combine several systems</span><span class="real-world"><span class="arrow">→</span>Reading lights, gaspers, oxygen masks, and call buttons live in one area.</span></div>
+        <div class="idea-card"><span class="main-idea">Maintenance access is built in</span><span class="real-world"><span class="arrow">→</span>PSUs swing open, but oxygen components need awareness and care.</span></div>
+        <div class="idea-card"><span class="main-idea">PSU faults can come from other ATAs</span><span class="real-world"><span class="arrow">→</span>Think ATA 21 air, ATA 33 lights, ATA 35 oxygen, and ATA 24 power.</span><span class="tag">interface point</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧩</div><h2>Cabin Panels & Decompression</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Panels are functional, not just cosmetic</span><span class="real-world"><span class="arrow">→</span>They cover structure, wiring, ducts, and help manage cabin finish and airflow.</span></div>
+        <div class="idea-card"><span class="main-idea">Incorrect panel installation creates issues</span><span class="real-world"><span class="arrow">→</span>Noise, airflow problems, and loose trim can start here.</span></div>
+        <div class="idea-card"><span class="main-idea">Dado panels protect during decompression</span><span class="real-world"><span class="arrow">→</span>Decompression flaps open at low differential pressure to equalize air.</span><span class="tag">pressurization safety</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🍽️</div><h2>Galleys</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Galleys combine food service, water, and power</span><span class="real-world"><span class="arrow">→</span>Wet galleys have water/drainage; dry galleys focus on storage and equipment.</span></div>
+        <div class="idea-card"><span class="main-idea">Galley loads can be shed</span><span class="real-world"><span class="arrow">→</span>If ovens or coffee makers are off, check ATA 24 load shedding logic.</span><span class="tag">not always galley fault</span></div>
+        <div class="idea-card"><span class="main-idea">Galleys touch multiple systems</span><span class="real-world"><span class="arrow">→</span>Electrical, water, drainage, doors, and latches all matter.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🚻</div><h2>Lavatories</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Lav write-ups are common</span><span class="real-world"><span class="arrow">→</span>Think flush faults, water problems, smoke detector issues, and waste system interfaces.</span></div>
+        <div class="idea-card"><span class="main-idea">Lav smoke detection is safety critical</span><span class="real-world"><span class="arrow">→</span>Tamper-proof smoke detectors protect one of the highest-risk cabin areas.</span><span class="tag">safety critical</span></div>
+        <div class="idea-card"><span class="main-idea">Water and waste are cross-system</span><span class="real-world"><span class="arrow">→</span>ATA 25 symptoms often trace into ATA 38 potable water or waste systems.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📦</div><h2>Emergency Equipment</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Emergency equipment location matters</span><span class="real-world"><span class="arrow">→</span>Fire extinguishers, oxygen bottles, life vests, megaphones, and ELT must be accessible.</span></div>
+        <div class="idea-card"><span class="main-idea">Missing equipment can stop dispatch</span><span class="real-world"><span class="arrow">→</span>Correct quantity, location, and serviceability are all important.</span><span class="tag">no dispatch</span></div>
+        <div class="idea-card"><span class="main-idea">Storage areas are part of the system</span><span class="real-world"><span class="arrow">→</span>Galleys, FA stations, closets, and bins all support equipment storage.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">💡</div><h2>Closets & Minor Electrical</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Closet lights use microswitch logic</span><span class="real-world"><span class="arrow">→</span>Door switch faults can create simple light-inop complaints.</span></div>
+        <div class="idea-card"><span class="main-idea">Most ATA 25 faults are simple but important</span><span class="real-world"><span class="arrow">→</span>Latches, switches, mounts, alignment, and loose hardware are common.</span></div>
+        <div class="idea-card"><span class="main-idea">Small items can affect dispatch</span><span class="real-world"><span class="arrow">→</span>Interior issues can become safety, accessibility, or emergency equipment problems.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔧</div><h2>Troubleshooting Flow</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">1. Identify the component</span><span class="real-world"><span class="arrow">→</span>Seat, PSU, galley, lav, bin, panel, closet, or emergency equipment.</span></div>
+        <div class="idea-card"><span class="main-idea">2. Check mechanical integrity first</span><span class="real-world"><span class="arrow">→</span>Locks, hinges, mounts, latches, fittings, tracks, and alignment.</span><span class="tag">start here</span></div>
+        <div class="idea-card"><span class="main-idea">3. Check power and interfaces</span><span class="real-world"><span class="arrow">→</span>Then look at ATA 24 electrical, ATA 21 air, ATA 35 oxygen, ATA 26 fire, or ATA 38 water/waste.</span></div>
+      </div></div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember A220 ATA 25</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Support People</div><ul><li>Seats</li><li>Cabin layout</li><li>Flight deck furnishings</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Support Safety</div><ul><li>Emergency equipment</li><li>Decompression panels</li><li>Restraints</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Support Operations</div><ul><li>Galleys</li><li>Lavatories</li><li>Storage</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Support Systems</div><ul><li>PSUs</li><li>Panels</li><li>Electrical / air / oxygen interfaces</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">ATA 25 = safety + structure<br><small>not just cabin trim</small></div>
+        <div class="fail-chip">Most faults are mechanical<br><small>latches, mounts, alignment</small></div>
+        <div class="fail-chip">Seats and bins are structural<br><small>treat seriously</small></div>
+        <div class="fail-chip">PSUs are multi-system hubs<br><small>air, oxygen, electrical</small></div>
+        <div class="fail-chip">Lav faults are common<br><small>detectors, water, waste</small></div>
+        <div class="fail-chip">Missing safety gear<br><small>can mean no dispatch</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>A220 ATA 25 quick-study page • Equipment, furnishings, safety, structure, cabin systems, and line-maintenance troubleshooting.</footer>
+</body>
+</html>

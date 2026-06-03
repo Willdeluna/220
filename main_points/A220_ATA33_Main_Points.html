@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 33 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,159,28,0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(98,216,255,0.13), transparent 26%),
+        radial-gradient(circle at 52% 100%, rgba(140,255,177,0.07), transparent 26%),
+        linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 18px 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 0 22px var(--soft);
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      color: var(--orange);
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16);
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .hero-strip {
+      max-width: 1180px;
+      margin: 24px auto 8px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 0 34px rgba(255,159,28,.24);
+      border-color: var(--orange);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      border: 1px solid rgba(255,159,28,.28);
+      border-radius: 50%;
+    }
+
+    .hero-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .hero-title { color: var(--amber); font-size: 1.25rem; font-weight: 900; }
+    .hero-text { color: var(--muted); margin-top: 8px; line-height: 1.42; }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px 48px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .system-section {
+      border: 1px solid var(--line);
+      background: rgba(9,9,9,.88);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .system-section::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: .75;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75));
+      font-size: 1.65rem;
+      box-shadow: inset 0 0 18px rgba(255,159,28,.12);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--orange);
+      font-size: 1.2rem;
+      letter-spacing: .01em;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .idea-card {
+      border: 1px solid rgba(255,159,28,.28);
+      background: linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding: 13px 14px;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card:hover {
+      transform: translateX(8px) scale(1.025);
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06));
+      box-shadow: 0 0 26px rgba(255,159,28,.21);
+    }
+
+    .idea-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
+
+    .idea-card:hover::after { transform: translateX(120%); }
+
+    .main-idea {
+      display: block;
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .arrow {
+      color: var(--orange);
+      font-weight: 900;
+      margin-right: 4px;
+    }
+
+    .real-world {
+      display: block;
+      color: #ead9b8;
+      line-height: 1.42;
+      font-size: .96rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .memory-map {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memory-map h2 { font-size: 1.45rem; margin-bottom: 14px; }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .map-card {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-7px) rotate(-.5deg);
+      box-shadow: 0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12);
+    }
+
+    .map-number {
+      color: var(--blue);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .map-title {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin: 4px 0 8px;
+    }
+
+    .map-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #ead9b8;
+      line-height: 1.65;
+    }
+
+    .fail-list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fail-chip {
+      border: 1px solid rgba(255,95,86,.55);
+      background: rgba(255,95,86,.08);
+      color: #ffd6d3;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .fail-chip:hover {
+      transform: scale(1.06);
+      background: rgba(255,95,86,.18);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 26px 18px 38px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-strip, .map-grid { grid-template-columns: 1fr; }
+      .section-grid { grid-template-columns: 1fr; }
+      .fail-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      main { padding: 18px 10px 34px; }
+      header { padding-top: 24px; }
+      .system-section, .memory-map { border-radius: 18px; padding: 14px; }
+      .fail-list { grid-template-columns: 1fr; }
+      .idea-card:hover { transform: scale(1.015); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 33 • Lighting System</div>
+    <h1>Lighting Logic Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for A220 lighting: flight deck, cabin, emergency, exterior, cargo/service lights, CMS control, dimmers, EPSUs, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">💡</div><div class="hero-title">Networked Lighting</div><div class="hero-text">Lighting is controlled by buses, CMS, CDCs, dimmers, switches, and aircraft-state logic.</div></div>
+    <div class="hero-card"><div class="hero-icon">🚨</div><div class="hero-title">Emergency System</div><div class="hero-text">EPSU battery units power evacuation lighting when main aircraft power is lost.</div></div>
+    <div class="hero-card"><div class="hero-icon">🔦</div><div class="hero-title">Exterior Visibility</div><div class="hero-text">Landing, taxi, nav, beacon, strobe, logo, and wing lights all use different logic and power paths.</div></div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Big Picture — What ATA 33 Does</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 33 is more than bulbs</span><span class="real-world"><span class="arrow">→</span>It combines normal lighting, emergency lighting, exterior visibility, and cabin-management integration.</span></div>
+          <div class="idea-card"><span class="main-idea">Power + digital control + safety</span><span class="real-world"><span class="arrow">→</span>Lighting behavior depends on buses, CMS, CDCs, dimmers, and aircraft state.</span><span class="tag">core idea</span></div>
+          <div class="idea-card"><span class="main-idea">Trace the path before changing parts</span><span class="real-world"><span class="arrow">→</span>A dark or dim light may be a control, data bus, power supply, or logic issue.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚡</div><h2>Power & Control Architecture</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Interior lighting mostly uses DC power</span><span class="real-world"><span class="arrow">→</span>Flight deck and cabin lights are commonly fed through DC buses and control boxes.</span></div>
+          <div class="idea-card"><span class="main-idea">High-power exterior lights use AC power</span><span class="real-world"><span class="arrow">→</span>Landing, taxi, wing inspection, and other high-intensity lights may use AC bus power.</span></div>
+          <div class="idea-card"><span class="main-idea">Control is often digital</span><span class="real-world"><span class="arrow">→</span>CMS, CDCs, dimmer boxes, and switches command the light output.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">✈️</div><h2>Flight Deck Lighting</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Includes flood, reading, dome, map, and panel lights</span><span class="real-world"><span class="arrow">→</span>These support crew visibility and night operation.</span></div>
+          <div class="idea-card"><span class="main-idea">Brightness often runs through dimmer boxes</span><span class="real-world"><span class="arrow">→</span>Panel lighting complaints may point to dimmer output, not the fixture.</span></div>
+          <div class="idea-card"><span class="main-idea">Cockpit lighting still has analog-style control</span><span class="real-world"><span class="arrow">→</span>Potentiometers and dimmer channels matter for troubleshooting.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🎚️</div><h2>Dimmer Boxes</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Dimmer boxes create different output levels</span><span class="real-world"><span class="arrow">→</span>They can supply 28VDC and low-voltage lighting channels.</span></div>
+          <div class="idea-card"><span class="main-idea">Brightness problem ≠ bad light automatically</span><span class="real-world"><span class="arrow">→</span>If many lights are dim or inop, suspect dimmer/control power first.</span></div>
+          <div class="idea-card"><span class="main-idea">Use grouping as a clue</span><span class="real-world"><span class="arrow">→</span>One failed lamp is local; one failed lighting zone may be upstream.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">💡</div><h2>Dome Light Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Same light can use different power paths</span><span class="real-world"><span class="arrow">→</span>Battery, ground, and flight conditions can route power differently.</span></div>
+          <div class="idea-card"><span class="main-idea">Battery operation may time out automatically</span><span class="real-world"><span class="arrow">→</span>Auto shutoff protects battery power when aircraft power is limited.</span></div>
+          <div class="idea-card"><span class="main-idea">Aircraft state changes light behavior</span><span class="real-world"><span class="arrow">→</span>This is normal logic, not always a fault.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🏠</div><h2>Cabin Lighting</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Cabin lighting is CMS-controlled</span><span class="real-world"><span class="arrow">→</span>LED strip lighting units are zoned, programmable, and scene-based.</span></div>
+          <div class="idea-card"><span class="main-idea">Lighting scenarios come from the cabin system</span><span class="real-world"><span class="arrow">→</span>Crew terminal commands can change zones, mood lighting, and brightness.</span></div>
+          <div class="idea-card"><span class="main-idea">Data bus failure may default lights to a safe level</span><span class="real-world"><span class="arrow">→</span>Dim/default lighting can be graceful degradation, not total failure.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧩</div><h2>CMS / Cabin Control Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">CMS sends lighting commands digitally</span><span class="real-world"><span class="arrow">→</span>RS-485 style data communication can drive cabin lighting zones.</span></div>
+          <div class="idea-card"><span class="main-idea">Manual override can mask CMS behavior</span><span class="real-world"><span class="arrow">→</span>Switch positions may override what the cabin system is trying to do.</span></div>
+          <div class="idea-card"><span class="main-idea">Multiple control paths are normal</span><span class="real-world"><span class="arrow">→</span>Attendant panels, flight deck switches, and CMS logic may all interact.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚪</div><h2>Entry, Galley & Lav Lighting</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Entry and galley lights use scenario and local control</span><span class="real-world"><span class="arrow">→</span>Automation plus manual controls support crew operations.</span></div>
+          <div class="idea-card"><span class="main-idea">Lav lights react to door logic</span><span class="real-world"><span class="arrow">→</span>Locked/unlocked status can change brightness and occupied signs.</span></div>
+          <div class="idea-card"><span class="main-idea">Door sensors can cause odd lighting complaints</span><span class="real-world"><span class="arrow">→</span>Check logic inputs before replacing lights.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚨</div><h2>Emergency Lighting</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Emergency lights are safety-critical</span><span class="real-world"><span class="arrow">→</span>They provide exit path, overhead, and exterior slide lighting.</span></div>
+          <div class="idea-card"><span class="main-idea">EPSUs provide independent battery power</span><span class="real-world"><span class="arrow">→</span>Emergency lighting can work even after main power is lost.</span></div>
+          <div class="idea-card"><span class="main-idea">ARM is the normal safety position</span><span class="real-world"><span class="arrow">→</span>If the switch is OFF, auto emergency activation may not occur.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔋</div><h2>EPSU Monitoring</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">EPSUs report battery and fault status</span><span class="real-world"><span class="arrow">→</span>Battery health is a dispatch and safety concern.</span></div>
+          <div class="idea-card"><span class="main-idea">Emergency lights must last long enough for evacuation</span><span class="real-world"><span class="arrow">→</span>The system is designed for independent operation after power loss.</span></div>
+          <div class="idea-card"><span class="main-idea">Check test results before parts swapping</span><span class="real-world"><span class="arrow">→</span>A failed emergency light may be battery, EPSU, wiring, or control logic.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌙</div><h2>Exterior Lighting Overview</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Exterior lights support visibility and identification</span><span class="real-world"><span class="arrow">→</span>Navigation, beacon, strobe, landing, taxi, logo, and wing inspection lights all have different jobs.</span></div>
+          <div class="idea-card"><span class="main-idea">Different lamp technology fits different needs</span><span class="real-world"><span class="arrow">→</span>LED for efficiency, HID for intensity, xenon/strobes for attention.</span></div>
+          <div class="idea-card"><span class="main-idea">Behavior changes with aircraft state</span><span class="real-world"><span class="arrow">→</span>WOW, gear position, tow mode, and ground service modes can affect lights.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">💥</div><h2>Landing & Taxi Lights</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">HID lights need ignition and warm-up</span><span class="real-world"><span class="arrow">→</span>They may require high ignition voltage and time before full brightness.</span></div>
+          <div class="idea-card"><span class="main-idea">Nose gear lights depend on gear position</span><span class="real-world"><span class="arrow">→</span>Some lights only power when the gear is down and locked.</span></div>
+          <div class="idea-card"><span class="main-idea">Do not rapidly cycle HID lamps</span><span class="real-world"><span class="arrow">→</span>Rapid cycling can shorten lamp life and confuse troubleshooting.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📍</div><h2>Navigation, Beacon & Strobe Lights</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Navigation lights can support normal and ground service use</span><span class="real-world"><span class="arrow">→</span>They may be available even without full aircraft power.</span></div>
+          <div class="idea-card"><span class="main-idea">Beacon intensity can change on ground</span><span class="real-world"><span class="arrow">→</span>WOW logic may reduce intensity for ground operations.</span></div>
+          <div class="idea-card"><span class="main-idea">Strobes are high-voltage systems</span><span class="real-world"><span class="arrow">→</span>Treat them with respect during maintenance.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔦</div><h2>Wing, Cargo & Service Lights</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Wing inspection lights help view leading edge and engine inlet</span><span class="real-world"><span class="arrow">→</span>Left/right bus split can help isolate faults.</span></div>
+          <div class="idea-card"><span class="main-idea">Cargo lights can auto-on with door opening</span><span class="real-world"><span class="arrow">→</span>Timers may shut them off to protect battery power.</span></div>
+          <div class="idea-card"><span class="main-idea">Maintenance lights may be parallel wired</span><span class="real-world"><span class="arrow">→</span>Any one switch may command a group of lights on.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance Reality</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Most faults are upstream of the bulb</span><span class="real-world"><span class="arrow">→</span>Power supplies, dimmers, CMS, CDC, data bus, and control logic are common fault areas.</span></div>
+          <div class="idea-card"><span class="main-idea">Exterior lights add lamp-aging and power-supply issues</span><span class="real-world"><span class="arrow">→</span>HID and strobe systems have special failure patterns.</span></div>
+          <div class="idea-card"><span class="main-idea">Complete lighting loss is rare</span><span class="real-world"><span class="arrow">→</span>Most issues are zone, control, bus, or component specific.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🛠️</div><h2>Troubleshooting Flow</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Step 1: Identify the lighting family</span><span class="real-world"><span class="arrow">→</span>Cockpit, cabin, emergency, exterior, cargo, or service.</span><span class="tag">use this</span></div>
+          <div class="idea-card"><span class="main-idea">Step 2: Check power source</span><span class="real-world"><span class="arrow">→</span>DC bus, AC bus, battery, EPSU, or ground service power.</span></div>
+          <div class="idea-card"><span class="main-idea">Step 3: Check control path</span><span class="real-world"><span class="arrow">→</span>CMS, CDC, switch, PBA, dimmer, or sensor logic.</span></div>
+          <div class="idea-card"><span class="main-idea">Step 4: Check output</span><span class="real-world"><span class="arrow">→</span>Lamp, LED unit, HID supply, ballast, wiring, or fixture.</span></div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember A220 ATA 33</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Provide Light</div><ul><li>LEDs</li><li>HID</li><li>Strobes</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Control Light</div><ul><li>CMS</li><li>CDC</li><li>Dimmer boxes</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Distribute Power</div><ul><li>DC buses</li><li>AC buses</li><li>EPSU batteries</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Protect Operation</div><ul><li>Emergency lights</li><li>WOW/gear logic</li><li>Timers</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">Cabin lights<br><small>check CMS/data bus</small></div>
+        <div class="fail-chip">Dim lights<br><small>check dimmer/control path</small></div>
+        <div class="fail-chip">Emergency lights<br><small>check EPSU/battery</small></div>
+        <div class="fail-chip">Exterior lights<br><small>check power + lamp type</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    A220 ATA 33 quick-study page • Lighting power, control logic, emergency lighting, exterior visibility, and line-maintenance troubleshooting.
+  </footer>
+</body>
+</html>

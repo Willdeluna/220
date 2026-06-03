@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 44 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,159,28,0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(98,216,255,0.13), transparent 26%),
+        radial-gradient(circle at 52% 100%, rgba(140,255,177,0.07), transparent 26%),
+        linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 18px 18px;
+      text-align: center;
+      position: relative;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 0 22px var(--soft);
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+    h1 {
+      margin: 18px 0 8px;
+      color: var(--orange);
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16);
+    }
+    .subtitle {
+      max-width: 900px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+    .hero-strip {
+      max-width: 1180px;
+      margin: 24px auto 8px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 0 34px rgba(255,159,28,.24);
+      border-color: var(--orange);
+    }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      border: 1px solid rgba(255,159,28,.28);
+      border-radius: 50%;
+    }
+    .hero-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .hero-title { color: var(--amber); font-size: 1.25rem; font-weight: 900; }
+    .hero-text { color: var(--muted); margin-top: 8px; line-height: 1.42; }
+    main { max-width: 1240px; margin: 0 auto; padding: 22px 18px 48px; }
+    .section-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .system-section {
+      border: 1px solid var(--line);
+      background: rgba(9,9,9,.88);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .system-section::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: .75;
+    }
+    .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; position: relative; z-index: 1; }
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75));
+      font-size: 1.65rem;
+      box-shadow: inset 0 0 18px rgba(255,159,28,.12);
+    }
+    h2 { margin: 0; color: var(--orange); font-size: 1.2rem; letter-spacing: .01em; }
+    .cards { display: grid; gap: 10px; position: relative; z-index: 1; }
+    .idea-card {
+      border: 1px solid rgba(255,159,28,.28);
+      background: linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding: 13px 14px;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .idea-card:hover {
+      transform: translateX(8px) scale(1.025);
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06));
+      box-shadow: 0 0 26px rgba(255,159,28,.21);
+    }
+    .idea-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
+    .idea-card:hover::after { transform: translateX(120%); }
+    .main-idea { display: block; color: var(--amber); font-weight: 900; font-size: 1rem; margin-bottom: 5px; }
+    .arrow { color: var(--orange); font-weight: 900; margin-right: 4px; }
+    .real-world { display: block; color: #ead9b8; line-height: 1.42; font-size: .96rem; }
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .wide { grid-column: 1 / -1; }
+    .memory-map {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      position: relative;
+      overflow: hidden;
+    }
+    .memory-map h2 { font-size: 1.45rem; margin-bottom: 14px; }
+    .map-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .map-card {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .map-card:hover { transform: translateY(-7px) rotate(-.5deg); box-shadow: 0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12); }
+    .map-number { color: var(--blue); font-size: 2rem; font-weight: 900; }
+    .map-title { color: var(--amber); font-weight: 900; font-size: 1.2rem; margin: 4px 0 8px; }
+    .map-card ul { margin: 0; padding-left: 18px; color: #ead9b8; line-height: 1.65; }
+    .fail-list { margin-top: 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .fail-chip {
+      border: 1px solid rgba(255,95,86,.55);
+      background: rgba(255,95,86,.08);
+      color: #ffd6d3;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .fail-chip:hover { transform: scale(1.06); background: rgba(255,95,86,.18); }
+    footer { text-align: center; color: var(--muted); padding: 26px 18px 38px; }
+    @media (max-width: 900px) {
+      .hero-strip, .map-grid { grid-template-columns: 1fr; }
+      .section-grid { grid-template-columns: 1fr; }
+      .fail-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      main { padding: 18px 10px 34px; }
+      header { padding-top: 24px; }
+      .system-section, .memory-map { border-radius: 18px; padding: 14px; }
+      .fail-list { grid-template-columns: 1fr; }
+      .idea-card:hover { transform: scale(1.015); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 44 • Cabin Systems / CMS</div>
+    <h1>Cabin Control Network Made Simple</h1>
+    <p class="subtitle">A quick interactive study page for CMS logic, crew terminal commands, cabin controllers, zone boxes, PSUCs, lighting integration, evacuation alerts, cabin power, BITE testing, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card">
+      <div class="hero-icon">🧠</div>
+      <div class="hero-title">Cabin Controller Brain</div>
+      <div class="hero-text">The cabin controller processes commands and coordinates cabin functions through the CMS network.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">🔀</div>
+      <div class="hero-title">Zone Box Routing</div>
+      <div class="hero-text">Zone boxes act like local data hubs, routing commands to cabin devices and keeping functions localized.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">💡</div>
+      <div class="hero-title">Software-Driven Cabin</div>
+      <div class="hero-text">Lighting, calls, evacuation alerts, and cabin functions are controlled by logic and networks—not just switches.</div>
+    </div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept — What ATA 44 Does</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 44 = cabin control network</span><span class="real-world"><span class="arrow">→</span>It connects cabin controls, crew inputs, lighting, alerts, and passenger-service functions through digital logic.</span></div>
+          <div class="idea-card"><span class="main-idea">Do not think simple wiring</span><span class="real-world"><span class="arrow">→</span>Most cabin functions depend on command signals, controllers, data buses, and local output modules.</span><span class="tag">big idea</span></div>
+          <div class="idea-card"><span class="main-idea">Troubleshooting starts with the network path</span><span class="real-world"><span class="arrow">→</span>A bad output may be a command, communication, controller, or device problem.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🎛️</div><h2>Crew Terminal / Cabin Interface</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Crew terminal is the main user interface</span><span class="real-world"><span class="arrow">→</span>Cabin crew can control cabin functions, scenarios, lighting, and system pages from the terminal.</span></div>
+          <div class="idea-card"><span class="main-idea">Commands become digital messages</span><span class="real-world"><span class="arrow">→</span>The terminal does not directly power the devices; it sends instructions into the CMS network.</span></div>
+          <div class="idea-card"><span class="main-idea">Check terminal messages first</span><span class="real-world"><span class="arrow">→</span>The display can point to failed controllers, zone boxes, PSUCs, or communication paths.</span><span class="tag">MX start point</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🖧</div><h2>Cabin Controller — Main Processor</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Cabin controller is the critical component</span><span class="real-world"><span class="arrow">→</span>It processes cabin commands and coordinates the system-wide cabin logic.</span></div>
+          <div class="idea-card"><span class="main-idea">Partial controller failure = partial function loss</span><span class="real-world"><span class="arrow">→</span>The system is designed to degrade, not completely disappear.</span></div>
+          <div class="idea-card"><span class="main-idea">Controller faults can look like device faults</span><span class="real-world"><span class="arrow">→</span>Do not chase the light, sign, or call button until the command path is verified.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📦</div><h2>Zone Boxes — Local Routing</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ZBs act like data switches</span><span class="real-world"><span class="arrow">→</span>They route commands and data between the cabin controller and local cabin devices.</span></div>
+          <div class="idea-card"><span class="main-idea">Zone failure usually affects a section</span><span class="real-world"><span class="arrow">→</span>If one area of the cabin has issues, suspect local zone-box routing or communication.</span><span class="tag">localized clue</span></div>
+          <div class="idea-card"><span class="main-idea">ZB failure may reroute</span><span class="real-world"><span class="arrow">→</span>The CMS tries to keep minimum cabin function available using alternate paths when possible.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔌</div><h2>PSUCs — Local Device Control</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">PSUCs control local passenger-service units</span><span class="real-world"><span class="arrow">→</span>They handle localized outputs like signs, lights, calls, and passenger-service functions.</span></div>
+          <div class="idea-card"><span class="main-idea">PSUC failure = local loss</span><span class="real-world"><span class="arrow">→</span>A single-seat or small-zone issue is often PSUC-related, not a whole CMS failure.</span></div>
+          <div class="idea-card"><span class="main-idea">PSUCs are the execution layer</span><span class="real-world"><span class="arrow">→</span>Command comes from CMS, routing passes through ZB, and PSUC makes the device respond.</span><span class="tag">easy flow</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📍</div><h2>Passenger / Crew Call Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">System tracks call location digitally</span><span class="real-world"><span class="arrow">→</span>Passenger and crew-call indications are managed through the CMS network so the exact area can be identified.</span></div>
+          <div class="idea-card"><span class="main-idea">Call issue may be network or PSUC</span><span class="real-world"><span class="arrow">→</span>Verify the input, the zone path, and the local output before replacing the button.</span></div>
+          <div class="idea-card"><span class="main-idea">Location logic matters</span><span class="real-world"><span class="arrow">→</span>If the wrong area indicates, think LOPA mapping, configuration, or data-routing issue.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">💡</div><h2>Cabin Lighting Integration</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Lighting controlled by CMS scenarios</span><span class="real-world"><span class="arrow">→</span>Cabin lighting can change by selected mode, phase, or crew-commanded lighting scene.</span></div>
+          <div class="idea-card"><span class="main-idea">ZB outputs control lighting by zone</span><span class="real-world"><span class="arrow">→</span>Lighting problems may follow a cabin zone instead of one fixture.</span></div>
+          <div class="idea-card"><span class="main-idea">Software-driven, not manual-only</span><span class="real-world"><span class="arrow">→</span>A light can be good but not commanded correctly.</span><span class="tag">don’t chase bulbs</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚨</div><h2>Emergency Evacuation System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Activated from flight deck or cabin</span><span class="real-world"><span class="arrow">→</span>Evacuation may be triggered by flight deck PBA or cabin switch.</span></div>
+          <div class="idea-card"><span class="main-idea">Any station can trigger evacuation</span><span class="real-world"><span class="arrow">→</span>System design ensures emergency alerts can be commanded from more than one location.</span></div>
+          <div class="idea-card"><span class="main-idea">Outputs include horn and cabin alerts</span><span class="real-world"><span class="arrow">→</span>Check command input, CMS path, and alert output when troubleshooting.</span><span class="tag">safety critical</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚠️</div><h2>Hijack Warning — Optional System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Hidden discrete input may be used</span><span class="real-world"><span class="arrow">→</span>Some configurations use a hidden input such as a reading-light switch to trigger a hijack alert.</span></div>
+          <div class="idea-card"><span class="main-idea">Alert may show red CABIN indication</span><span class="real-world"><span class="arrow">→</span>Multiple chimes and cabin alerts can be generated through the CMS alerting path.</span></div>
+          <div class="idea-card"><span class="main-idea">Hard to catch without system knowledge</span><span class="real-world"><span class="arrow">→</span>This is a discrete-input logic issue, not an obvious physical device failure.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚡</div><h2>CMS Power System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Powered by essential and normal DC buses</span><span class="real-world"><span class="arrow">→</span>DC ESS BUS 1/2 and DC BUS 1/2 help keep cabin functions available in degraded power modes.</span></div>
+          <div class="idea-card"><span class="main-idea">Power loss may cause selective cabin faults</span><span class="real-world"><span class="arrow">→</span>Always verify bus power before calling a CMS component bad.</span></div>
+          <div class="idea-card"><span class="main-idea">ATA 24 matters</span><span class="real-world"><span class="arrow">→</span>Electrical reconfiguration or load shedding can create cabin-system symptoms.</span><span class="tag">cross ATA</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔗</div><h2>System Integration</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 44 sits at the center of cabin integration</span><span class="real-world"><span class="arrow">→</span>It interfaces with temperature zones, electrical power, cabin furnishings, oxygen, smoke detection, and refuel status.</span></div>
+          <div class="idea-card"><span class="main-idea">Many ATA 44 faults begin elsewhere</span><span class="real-world"><span class="arrow">→</span>A cabin symptom may actually come from ATA 21, 24, 25, 26, 28, or 35.</span></div>
+          <div class="idea-card"><span class="main-idea">Trace the command and the dependency</span><span class="real-world"><span class="arrow">→</span>CMS often displays or controls systems that belong to other ATA chapters.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧪</div><h2>Maintenance & Testing</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">CMS has strong built-in maintenance</span><span class="real-world"><span class="arrow">→</span>Maintenance mode can provide BITE faults, LOPA mapping, and troubleshooting steps.</span><span class="tag">use this first</span></div>
+          <div class="idea-card"><span class="main-idea">Tests include quick, full, lamp, PA, and decompression tests</span><span class="real-world"><span class="arrow">→</span>Use the correct test for the reported cabin symptom.</span></div>
+          <div class="idea-card"><span class="main-idea">BITE helps separate network from device</span><span class="real-world"><span class="arrow">→</span>Fault history can tell if the failure is CC, ZB, PSUC, communication, or output-related.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section wide">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Troubleshooting Flow — Use This</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Step 1 — Check crew terminal messages</span><span class="real-world"><span class="arrow">→</span>Start with what the CMS is already telling you.</span></div>
+          <div class="idea-card"><span class="main-idea">Step 2 — Identify the component level</span><span class="real-world"><span class="arrow">→</span>Separate CC, ZB, PSUC, or local device before removing parts.</span></div>
+          <div class="idea-card"><span class="main-idea">Step 3 — Check network path</span><span class="real-world"><span class="arrow">→</span>Verify Ethernet / RS-485 communication and routing.</span></div>
+          <div class="idea-card"><span class="main-idea">Step 4 — Run CMS BITE</span><span class="real-world"><span class="arrow">→</span>Follow command → network → controller → device.</span><span class="tag">line MX flow</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember ATA 44</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Control</div><ul><li>Crew terminal</li><li>Cabin switches</li><li>Cabin commands</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Process</div><ul><li>Cabin controller</li><li>CMS logic</li><li>Fault handling</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Route</div><ul><li>Zone boxes</li><li>Ethernet</li><li>RS-485</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Execute</div><ul><li>PSUCs</li><li>Lighting</li><li>Calls / alerts</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">CMS is a network<br><small>not simple wiring</small></div>
+        <div class="fail-chip">CC is critical<br><small>main processor</small></div>
+        <div class="fail-chip">ZB faults<br><small>often zone-based</small></div>
+        <div class="fail-chip">Trace path<br><small>command to device</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    A220 ATA 44 quick-study page • Cabin control network, CMS logic, zone routing, PSUC outputs, emergency alerts, and line-maintenance troubleshooting.
+  </footer>
+</body>
+</html>

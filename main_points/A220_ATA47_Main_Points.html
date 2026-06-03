@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 47 Alternate Main Points</title>
+  <style>
+    :root{
+      --bg:#040404; --panel:#0d0d0d; --panel2:#17100a; --orange:#ff9f1c; --amber:#ffd166;
+      --text:#fff4df; --muted:#c7aa76; --line:rgba(255,159,28,.48); --soft:rgba(255,159,28,.16);
+      --blue:#61dafb; --green:#8cffb1; --red:#ff5f56;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:
+      radial-gradient(circle at 15% 10%,rgba(255,159,28,.22),transparent 24%),
+      radial-gradient(circle at 85% 0%,rgba(97,218,251,.12),transparent 25%),
+      linear-gradient(145deg,#000 0%,#070707 45%,#160c02 100%);overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:38px 38px;mask-image:radial-gradient(circle at center,black,transparent 84%)}
+    header{max-width:1180px;margin:auto;padding:36px 18px 20px;text-align:center;position:relative}
+    .badge{display:inline-block;border:1px solid var(--line);background:rgba(0,0,0,.62);color:var(--amber);padding:9px 16px;border-radius:999px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 0 24px var(--soft)}
+    h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2.1rem,6vw,5rem);line-height:.95;text-shadow:0 0 20px rgba(255,159,28,.4)}
+    .subtitle{max-width:900px;margin:0 auto;color:var(--muted);line-height:1.55;font-size:1.08rem}
+    main{max-width:1240px;margin:auto;padding:20px 18px 52px}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0 22px}
+    .flow-card{position:relative;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(255,159,28,.12),rgba(0,0,0,.75));padding:18px;min-height:142px;transition:.25s ease;overflow:hidden}
+    .flow-card:hover{transform:translateY(-8px);border-color:var(--orange);box-shadow:0 0 30px rgba(255,159,28,.22)}
+    .flow-card:after{content:"→";position:absolute;right:12px;top:10px;color:rgba(255,159,28,.45);font-size:1.6rem;font-weight:900}.flow-card:last-child:after{content:"✓";color:rgba(140,255,177,.6)}
+    .num{color:var(--blue);font-size:1.6rem;font-weight:900}.ftitle{color:var(--amber);font-weight:900;margin:6px 0}.ftext{color:#ead9b8;line-height:1.4;font-size:.95rem}
+    .dashboard{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    section{border:1px solid var(--line);border-radius:26px;background:rgba(10,10,10,.9);padding:18px;position:relative;overflow:hidden;box-shadow:0 0 28px rgba(0,0,0,.4)}
+    section:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),transparent);opacity:.75}
+    h2{margin:4px 0 14px;color:var(--orange);font-size:1.35rem}.grid{display:grid;gap:10px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .card{border:1px solid rgba(255,159,28,.28);border-radius:16px;padding:13px 14px;background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.025));transition:.22s ease;position:relative;overflow:hidden}.card:hover{transform:translateX(7px) scale(1.015);border-color:var(--orange);box-shadow:0 0 24px rgba(255,159,28,.18);background:linear-gradient(135deg,rgba(255,159,28,.17),rgba(97,218,251,.055))}
+    .idea{display:block;color:var(--amber);font-weight:900;margin-bottom:5px}.desc{display:block;color:#ead9b8;line-height:1.42}.arrow{color:var(--orange);font-weight:900}.pill{display:inline-block;margin-top:8px;background:var(--orange);color:#111;font-weight:900;font-size:.7rem;border-radius:999px;padding:3px 8px;text-transform:uppercase;letter-spacing:.04em}
+    .logic-table{width:100%;border-collapse:separate;border-spacing:0 9px}.logic-table td{background:rgba(255,159,28,.06);border-top:1px solid rgba(255,159,28,.22);border-bottom:1px solid rgba(255,159,28,.22);padding:12px}.logic-table td:first-child{border-left:1px solid rgba(255,159,28,.22);border-radius:14px 0 0 14px;color:var(--amber);font-weight:900}.logic-table td:last-child{border-right:1px solid rgba(255,159,28,.22);border-radius:0 14px 14px 0;color:#ead9b8}
+    .warning{border-color:rgba(255,95,86,.55);background:rgba(255,95,86,.08)}.green{border-color:rgba(140,255,177,.42);background:rgba(140,255,177,.06)}.blue{border-color:rgba(97,218,251,.42);background:rgba(97,218,251,.055)}
+    .wide{grid-column:1/-1}.takeaways{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}.chip{border:1px solid rgba(255,159,28,.35);border-radius:18px;padding:14px;background:rgba(0,0,0,.48);text-align:center;font-weight:900;color:var(--amber);transition:.2s}.chip:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(255,159,28,.16)}.chip small{display:block;color:var(--muted);font-weight:700;margin-top:5px;line-height:1.3}
+    footer{text-align:center;color:var(--muted);padding:24px 18px 38px}
+    @media(max-width:980px){.flow{grid-template-columns:1fr}.dashboard,.two{grid-template-columns:1fr}.takeaways{grid-template-columns:repeat(2,1fr)}.flow-card:after{content:"↓"}.flow-card:last-child:after{content:"✓"}}
+    @media(max-width:540px){main{padding:16px 10px 38px}section{border-radius:18px;padding:14px}.takeaways{grid-template-columns:1fr}.card:hover{transform:scale(1.01)}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">✅ A220 ATA 47 • Fuel Tank Inerting / Nitrogen Generation</div>
+    <h1>Controlled Nitrogen Generation</h1>
+    <p class="subtitle">Alternate study-page version: follow the actual logic path — bleed air is conditioned, oxygen is removed by the ASM, nitrogen-enriched air goes to the tanks, and the ICU protects the system the whole time.</p>
+  </header>
+  <main>
+    <div class="flow">
+      <div class="flow-card"><div class="num">1</div><div class="ftitle">Take Air</div><div class="ftext">Bleed air is the source. ATA 36 problems can instantly become ATA 47 problems.</div></div>
+      <div class="flow-card"><div class="num">2</div><div class="ftitle">Condition Air</div><div class="ftext">Cooling, pressure, temperature, and filtering protect the ASM.</div></div>
+      <div class="flow-card"><div class="num">3</div><div class="ftitle">Separate Air</div><div class="ftext">The ASM membrane removes oxygen and leaves nitrogen-enriched air.</div></div>
+      <div class="flow-card"><div class="num">4</div><div class="ftitle">Distribute NEA</div><div class="ftext">Flow valves, check valves, flame arrestors, and orifices send NEA to the tanks.</div></div>
+      <div class="flow-card"><div class="num">5</div><div class="ftitle">Protect System</div><div class="ftext">ICU logic shuts the system down for unsafe pressure, temperature, or data.</div></div>
+    </div>
+
+    <div class="dashboard">
+      <section>
+        <h2>🧠 Core System Idea</h2>
+        <div class="grid">
+          <div class="card"><span class="idea">ATA 47 is a controlled nitrogen generation system</span><span class="desc"><span class="arrow">→</span> It takes aircraft air, removes oxygen, and sends nitrogen-enriched air into the fuel tanks.</span><span class="pill">big picture</span></div>
+          <div class="card"><span class="idea">ASM is the heart of the system</span><span class="desc"><span class="arrow">→</span> The Air Separation Module uses membrane fibers: oxygen diffuses out, nitrogen remains.</span></div>
+          <div class="card"><span class="idea">ICU is the logic brain</span><span class="desc"><span class="arrow">→</span> The Inerting Control Unit controls valves, startup, temperature, pressure, flow, monitoring, and shutdown.</span><span class="pill">start here</span></div>
+          <div class="card"><span class="idea">System shutdown is often protection, not failure</span><span class="desc"><span class="arrow">→</span> Overtemperature, overpressure, sensor faults, or data loss can cause a latched shutdown.</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>⚙️ System Logic Modes</h2>
+        <table class="logic-table">
+          <tr><td>Normal</td><td>System running and producing NEA.</td></tr>
+          <tr><td>Health Monitoring</td><td>Checks oxygen levels and system effectiveness.</td></tr>
+          <tr><td>Inhibit</td><td>System turns off automatically based on aircraft configuration.</td></tr>
+          <tr><td>Latched Shutdown</td><td>Fault shutdown that requires OMS reset.</td></tr>
+          <tr><td>Maintenance</td><td>Used for testing and troubleshooting.</td></tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>🧪 Air Separation Module</h2>
+        <div class="grid two">
+          <div class="card blue"><span class="idea">Membrane fiber separation</span><span class="desc"><span class="arrow">→</span> Oxygen diffuses out through the membrane while nitrogen remains in the stream.</span></div>
+          <div class="card green"><span class="idea">Outputs two air streams</span><span class="desc"><span class="arrow">→</span> NEA goes to the tank. OEA is dumped overboard.</span></div>
+          <div class="card warning"><span class="idea">ASM is sensitive</span><span class="desc"><span class="arrow">→</span> Temperature, pressure, and contamination can reduce performance.</span></div>
+          <div class="card"><span class="idea">Poor air quality = poor inerting</span><span class="desc"><span class="arrow">→</span> Always think upstream: bleed source, cooling, filtering, pressure, and temperature.</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌡️ Temperature & Pressure Protection</h2>
+        <div class="grid">
+          <div class="card"><span class="idea">TCV controls temperature</span><span class="desc"><span class="arrow">→</span> Target temperature is about 60°C / 140°F to protect ASM performance.</span></div>
+          <div class="card warning"><span class="idea">Overpressure shutdown</span><span class="desc"><span class="arrow">→</span> Around 60 psi can trigger shutdown protection.</span></div>
+          <div class="card warning"><span class="idea">Overtemperature shutdown</span><span class="desc"><span class="arrow">→</span> Digital threshold is around 85°C; analog backup around 90°C.</span></div>
+          <div class="card"><span class="idea">Latched shutdown does not self-clear</span><span class="desc"><span class="arrow">→</span> Reset is required through OMS after the fault condition is handled.</span><span class="pill">MX clue</span></div>
+        </div>
+      </section>
+
+      <section class="wide">
+        <h2>🛢️ NEA Distribution & Safety Devices</h2>
+        <div class="grid two">
+          <div class="card"><span class="idea">NEA goes to wing and center tanks</span><span class="desc"><span class="arrow">→</span> Distribution uses check valves, flame arrestors, and flow orifices to control and protect flow.</span></div>
+          <div class="card"><span class="idea">DFSOV controls flow rate</span><span class="desc"><span class="arrow">→</span> Low flow is used on ground, climb, and cruise; higher flow is used during descent.</span><span class="pill">flight phase</span></div>
+          <div class="card warning"><span class="idea">Flame arrestor protects the tank</span><span class="desc"><span class="arrow">→</span> It prevents flame propagation into the fuel tank.</span></div>
+          <div class="card warning"><span class="idea">J-trap protects the system</span><span class="desc"><span class="arrow">→</span> It helps prevent fuel from entering the inerting system.</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🚫 Inhibit Conditions</h2>
+        <div class="grid">
+          <div class="card"><span class="idea">Refueling / defueling</span><span class="desc"><span class="arrow">→</span> Inerting can be automatically inhibited during fueling operations.</span></div>
+          <div class="card"><span class="idea">Engine start</span><span class="desc"><span class="arrow">→</span> System may inhibit when bleed air is needed elsewhere.</span></div>
+          <div class="card"><span class="idea">One engine inoperative</span><span class="desc"><span class="arrow">→</span> Configuration logic can shut ATA 47 down to protect priority systems.</span></div>
+          <div class="card"><span class="idea">Bleed air unavailable or anti-ice conflict</span><span class="desc"><span class="arrow">→</span> ATA 36 and ATA 30 demands can directly affect inerting availability.</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔧 Troubleshooting Flow</h2>
+        <table class="logic-table">
+          <tr><td>1. CAS / OMS</td><td>Start with the message and fault history.</td></tr>
+          <tr><td>2. Mode</td><td>Normal, inhibited, shutdown, health monitoring, or maintenance?</td></tr>
+          <tr><td>3. Values</td><td>Check temperature, pressure, and oxygen level.</td></tr>
+          <tr><td>4. Air Path</td><td>Bleed → cooling → ASM → tank.</td></tr>
+          <tr><td>5. Reset</td><td>If latched, correct the issue before OMS reset.</td></tr>
+        </table>
+      </section>
+
+      <section class="wide">
+        <h2>🔥 Real Line MX Takeaways</h2>
+        <div class="takeaways">
+          <div class="chip">ASM = Heart<small>Creates nitrogen-enriched air</small></div>
+          <div class="chip">ICU = Brain<small>Controls and protects everything</small></div>
+          <div class="chip">ATA 36 Link<small>Bleed issues become inerting issues</small></div>
+          <div class="chip">Latched Shutdown<small>Requires OMS reset</small></div>
+          <div class="chip">Temp Matters<small>Cooling protects the ASM</small></div>
+          <div class="chip">Flow Changes<small>Descent needs higher flow</small></div>
+          <div class="chip">Most Faults<small>Sensors, valves, cooling, logic</small></div>
+          <div class="chip">Think Air Quality<small>Pressure, temp, purity, contamination</small></div>
+        </div>
+      </section>
+
+      <section class="wide">
+        <h2>🧠 Final Memory Hook</h2>
+        <div class="card green"><span class="idea">ATA 47 = Airflow Quality + System Logic</span><span class="desc"><span class="arrow">→</span> The system takes bleed air, conditions it, separates oxygen from nitrogen, delivers NEA to fuel tanks, and protects itself with valves, sensors, and shutdown logic. When troubleshooting, follow source → conditioning → separation → distribution → protection.</span></div>
+      </section>
+    </div>
+  </main>
+  <footer>A220 ATA 47 alternate quick-study page • Fuel tank inerting, ASM, ICU logic, flow control, and maintenance troubleshooting.</footer>
+</body>
+</html>

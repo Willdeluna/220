@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 22 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+      --violet: #c28cff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,159,28,0.24), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(98,216,255,0.15), transparent 26%),
+        radial-gradient(circle at 52% 100%, rgba(194,140,255,0.08), transparent 28%),
+        linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 18px 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 0 22px var(--soft);
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      color: var(--orange);
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16);
+    }
+
+    .subtitle {
+      max-width: 900px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .hero-strip {
+      max-width: 1180px;
+      margin: 24px auto 8px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 146px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 0 34px rgba(255,159,28,.24);
+      border-color: var(--orange);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      border: 1px solid rgba(255,159,28,.28);
+      border-radius: 50%;
+    }
+
+    .hero-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .hero-title { color: var(--amber); font-size: 1.25rem; font-weight: 900; }
+    .hero-text { color: var(--muted); margin-top: 8px; line-height: 1.42; }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px 48px;
+    }
+
+    .flow-banner {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 18px;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(98,216,255,.08), rgba(255,159,28,.1), rgba(0,0,0,.75));
+      overflow: hidden;
+      position: relative;
+    }
+
+    .flow-banner h2 { margin-bottom: 14px; font-size: 1.4rem; }
+    .flow-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      color: #ead9b8;
+      font-weight: 900;
+    }
+    .flow-step {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(0,0,0,.55);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .flow-step:hover { transform: translateY(-4px); box-shadow: 0 0 22px rgba(98,216,255,.15); }
+    .flow-arrow { color: var(--orange); font-size: 1.3rem; }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .system-section {
+      border: 1px solid var(--line);
+      background: rgba(9,9,9,.88);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .system-section::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: .75;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75));
+      font-size: 1.65rem;
+      box-shadow: inset 0 0 18px rgba(255,159,28,.12);
+      flex: 0 0 auto;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--orange);
+      font-size: 1.2rem;
+      letter-spacing: .01em;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .idea-card {
+      border: 1px solid rgba(255,159,28,.28);
+      background: linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding: 13px 14px;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card:hover {
+      transform: translateX(8px) scale(1.025);
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06));
+      box-shadow: 0 0 26px rgba(255,159,28,.21);
+    }
+
+    .idea-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
+
+    .idea-card:hover::after { transform: translateX(120%); }
+
+    .main-idea {
+      display: block;
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .arrow {
+      color: var(--orange);
+      font-weight: 900;
+      margin-right: 4px;
+    }
+
+    .real-world {
+      display: block;
+      color: #ead9b8;
+      line-height: 1.42;
+      font-size: .96rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .memory-map {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memory-map h2 { font-size: 1.45rem; margin-bottom: 14px; }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .map-card {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-7px) rotate(-.5deg);
+      box-shadow: 0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12);
+    }
+
+    .map-number {
+      color: var(--blue);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .map-title {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin: 4px 0 8px;
+    }
+
+    .map-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #ead9b8;
+      line-height: 1.65;
+    }
+
+    .fail-list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fail-chip {
+      border: 1px solid rgba(255,95,86,.55);
+      background: rgba(255,95,86,.08);
+      color: #ffd6d3;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .fail-chip:hover {
+      transform: scale(1.06);
+      background: rgba(255,95,86,.18);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 26px 18px 38px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-strip, .section-grid, .map-grid { grid-template-columns: 1fr; }
+      .fail-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      main { padding: 18px 10px 34px; }
+      header { padding-top: 24px; }
+      .system-section, .memory-map, .flow-banner { border-radius: 18px; padding: 14px; }
+      .fail-list { grid-template-columns: 1fr; }
+      .idea-card:hover { transform: scale(1.015); }
+      .flow-line { align-items: stretch; flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 22 • Auto Flight System</div>
+    <h1>Auto Flight Made Simple</h1>
+    <p class="subtitle">A line-maintenance study page for A220 flight guidance, FMA logic, autopilot, autothrottle, autoland, Emergency Descent Mode, sensor dependency, and troubleshooting flow.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card">
+      <div class="hero-icon">🧠</div>
+      <div class="hero-title">Data Drives Everything</div>
+      <div class="hero-text">Sensors feed logic. Logic creates commands. Commands go to flight controls.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">📺</div>
+      <div class="hero-title">FMA Is Truth</div>
+      <div class="hero-text">The Flight Mode Annunciator shows the real active mode, not just what someone expected.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">🛡️</div>
+      <div class="hero-title">Degrades, Not Dies</div>
+      <div class="hero-text">Most faults cause mode reversion, disconnects, or downgraded capability instead of total failure.</div>
+    </div>
+  </section>
+
+  <main>
+    <section class="flow-banner">
+      <h2>🔥 Core Flow — Data → Logic → Command → Execution</h2>
+      <div class="flow-line">
+        <span class="flow-step">Sensors</span><span class="flow-arrow">→</span>
+        <span class="flow-step">DMC / FMS Processing</span><span class="flow-arrow">→</span>
+        <span class="flow-step">Flight Guidance Commands</span><span class="flow-arrow">→</span>
+        <span class="flow-step">PFCC</span><span class="flow-arrow">→</span>
+        <span class="flow-step">FBW / Control Surfaces</span>
+      </div>
+    </section>
+
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept — What ATA 22 Really Does</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 22 does not directly move the airplane</span><span class="real-world"><span class="arrow">→</span>It commands the flight control system to move the surfaces.</span></div>
+          <div class="idea-card"><span class="main-idea">Auto flight is a logic system</span><span class="real-world"><span class="arrow">→</span>Think data, modes, and computers before replacing autopilot parts.</span><span class="tag">big takeaway</span></div>
+          <div class="idea-card"><span class="main-idea">Wrong behavior usually means wrong data or wrong mode</span><span class="real-world"><span class="arrow">→</span>The autopilot may be following bad guidance perfectly.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧩</div><h2>System Architecture</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">DMCs are the thinking layer</span><span class="real-world"><span class="arrow">→</span>They combine FMS, navigation, and air data to build the flight path solution.</span></div>
+          <div class="idea-card"><span class="main-idea">PFCCs are the execution layer</span><span class="real-world"><span class="arrow">→</span>They convert commands into flight-control movement.</span><span class="tag">memory hook</span></div>
+          <div class="idea-card"><span class="main-idea">Three PFCCs use majority-vote logic</span><span class="real-world"><span class="arrow">→</span>One disagreement can be ignored, so the system usually degrades instead of quitting.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">✈️</div><h2>Flight Guidance System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">FGS decides what the airplane should do</span><span class="real-world"><span class="arrow">→</span>Climb, descend, turn, hold speed, intercept, or capture.</span></div>
+          <div class="idea-card"><span class="main-idea">Autopilot follows FGS commands</span><span class="real-world"><span class="arrow">→</span>Bad guidance can create bad-looking aircraft behavior with a good autopilot.</span></div>
+          <div class="idea-card"><span class="main-idea">Every movement is lateral or vertical</span><span class="real-world"><span class="arrow">→</span>Lateral: HDG, LNAV, LOC. Vertical: VNAV, ALT, VS, GS.</span><span class="tag">easy sorting</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📺</div><h2>FMA — Flight Mode Annunciator</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">FMA shows the real active system state</span><span class="real-world"><span class="arrow">→</span>Do not troubleshoot based only on what mode was selected.</span><span class="tag">FMA is truth</span></div>
+          <div class="idea-card"><span class="main-idea">FMA separates lateral, vertical, and autothrottle modes</span><span class="real-world"><span class="arrow">→</span>It tells you which part of the logic is actually active.</span></div>
+          <div class="idea-card"><span class="main-idea">Mode reversion is normal protection logic</span><span class="real-world"><span class="arrow">→</span>If conditions are not met, the system may switch modes automatically.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🕹️</div><h2>Autopilot — What It Actually Does</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Autopilot works through FBW laws</span><span class="real-world"><span class="arrow">→</span>It does not bypass flight-envelope protections.</span></div>
+          <div class="idea-card"><span class="main-idea">Normal Law protections still apply</span><span class="real-world"><span class="arrow">→</span>The autopilot is limited by system laws and cannot command unsafe behavior.</span></div>
+          <div class="idea-card"><span class="main-idea">Engagement needs stable, clean signals</span><span class="real-world"><span class="arrow">→</span>Conflicting inputs or invalid data can cause immediate disconnect.</span><span class="tag">line MX clue</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚠️</div><h2>Autopilot Disconnect Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Disconnect usually equals protection</span><span class="real-world"><span class="arrow">→</span>Do not instantly call it an autopilot failure.</span><span class="tag">important</span></div>
+          <div class="idea-card"><span class="main-idea">Common triggers: sensor disagreement or envelope exceedance</span><span class="real-world"><span class="arrow">→</span>Invalid inputs make the system back out.</span></div>
+          <div class="idea-card"><span class="main-idea">Sidestick conflict or trim mismatch can drop AP</span><span class="real-world"><span class="arrow">→</span>Check aircraft state and pilot input paths before blaming the AP.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚡</div><h2>Autothrottle / ATS</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATS manages energy</span><span class="real-world"><span class="arrow">→</span>It controls the speed and thrust relationship, not just throttle position.</span></div>
+          <div class="idea-card"><span class="main-idea">THRUST mode fixes power, SPEED mode chases speed</span><span class="real-world"><span class="arrow">→</span>Know which mode is active before calling the response wrong.</span></div>
+          <div class="idea-card"><span class="main-idea">ATS faults can be physical</span><span class="real-world"><span class="arrow">→</span>Servo, linkage, and throttle quadrant issues are real moving-part problems.</span><span class="tag">unlike AP</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🛬</div><h2>Autoland</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Autoland uses many systems at once</span><span class="real-world"><span class="arrow">→</span>ILS, radio altimeter, IRS, and air data all matter.</span></div>
+          <div class="idea-card"><span class="main-idea">Phases: APP, FLARE, ROLLOUT</span><span class="real-world"><span class="arrow">→</span>Alignment, flare around low altitude, then centerline control.</span></div>
+          <div class="idea-card"><span class="main-idea">LAND3, LAND2, NO LAND = integrity levels</span><span class="real-world"><span class="arrow">→</span>The system downgrades when redundancy is reduced.</span><span class="tag">degrades gracefully</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚨</div><h2>Emergency Descent Mode</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">EDM can activate automatically</span><span class="real-world"><span class="arrow">→</span>Unsafe cabin altitude can trigger a safety response.</span></div>
+          <div class="idea-card"><span class="main-idea">System engages AP and AT logic</span><span class="real-world"><span class="arrow">→</span>It commands idle thrust and descent to protect occupants.</span></div>
+          <div class="idea-card"><span class="main-idea">Not every dramatic action is a fault</span><span class="real-world"><span class="arrow">→</span>EDM is designed safety behavior, not random airplane weirdness.</span><span class="tag">A220 feature</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📡</div><h2>Sensor Dependency</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 22 depends heavily on IRU, ADC, and GPS</span><span class="real-world"><span class="arrow">→</span>Position, attitude, speed, altitude, and navigation data drive the system.</span></div>
+          <div class="idea-card"><span class="main-idea">Sensor disagreement causes degradation or disconnect</span><span class="real-world"><span class="arrow">→</span>If the computers cannot trust the data, they limit the function.</span></div>
+          <div class="idea-card"><span class="main-idea">Most ATA 22 issues are input-data issues</span><span class="real-world"><span class="arrow">→</span>Bad input data makes good logic behave badly.</span><span class="tag">root cause clue</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🎚️</div><h2>Mode Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Managed mode = FMS controlled</span><span class="real-world"><span class="arrow">→</span>The aircraft follows computed flight plan logic.</span></div>
+          <div class="idea-card"><span class="main-idea">Selected mode = pilot/FCP controlled</span><span class="real-world"><span class="arrow">→</span>The crew-selected value controls the target.</span></div>
+          <div class="idea-card"><span class="main-idea">Blank FCP window can be normal</span><span class="real-world"><span class="arrow">→</span>Managed mode may hide selected targets because the FMS is driving.</span><span class="tag">don’t overthink it</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Troubleshooting Mindset</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Start with FMA</span><span class="real-world"><span class="arrow">→</span>Confirm the mode that is actually active.</span></div>
+          <div class="idea-card"><span class="main-idea">Check inputs before computers</span><span class="real-world"><span class="arrow">→</span>Validate airspeed, altitude, IRS, GPS, and sensor status.</span></div>
+          <div class="idea-card"><span class="main-idea">Use BITE and fault history</span><span class="real-world"><span class="arrow">→</span>Look for PFCC/DMC faults and mode reversion clues.</span><span class="tag">best order</span></div>
+        </div>
+      </div>
+
+      <div class="system-section wide">
+        <div class="section-head"><div class="section-icon">🔗</div><h2>System Interaction — Why Problems Spread</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 22 depends on ATA 34 navigation</span><span class="real-world"><span class="arrow">→</span>Bad nav/air data can show up as auto flight problems.</span></div>
+          <div class="idea-card"><span class="main-idea">ATA 22 depends on ATA 31 displays</span><span class="real-world"><span class="arrow">→</span>The FMA and display indications are your troubleshooting window.</span></div>
+          <div class="idea-card"><span class="main-idea">ATA 22 depends on ATA 27 flight controls and ATA 24 electrical</span><span class="real-world"><span class="arrow">→</span>Execution and power problems can look like autopilot issues.</span><span class="tag">someone else’s problem</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember A220 ATA 22</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Sense</div><ul><li>IRU</li><li>ADC</li><li>GPS</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Think</div><ul><li>DMC</li><li>FMS</li><li>Flight guidance</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Control</div><ul><li>PFCC</li><li>Mode logic</li><li>Protections</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Move</div><ul><li>FBW</li><li>Control surfaces</li><li>ATS hardware</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">Most problems<br><small>data mismatch, not AP hardware</small></div>
+        <div class="fail-chip">FMA first<br><small>mode tells the truth</small></div>
+        <div class="fail-chip">Mode reversion<br><small>explains weird behavior</small></div>
+        <div class="fail-chip">ATS issues<br><small>can be servo/linkage physical</small></div>
+        <div class="fail-chip">Autoland<br><small>downgrades by integrity</small></div>
+        <div class="fail-chip">ATA 22 faults<br><small>may start in ATA 34/27/24/31</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    A220 ATA 22 quick-study page • Auto flight logic, FMA truth, mode reversion, sensor dependency, and line-maintenance troubleshooting.
+  </footer>
+</body>
+</html>

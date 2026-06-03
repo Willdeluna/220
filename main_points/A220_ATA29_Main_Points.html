@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 29 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,159,28,0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(98,216,255,0.13), transparent 26%),
+        radial-gradient(circle at 52% 100%, rgba(140,255,177,0.07), transparent 26%),
+        linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 18px 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 0 22px var(--soft);
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      color: var(--orange);
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16);
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .hero-strip {
+      max-width: 1180px;
+      margin: 24px auto 8px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 0 34px rgba(255,159,28,.24);
+      border-color: var(--orange);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      border: 1px solid rgba(255,159,28,.28);
+      border-radius: 50%;
+    }
+
+    .hero-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .hero-title { color: var(--amber); font-size: 1.25rem; font-weight: 900; }
+    .hero-text { color: var(--muted); margin-top: 8px; line-height: 1.42; }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px 48px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .system-section {
+      border: 1px solid var(--line);
+      background: rgba(9,9,9,.88);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .system-section::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: .75;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75));
+      font-size: 1.65rem;
+      box-shadow: inset 0 0 18px rgba(255,159,28,.12);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--orange);
+      font-size: 1.2rem;
+      letter-spacing: .01em;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .idea-card {
+      border: 1px solid rgba(255,159,28,.28);
+      background: linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding: 13px 14px;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card:hover {
+      transform: translateX(8px) scale(1.025);
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06));
+      box-shadow: 0 0 26px rgba(255,159,28,.21);
+    }
+
+    .idea-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
+
+    .idea-card:hover::after { transform: translateX(120%); }
+
+    .main-idea {
+      display: block;
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .arrow {
+      color: var(--orange);
+      font-weight: 900;
+      margin-right: 4px;
+    }
+
+    .real-world {
+      display: block;
+      color: #ead9b8;
+      line-height: 1.42;
+      font-size: .96rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .memory-map {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memory-map h2 { font-size: 1.45rem; margin-bottom: 14px; }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .map-card {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-7px) rotate(-.5deg);
+      box-shadow: 0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12);
+    }
+
+    .map-number {
+      color: var(--blue);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .map-title {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin: 4px 0 8px;
+    }
+
+    .map-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #ead9b8;
+      line-height: 1.65;
+    }
+
+    .fail-list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fail-chip {
+      border: 1px solid rgba(255,95,86,.55);
+      background: rgba(255,95,86,.08);
+      color: #ffd6d3;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .fail-chip:hover {
+      transform: scale(1.06);
+      background: rgba(255,95,86,.18);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 26px 18px 38px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-strip, .map-grid { grid-template-columns: 1fr; }
+      .section-grid { grid-template-columns: 1fr; }
+      .fail-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      main { padding: 18px 10px 34px; }
+      header { padding-top: 24px; }
+      .system-section, .memory-map { border-radius: 18px; padding: 14px; }
+      .fail-list { grid-template-columns: 1fr; }
+      .idea-card:hover { transform: scale(1.015); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 29 • Hydraulic System</div>
+    <h1>Pressure, Logic & Redundancy Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for HYD 1, HYD 2, HYD 3, EDPs, ACMPs, bootstrap reservoirs, PTU logic, RAT backup, priority valves, protections, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card">
+      <div class="hero-icon">💧</div>
+      <div class="hero-title">Triple Redundancy</div>
+      <div class="hero-text">Three independent hydraulic systems distribute power so flight control capability remains available after failures.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">⚙️</div>
+      <div class="hero-title">Demand-Based Pressure</div>
+      <div class="hero-text">EDPs, ACMPs, reservoirs, and accumulators work together to maintain roughly 3000 psi when needed.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">🧠</div>
+      <div class="hero-title">Logic Before Parts</div>
+      <div class="hero-text">PTU, ACMPs, priority valves, and RAT behavior are often normal system protection logic.</div>
+    </div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept — ATA 29 Big Picture</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">A220 hydraulics are triple-redundant</span><span class="real-world"><span class="arrow">→</span>HYD 1, HYD 2, and HYD 3 are independent systems that protect flight control capability.</span></div>
+          <div class="idea-card"><span class="main-idea">One system can still support all flight axes</span><span class="real-world"><span class="arrow">→</span>The airplane is designed so a single hydraulic failure does not remove control.</span><span class="tag">big takeaway</span></div>
+          <div class="idea-card"><span class="main-idea">Think pressure management, not just pumps</span><span class="real-world"><span class="arrow">→</span>Logic decides when pumps run, valves shift, and priority loads get protected.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🏗️</div><h2>System Architecture</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Each system has its own components</span><span class="real-world"><span class="arrow">→</span>Reservoir, pumps, filters, valves, and monitoring stay separated between systems.</span></div>
+          <div class="idea-card"><span class="main-idea">Loads are distributed across the airplane</span><span class="real-world"><span class="arrow">→</span>Flight controls, gear, thrust reversers, spoilers, flaps, and slats are split intelligently.</span></div>
+          <div class="idea-card"><span class="main-idea">No single failure should take everything</span><span class="real-world"><span class="arrow">→</span>That is the whole design philosophy of the hydraulic layout.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚙️</div><h2>Pump Types — EDP vs ACMP</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">EDP = engine driven pump</span><span class="real-world"><span class="arrow">→</span>Main source for HYD 1 and HYD 2 anytime the related engine is running.</span></div>
+          <div class="idea-card"><span class="main-idea">ACMP = electric motor pump</span><span class="real-world"><span class="arrow">→</span>Backup/assist pump, and primary power source for HYD 3.</span><span class="tag">easy memory</span></div>
+          <div class="idea-card"><span class="main-idea">Variable displacement pumps meet demand</span><span class="real-world"><span class="arrow">→</span>They adjust output instead of simply pushing constant flow all the time.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔀</div><h2>System Differences</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">HYD 1: EDP 1A primary</span><span class="real-world"><span class="arrow">→</span>Backup support can come from the PTU and electric pump logic.</span></div>
+          <div class="idea-card"><span class="main-idea">HYD 2: EDP 2A primary</span><span class="real-world"><span class="arrow">→</span>ACMP 2B gives backup pressure when required.</span></div>
+          <div class="idea-card"><span class="main-idea">HYD 3: electrically driven</span><span class="real-world"><span class="arrow">→</span>ACMP 3A/3B supply it, with RAT backup in emergency conditions.</span><span class="tag">key difference</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📈</div><h2>Pressure System Basics</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Normal pressure is about 3000 psi</span><span class="real-world"><span class="arrow">→</span>This is the working pressure target for hydraulic users.</span></div>
+          <div class="idea-card"><span class="main-idea">Pressure switches drive logic</span><span class="real-world"><span class="arrow">→</span>Pressure values are used for pump commands, warnings, and system state.</span></div>
+          <div class="idea-card"><span class="main-idea">Low pressure does not always mean failed pump</span><span class="real-world"><span class="arrow">→</span>Quantity, temperature, priority valves, logic, or electrical shedding can be involved.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🛢️</div><h2>Bootstrap Reservoir</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Reservoir is self-pressurizing</span><span class="real-world"><span class="arrow">→</span>It uses hydraulic pressure to maintain pump inlet pressure.</span></div>
+          <div class="idea-card"><span class="main-idea">Prevents cavitation</span><span class="real-world"><span class="arrow">→</span>The pump needs positive inlet pressure to avoid damage and pressure loss.</span></div>
+          <div class="idea-card"><span class="main-idea">Reservoir is active, not just storage</span><span class="real-world"><span class="arrow">→</span>It helps the system work through negative G and aggressive maneuvering.</span><span class="tag">unique concept</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔋</div><h2>Accumulators</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Accumulators store hydraulic energy</span><span class="real-world"><span class="arrow">→</span>They support transient demand and short-term pressure needs.</span></div>
+          <div class="idea-card"><span class="main-idea">HYD 3 has extra accumulator support</span><span class="real-world"><span class="arrow">→</span>This matters during RAT transition and emergency operation.</span></div>
+          <div class="idea-card"><span class="main-idea">Think short-term backup pressure</span><span class="real-world"><span class="arrow">→</span>They are not the main power source, but they smooth and protect the system.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔄</div><h2>PTU — Power Transfer Unit</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">PTU transfers power, not fluid</span><span class="real-world"><span class="arrow">→</span>HYD 2 can help HYD 1 mechanically while fluid stays separated.</span></div>
+          <div class="idea-card"><span class="main-idea">Automatic during specific conditions</span><span class="real-world"><span class="arrow">→</span>Low HYD 1 pressure, takeoff, approach, and single-engine taxi can trigger it.</span></div>
+          <div class="idea-card"><span class="main-idea">PTU running may be normal</span><span class="real-world"><span class="arrow">→</span>Do not call it a failure just because the system is helping itself.</span><span class="tag">MX clue</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚦</div><h2>Priority Valves</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Flight controls get priority</span><span class="real-world"><span class="arrow">→</span>When pressure drops, non-essential users are limited first.</span></div>
+          <div class="idea-card"><span class="main-idea">Loss of some users can be protection logic</span><span class="real-world"><span class="arrow">→</span>Priority valves explain why one system function may disappear while controls remain.</span></div>
+          <div class="idea-card"><span class="main-idea">Pressure is rationed by importance</span><span class="real-world"><span class="arrow">→</span>This is hydraulic load shedding, airplane style.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌀</div><h2>RAT Emergency Backup</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">RAT powers HYD 3 in emergency</span><span class="real-world"><span class="arrow">→</span>It gives essential hydraulic power when normal electrical power is lost.</span></div>
+          <div class="idea-card"><span class="main-idea">Deploys with major electrical failure logic</span><span class="real-world"><span class="arrow">→</span>Loss of both AC buses can trigger RAT deployment in flight.</span></div>
+          <div class="idea-card"><span class="main-idea">Electrical failure can create hydraulic backup action</span><span class="real-world"><span class="arrow">→</span>This is why ATA 24 and ATA 29 are tightly connected.</span><span class="tag">cross ATA</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔥</div><h2>Shutdown & Overheat Protection</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">FWSOV isolates engine hydraulic supply</span><span class="real-world"><span class="arrow">→</span>The firewall shutoff valve cuts fluid flow to the EDP when required.</span></div>
+          <div class="idea-card"><span class="main-idea">Fire and overheat can close valves</span><span class="real-world"><span class="arrow">→</span>Protection may look like a hydraulic system fault if you miss the trigger logic.</span></div>
+          <div class="idea-card"><span class="main-idea">Temperature protection comes first</span><span class="real-world"><span class="arrow">→</span>Sensors, switches, and thermal devices protect the system before damage spreads.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">❄️</div><h2>Cooling & Filters</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">HYD 1 and 2 use fuel cooling</span><span class="real-world"><span class="arrow">→</span>Hydraulic temperature can tie back to fuel cooling performance.</span></div>
+          <div class="idea-card"><span class="main-idea">HYD 3 cools differently</span><span class="real-world"><span class="arrow">→</span>Air convection and radiation handle its thermal control.</span></div>
+          <div class="idea-card"><span class="main-idea">Filters are high-value maintenance items</span><span class="real-world"><span class="arrow">→</span>Pressure, return, and case drain filters can create real write-ups.</span><span class="tag">common check</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚡</div><h2>ACMP & Electrical Interaction</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ACMPs respond to logic</span><span class="real-world"><span class="arrow">→</span>Takeoff, approach, engine failure, and high demand can command pump operation.</span></div>
+          <div class="idea-card"><span class="main-idea">ACMPs can be load shed</span><span class="real-world"><span class="arrow">→</span>If electrical power is limited, hydraulic assist may be affected.</span></div>
+          <div class="idea-card"><span class="main-idea">Hydraulic symptoms can start in ATA 24</span><span class="real-world"><span class="arrow">→</span>Always consider electrical availability when electric pumps behave strangely.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📺</div><h2>Indications & Synoptic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">HYD synoptic is your primary tool</span><span class="real-world"><span class="arrow">→</span>Check pressure, quantity, temperature, pump state, and valve positions.</span></div>
+          <div class="idea-card"><span class="main-idea">CAS tells you where to start</span><span class="real-world"><span class="arrow">→</span>Use messages to guide the path, not to blindly swap parts.</span></div>
+          <div class="idea-card"><span class="main-idea">Compare displayed state to expected logic</span><span class="real-world"><span class="arrow">→</span>Is the pump supposed to be on? Is the valve supposed to be closed?</span><span class="tag">line MX</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance Reality</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Most faults are not total system failures</span><span class="real-world"><span class="arrow">→</span>Sensors, pressure/temperature/quantity inputs, pump logic, and valves are common.</span></div>
+          <div class="idea-card"><span class="main-idea">Pumps are not always the villain</span><span class="real-world"><span class="arrow">→</span>Pressure loss can be caused by logic, fluid quantity, valve state, or power.</span></div>
+          <div class="idea-card"><span class="main-idea">Follow pressure and logic together</span><span class="real-world"><span class="arrow">→</span>Hydraulics are physical pressure controlled by smart system decisions.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section wide">
+        <div class="section-head"><div class="section-icon">🧭</div><h2>Troubleshooting Flow</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Step 1: Check HYD synoptic</span><span class="real-world"><span class="arrow">→</span>Start with pressure, quantity, temperature, pump status, and valve position.</span></div>
+          <div class="idea-card"><span class="main-idea">Step 2: Check pump source</span><span class="real-world"><span class="arrow">→</span>Separate EDP, ACMP, PTU, and RAT logic before calling a component bad.</span></div>
+          <div class="idea-card"><span class="main-idea">Step 3: Check protection logic</span><span class="real-world"><span class="arrow">→</span>Priority valves, FWSOVs, thermal protection, and load shedding explain many symptoms.</span></div>
+          <div class="idea-card"><span class="main-idea">Step 4: Go component-level last</span><span class="real-world"><span class="arrow">→</span>After logic makes sense, check pump, valve, sensor, filter, or fluid issue.</span><span class="tag">pressure → flow → logic → component</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember ATA 29</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Generate Pressure</div><ul><li>EDP</li><li>ACMP</li><li>RAT</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Store Pressure</div><ul><li>Reservoir</li><li>Accumulators</li><li>Bootstrap feed</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Distribute Pressure</div><ul><li>Valves</li><li>PTU</li><li>Priority logic</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Protect System</div><ul><li>Filters</li><li>FWSOV</li><li>Thermal protection</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">PTU logic<br><small>can look “weird” but normal</small></div>
+        <div class="fail-chip">ACMP operation<br><small>depends on demand + power</small></div>
+        <div class="fail-chip">Priority valves<br><small>explain lost non-essential users</small></div>
+        <div class="fail-chip">Most write-ups<br><small>sensors, logic, valves</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    A220 ATA 29 quick-study page • Hydraulic pressure management, redundancy, PTU/RAT logic, protection, and line-maintenance troubleshooting.
+  </footer>
+</body>
+</html>

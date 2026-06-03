@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 34 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,159,28,0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(98,216,255,0.13), transparent 26%),
+        radial-gradient(circle at 52% 100%, rgba(140,255,177,0.07), transparent 26%),
+        linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 18px 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 0 22px var(--soft);
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      color: var(--orange);
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16);
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .hero-strip {
+      max-width: 1180px;
+      margin: 24px auto 8px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 0 34px rgba(255,159,28,.24);
+      border-color: var(--orange);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      border: 1px solid rgba(255,159,28,.28);
+      border-radius: 50%;
+    }
+
+    .hero-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .hero-title { color: var(--amber); font-size: 1.25rem; font-weight: 900; }
+    .hero-text { color: var(--muted); margin-top: 8px; line-height: 1.42; }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px 48px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .system-section {
+      border: 1px solid var(--line);
+      background: rgba(9,9,9,.88);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .system-section::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: .75;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75));
+      font-size: 1.65rem;
+      box-shadow: inset 0 0 18px rgba(255,159,28,.12);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--orange);
+      font-size: 1.2rem;
+      letter-spacing: .01em;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .idea-card {
+      border: 1px solid rgba(255,159,28,.28);
+      background: linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding: 13px 14px;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card:hover {
+      transform: translateX(8px) scale(1.025);
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06));
+      box-shadow: 0 0 26px rgba(255,159,28,.21);
+    }
+
+    .idea-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
+
+    .idea-card:hover::after { transform: translateX(120%); }
+
+    .main-idea {
+      display: block;
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .arrow {
+      color: var(--orange);
+      font-weight: 900;
+      margin-right: 4px;
+    }
+
+    .real-world {
+      display: block;
+      color: #ead9b8;
+      line-height: 1.42;
+      font-size: .96rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .memory-map {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memory-map h2 { font-size: 1.45rem; margin-bottom: 14px; }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .map-card {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-7px) rotate(-.5deg);
+      box-shadow: 0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12);
+    }
+
+    .map-number {
+      color: var(--blue);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .map-title {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin: 4px 0 8px;
+    }
+
+    .map-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #ead9b8;
+      line-height: 1.65;
+    }
+
+    .fail-list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fail-chip {
+      border: 1px solid rgba(255,95,86,.55);
+      background: rgba(255,95,86,.08);
+      color: #ffd6d3;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .fail-chip:hover {
+      transform: scale(1.06);
+      background: rgba(255,95,86,.18);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 26px 18px 38px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-strip, .map-grid { grid-template-columns: 1fr; }
+      .section-grid { grid-template-columns: 1fr; }
+      .fail-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      main { padding: 18px 10px 34px; }
+      header { padding-top: 24px; }
+      .system-section, .memory-map { border-radius: 18px; padding: 14px; }
+      .fail-list { grid-template-columns: 1fr; }
+      .idea-card:hover { transform: scale(1.015); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 34 • Navigation</div>
+    <h1>Navigation Data Fusion Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for IRS, GNSS, air data, radio navigation, DME, radio altimeter, FMS blending, display flags, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">🧭</div><div class="hero-title">Data Fusion</div><div class="hero-text">IRS, GNSS, air data, and radio nav are blended into one position solution.</div></div>
+    <div class="hero-card"><div class="hero-icon">🛰️</div><div class="hero-title">FMS Brain</div><div class="hero-text">The FMS decides the best navigation answer and sends guidance to displays/AP.</div></div>
+    <div class="hero-card"><div class="hero-icon">🔎</div><div class="hero-title">Trace the Source</div><div class="hero-text">Don’t chase the display first — find the bad data feeding it.</div></div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 34 = data fusion system for position, motion, and environment</span><span class="real-world"><span class="arrow">→</span>ATA 34 = data fusion system for position, motion, and environment</span><span class="tag">key idea</span></div>
+          <div class="idea-card"><span class="main-idea">It blends IRS, GNSS, air data, and radio navigation into one usable navigation solution.</span><span class="real-world"><span class="arrow">→</span>It blends IRS, GNSS, air data, and radio navigation into one usable navigation solution.</span></div>
+          <div class="idea-card"><span class="main-idea">Navigation is not one box</span><span class="real-world"><span class="arrow">→</span>Navigation is not one box — it is multiple sensors blended together.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧩</div><h2>System Architecture</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Sensors feed DMC, FMS, displays, and autopilot guidance.</span><span class="real-world"><span class="arrow">→</span>Sensors feed DMC, FMS, displays, and autopilot guidance.</span></div>
+          <div class="idea-card"><span class="main-idea">IRS, GNSS, ADS, VHF NAV, and DME all contribute data.</span><span class="real-world"><span class="arrow">→</span>IRS, GNSS, ADS, VHF NAV, and DME all contribute data.</span></div>
+          <div class="idea-card"><span class="main-idea">FMS is the navigation decision-maker that creates position, flight path, and guidance.</span><span class="real-world"><span class="arrow">→</span>FMS is the navigation decision-maker that creates position, flight path, and guidance.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📡</div><h2>Navigation Data Types</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Independent sources include IRS and GNSS.</span><span class="real-world"><span class="arrow">→</span>Independent sources include IRS and GNSS.</span></div>
+          <div class="idea-card"><span class="main-idea">Dependent sources include VOR, DME, and radio navigation aids.</span><span class="real-world"><span class="arrow">→</span>Dependent sources include VOR, DME, and radio navigation aids.</span></div>
+          <div class="idea-card"><span class="main-idea">Air data provides the flight environment: speed, altitude, Mach, and temperature.</span><span class="real-world"><span class="arrow">→</span>Air data provides the flight environment: speed, altitude, Mach, and temperature.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>FMS — Navigation Brain</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">FMS blends all navigation sources into one solution.</span><span class="real-world"><span class="arrow">→</span>FMS blends all navigation sources into one solution.</span><span class="tag">key idea</span></div>
+          <div class="idea-card"><span class="main-idea">Provides lateral navigation, vertical navigation, flight planning, and map display.</span><span class="real-world"><span class="arrow">→</span>Provides lateral navigation, vertical navigation, flight planning, and map display.</span></div>
+          <div class="idea-card"><span class="main-idea">Outputs guidance to autopilot and position data to displays.</span><span class="real-world"><span class="arrow">→</span>Outputs guidance to autopilot and position data to displays.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚠️</div><h2>FMS Modes</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Synchronized mode = normal agreement between FMS sides.</span><span class="real-world"><span class="arrow">→</span>Synchronized mode = normal agreement between FMS sides.</span><span class="tag">key idea</span></div>
+          <div class="idea-card"><span class="main-idea">Single mode = one FMS failed or unavailable.</span><span class="real-world"><span class="arrow">→</span>Single mode = one FMS failed or unavailable.</span></div>
+          <div class="idea-card"><span class="main-idea">Split mode = both working but not synchronized</span><span class="real-world"><span class="arrow">→</span>Split mode = both working but not synchronized — usually data disagreement, not total failure.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧭</div><h2>IRS — Inertial Reference</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Provides position, attitude, heading, and velocity.</span><span class="real-world"><span class="arrow">→</span>Provides position, attitude, heading, and velocity.</span><span class="tag">key idea</span></div>
+          <div class="idea-card"><span class="main-idea">Uses accelerometers and gyros, so it does not need external signals.</span><span class="real-world"><span class="arrow">→</span>Uses accelerometers and gyros, so it does not need external signals.</span></div>
+          <div class="idea-card"><span class="main-idea">IRS drifts over time and is corrected by GNSS or radio navigation updates.</span><span class="real-world"><span class="arrow">→</span>IRS drifts over time and is corrected by GNSS or radio navigation updates.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚙️</div><h2>IRS Alignment</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Alignment quality directly affects navigation accuracy.</span><span class="real-world"><span class="arrow">→</span>Alignment quality directly affects navigation accuracy.</span><span class="tag">key idea</span></div>
+          <div class="idea-card"><span class="main-idea">Modes include stationary alignment, align-in-motion, navigation mode, and auto realign.</span><span class="real-world"><span class="arrow">→</span>Modes include stationary alignment, align-in-motion, navigation mode, and auto realign.</span></div>
+          <div class="idea-card"><span class="main-idea">A220 align-in-motion can recover navigation while moving when GNSS is available.</span><span class="real-world"><span class="arrow">→</span>A220 align-in-motion can recover navigation while moving when GNSS is available.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🛰️</div><h2>GNSS — Satellite Position</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Uses satellite signals and normally needs at least four satellites.</span><span class="real-world"><span class="arrow">→</span>Uses satellite signals and normally needs at least four satellites.</span></div>
+          <div class="idea-card"><span class="main-idea">Provides position, velocity, and time.</span><span class="real-world"><span class="arrow">→</span>Provides position, velocity, and time.</span></div>
+          <div class="idea-card"><span class="main-idea">Feeds FMS, IRS, TAWS, TCAS, and other aircraft systems.</span><span class="real-world"><span class="arrow">→</span>Feeds FMS, IRS, TAWS, TCAS, and other aircraft systems.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌡️</div><h2>Air Data System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Provides airspeed, altitude, Mach, and temperature.</span><span class="real-world"><span class="arrow">→</span>Provides airspeed, altitude, Mach, and temperature.</span><span class="tag">key idea</span></div>
+          <div class="idea-card"><span class="main-idea">Uses Air Data Smart Probes with sensor and computer built into the probe.</span><span class="real-world"><span class="arrow">→</span>Uses Air Data Smart Probes with sensor and computer built into the probe.</span></div>
+          <div class="idea-card"><span class="main-idea">Air data affects navigation, flight control, stall logic, and displayed flight information.</span><span class="real-world"><span class="arrow">→</span>Air data affects navigation, flight control, stall logic, and displayed flight information.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚠️</div><h2>ADS Failure Concepts</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Common issues include AOA mismatch, heater faults, and pressure faults.</span><span class="real-world"><span class="arrow">→</span>Common issues include AOA mismatch, heater faults, and pressure faults.</span></div>
+          <div class="idea-card"><span class="main-idea">Faults can generate ADS FAULT or PROBE HEAT FAIL messages.</span><span class="real-world"><span class="arrow">→</span>Faults can generate ADS FAULT or PROBE HEAT FAIL messages.</span></div>
+          <div class="idea-card"><span class="main-idea">Most problems are sensor disagreement or bad data, not a display failure.</span><span class="real-world"><span class="arrow">→</span>Most problems are sensor disagreement or bad data, not a display failure.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📻</div><h2>VHF NAV</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Provides VOR bearing and ILS localizer/glide slope.</span><span class="real-world"><span class="arrow">→</span>Provides VOR bearing and ILS localizer/glide slope.</span></div>
+          <div class="idea-card"><span class="main-idea">Controlled through RIU, CTP, or RTSA paths.</span><span class="real-world"><span class="arrow">→</span>Controlled through RIU, CTP, or RTSA paths.</span></div>
+          <div class="idea-card"><span class="main-idea">Good backup and correction source when satellite or inertial data needs comparison.</span><span class="real-world"><span class="arrow">→</span>Good backup and correction source when satellite or inertial data needs comparison.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📏</div><h2>DME</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Measures distance using signal time delay.</span><span class="real-world"><span class="arrow">→</span>Measures distance using signal time delay.</span></div>
+          <div class="idea-card"><span class="main-idea">One channel can tie to VOR while other channels support FMS updates.</span><span class="real-world"><span class="arrow">→</span>One channel can tie to VOR while other channels support FMS updates.</span></div>
+          <div class="idea-card"><span class="main-idea">Suppression pulses prevent interference with TCAS and ATC transmissions.</span><span class="real-world"><span class="arrow">→</span>Suppression pulses prevent interference with TCAS and ATC transmissions.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📐</div><h2>Radio Altimeter</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Measures height above ground, not barometric altitude.</span><span class="real-world"><span class="arrow">→</span>Measures height above ground, not barometric altitude.</span></div>
+          <div class="idea-card"><span class="main-idea">Used by autopilot, TAWS, displays, and low-altitude logic.</span><span class="real-world"><span class="arrow">→</span>Used by autopilot, TAWS, displays, and low-altitude logic.</span></div>
+          <div class="idea-card"><span class="main-idea">Failures often point to antenna, wiring, or receiver path issues.</span><span class="real-world"><span class="arrow">→</span>Failures often point to antenna, wiring, or receiver path issues.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚩</div><h2>Display &amp; Redundancy Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Systems cross-check IRS vs GNSS, ADS vs ADS, and NAV vs NAV.</span><span class="real-world"><span class="arrow">→</span>Systems cross-check IRS vs GNSS, ADS vs ADS, and NAV vs NAV.</span></div>
+          <div class="idea-card"><span class="main-idea">Mismatch creates flags and messages, not always immediate failure.</span><span class="real-world"><span class="arrow">→</span>Mismatch creates flags and messages, not always immediate failure.</span></div>
+          <div class="idea-card"><span class="main-idea">The system warns when data disagrees so you can trace the bad source.</span><span class="real-world"><span class="arrow">→</span>The system warns when data disagrees so you can trace the bad source.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⛰️</div><h2>TAWS / Terrain Awareness</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Uses FMS, GNSS, IRS, air data, and radio altitude.</span><span class="real-world"><span class="arrow">→</span>Uses FMS, GNSS, IRS, air data, and radio altitude.</span></div>
+          <div class="idea-card"><span class="main-idea">Provides terrain warnings and GPWS functions.</span><span class="real-world"><span class="arrow">→</span>Provides terrain warnings and GPWS functions.</span></div>
+          <div class="idea-card"><span class="main-idea">Bad navigation data can create safety-system symptoms.</span><span class="real-world"><span class="arrow">→</span>Bad navigation data can create safety-system symptoms.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">✈️</div><h2>TCAS / Traffic System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Uses position, altitude, and heading to build traffic awareness.</span><span class="real-world"><span class="arrow">→</span>Uses position, altitude, and heading to build traffic awareness.</span></div>
+          <div class="idea-card"><span class="main-idea">Provides traffic alerts and resolution advisories.</span><span class="real-world"><span class="arrow">→</span>Provides traffic alerts and resolution advisories.</span></div>
+          <div class="idea-card"><span class="main-idea">Navigation data supports collision avoidance logic.</span><span class="real-world"><span class="arrow">→</span>Navigation data supports collision avoidance logic.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌧️</div><h2>Weather Radar</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Uses IRS attitude, GNSS position, and air data to stabilize radar display.</span><span class="real-world"><span class="arrow">→</span>Uses IRS attitude, GNSS position, and air data to stabilize radar display.</span></div>
+          <div class="idea-card"><span class="main-idea">Provides weather detection and windshear alerts.</span><span class="real-world"><span class="arrow">→</span>Provides weather detection and windshear alerts.</span></div>
+          <div class="idea-card"><span class="main-idea">Bad nav or attitude data can make radar presentation look wrong.</span><span class="real-world"><span class="arrow">→</span>Bad nav or attitude data can make radar presentation look wrong.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔗</div><h2>System Integration</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 34 interacts with ATA 22 autopilot, ATA 31 displays, ATA 27 flight controls, ATA 23 radios, and safety systems.</span><span class="real-world"><span class="arrow">→</span>ATA 34 interacts with ATA 22 autopilot, ATA 31 displays, ATA 27 flight controls, ATA 23 radios, and safety systems.</span></div>
+          <div class="idea-card"><span class="main-idea">Navigation sits at the center of aircraft data flow.</span><span class="real-world"><span class="arrow">→</span>Navigation sits at the center of aircraft data flow.</span></div>
+          <div class="idea-card"><span class="main-idea">A navigation write-up may actually originate in another ATA system.</span><span class="real-world"><span class="arrow">→</span>A navigation write-up may actually originate in another ATA system.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance Reality</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Most faults are sensors, data mismatch, antennas, or data path issues.</span><span class="real-world"><span class="arrow">→</span>Most faults are sensors, data mismatch, antennas, or data path issues.</span></div>
+          <div class="idea-card"><span class="main-idea">Full system failures are rare.</span><span class="real-world"><span class="arrow">→</span>Full system failures are rare.</span></div>
+          <div class="idea-card"><span class="main-idea">Always compare sources before replacing hardware.</span><span class="real-world"><span class="arrow">→</span>Always compare sources before replacing hardware.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧪</div><h2>Troubleshooting Flow</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Start with PFD flags and CAS messages.</span><span class="real-world"><span class="arrow">→</span>Start with PFD flags and CAS messages.</span><span class="tag">key idea</span></div>
+          <div class="idea-card"><span class="main-idea">Identify which data is bad: position, airspeed, altitude, radio nav, or RA.</span><span class="real-world"><span class="arrow">→</span>Identify which data is bad: position, airspeed, altitude, radio nav, or RA.</span></div>
+          <div class="idea-card"><span class="main-idea">Compare IRS vs GNSS and ADS vs ADS, then trace sensor → DMC → FMS → display.</span><span class="real-world"><span class="arrow">→</span>Compare IRS vs GNSS and ADS vs ADS, then trace sensor → DMC → FMS → display.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember A220 ATA 34</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Sense</div><ul><li>IRS</li><li>GNSS</li><li>ADS</li><li>VHF NAV</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Blend</div><ul><li>FMS combines sources</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Verify</div><ul><li>Cross-checks and flags mismatches</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Display</div><ul><li>PFD/ND show the result</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">FMS is the central navigation brain</div>
+        <div class="fail-chip">IRS + GNSS blending is the core concept</div>
+        <div class="fail-chip">Most issues<br><small>= data mismatch, not total failure</small></div>
+        <div class="fail-chip">ADS faults affect navigation and flight controls</div>
+        <div class="fail-chip">Radio nav is backup and correction source</div>
+        <div class="fail-chip">TAWS and TCAS depend on good nav data</div>
+        <div class="fail-chip">Always trace nav issues back to sensors</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    A220 ATA 34 quick-study page • Navigation, data fusion, sensors, FMS logic, and source-based troubleshooting.
+  </footer>
+</body>
+</html>

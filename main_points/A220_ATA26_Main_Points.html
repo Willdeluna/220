@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 26 Main Points</title>
+  <style>
+    :root{--bg:#050505;--panel:#101010;--orange:#ff9f1c;--amber:#ffd27f;--soft:rgba(255,159,28,.18);--line:rgba(255,159,28,.55);--white:#f7efe4;--muted:#bda777;--red:#ff5f56;--blue:#62d8ff;--green:#8cffb1}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--white);background:radial-gradient(circle at 20% 0%,rgba(255,159,28,.22),transparent 28%),radial-gradient(circle at 85% 20%,rgba(255,95,86,.18),transparent 26%),radial-gradient(circle at 52% 100%,rgba(140,255,177,.07),transparent 26%),linear-gradient(135deg,#000,#080808 45%,#130b02);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at center,black,transparent 82%)}header{max-width:1180px;margin:0 auto;padding:36px 18px 18px;text-align:center;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid var(--line);background:rgba(0,0,0,.55);border-radius:999px;padding:8px 14px;box-shadow:0 0 22px var(--soft);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2rem,6vw,4.8rem);line-height:.96;text-shadow:0 0 18px rgba(255,159,28,.38),0 0 42px rgba(255,159,28,.16)}.subtitle{max-width:850px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.55}.hero-strip{max-width:1180px;margin:24px auto 8px;padding:0 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.hero-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,159,28,.1),rgba(0,0,0,.72));border-radius:22px;padding:20px;min-height:140px;position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.hero-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 34px rgba(255,159,28,.24);border-color:var(--orange)}.hero-card:after{content:"";position:absolute;width:150px;height:150px;right:-58px;bottom:-58px;border:1px solid rgba(255,159,28,.28);border-radius:50%}.hero-icon{font-size:2.2rem;margin-bottom:8px}.hero-title{color:var(--amber);font-size:1.25rem;font-weight:900}.hero-text{color:var(--muted);margin-top:8px;line-height:1.42}main{max-width:1240px;margin:0 auto;padding:22px 18px 48px}.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.system-section{border:1px solid var(--line);background:rgba(9,9,9,.88);border-radius:24px;padding:18px;box-shadow:0 0 30px rgba(0,0,0,.35);position:relative;overflow:hidden}.system-section:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--red),transparent);opacity:.75}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1}.section-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);background:radial-gradient(circle at top,rgba(255,159,28,.28),rgba(0,0,0,.75));font-size:1.65rem;box-shadow:inset 0 0 18px rgba(255,159,28,.12)}h2{margin:0;color:var(--orange);font-size:1.2rem;letter-spacing:.01em}.cards{display:grid;gap:10px;position:relative;z-index:1}.idea-card{border:1px solid rgba(255,159,28,.28);background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.02));border-radius:16px;padding:13px 14px;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;cursor:default;position:relative;overflow:hidden}.idea-card:hover{transform:translateX(8px) scale(1.025);border-color:var(--orange);background:linear-gradient(135deg,rgba(255,159,28,.18),rgba(255,95,86,.08));box-shadow:0 0 26px rgba(255,159,28,.21)}.idea-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s ease}.idea-card:hover:after{transform:translateX(120%)}.main-idea{display:block;color:var(--amber);font-weight:900;font-size:1rem;margin-bottom:5px}.arrow{color:var(--orange);font-weight:900;margin-right:4px}.real-world{display:block;color:#ead9b8;line-height:1.42;font-size:.96rem}.tag{display:inline-block;margin-top:8px;color:#111;background:var(--orange);border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.memory-map{margin-top:20px;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));position:relative;overflow:hidden}.memory-map h2{font-size:1.45rem;margin-bottom:14px}.map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.map-card{border:1px solid rgba(255,159,28,.38);border-radius:20px;padding:18px;background:rgba(0,0,0,.55);transition:transform .25s ease,box-shadow .25s ease}.map-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 0 28px rgba(255,95,86,.16),0 0 34px rgba(255,159,28,.12)}.map-number{color:var(--blue);font-size:2rem;font-weight:900}.map-title{color:var(--amber);font-weight:900;font-size:1.2rem;margin:4px 0 8px}.map-card ul{margin:0;padding-left:18px;color:#ead9b8;line-height:1.65}.fail-list{margin-top:20px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fail-chip{border:1px solid rgba(255,95,86,.55);background:rgba(255,95,86,.08);color:#ffd6d3;padding:14px;border-radius:16px;font-weight:800;text-align:center;transition:transform .2s ease,background .2s ease}.fail-chip:hover{transform:scale(1.06);background:rgba(255,95,86,.18)}footer{text-align:center;color:var(--muted);padding:26px 18px 38px}@media(max-width:900px){.hero-strip,.map-grid{grid-template-columns:1fr}.section-grid{grid-template-columns:1fr}.fail-list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main{padding:18px 10px 34px}header{padding-top:24px}.system-section,.memory-map{border-radius:18px;padding:14px}.fail-list{grid-template-columns:1fr}.idea-card:hover{transform:scale(1.015)}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 26 • Fire Protection</div>
+    <h1>Detection, Logic & Extinguishing Made Simple</h1>
+    <p class="subtitle">A line-maintenance study page for FIDEX, dual-loop logic, fire and smoke detection, bottle discharge, cargo suppression, lav protection, and smart troubleshooting flow.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">🔥</div><div class="hero-title">Detect First</div><div class="hero-text">Fire, smoke, and overheat sensors feed the system before any crew action happens.</div></div>
+    <div class="hero-card"><div class="hero-icon">🧠</div><div class="hero-title">FIDEX Logic</div><div class="hero-text">The fire protection brain decides using AND/OR logic, loop health, and system status.</div></div>
+    <div class="hero-card"><div class="hero-icon">🧯</div><div class="hero-title">Protect & Extinguish</div><div class="hero-text">The system can isolate engines, shut ventilation, and discharge bottles when commanded or automatic.</div></div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept — What ATA 26 Really Is</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Centralized detection + protection system</span><span class="real-world"><span class="arrow">→</span>ATA 26 detects fire, smoke, and overheat, then alerts and protects the airplane.</span></div>
+        <div class="idea-card"><span class="main-idea">Protect first, alert second</span><span class="real-world"><span class="arrow">→</span>The system is designed to prevent damage and isolate hazards, not just light up messages.</span><span class="tag">big idea</span></div>
+        <div class="idea-card"><span class="main-idea">Sensors → FIDEX → logic → action</span><span class="real-world"><span class="arrow">→</span>Follow the logic path before blaming hardware.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧩</div><h2>FIDEX — System Brain</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">FIDEX controls ATA 26</span><span class="real-world"><span class="arrow">→</span>It monitors loops, smoke detectors, bottles, pressure, panels, and system outputs.</span></div>
+        <div class="idea-card"><span class="main-idea">Dual-channel and self-monitoring</span><span class="real-world"><span class="arrow">→</span>Separate channels and power sources keep protection available after many failures.</span><span class="tag">redundancy</span></div>
+        <div class="idea-card"><span class="main-idea">Sends data to EICAS and OMS</span><span class="real-world"><span class="arrow">→</span>CAS messages are clues to where the logic found the issue.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔁</div><h2>Dual-Loop Logic — The Key</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Normal mode uses AND logic</span><span class="real-world"><span class="arrow">→</span>Both loops usually need to agree before a fire warning is triggered.</span></div>
+        <div class="idea-card"><span class="main-idea">Single loop failure can switch to OR logic</span><span class="real-world"><span class="arrow">→</span>Protection remains, but the decision logic changes.</span><span class="tag">testable</span></div>
+        <div class="idea-card"><span class="main-idea">Both loops failed = detection lost</span><span class="real-world"><span class="arrow">→</span>That becomes a caution and changes what protection is available.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📍</div><h2>Detection Areas</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Fire / overheat zones</span><span class="real-world"><span class="arrow">→</span>Engines, APU, and main wheel well are monitored for heat conditions.</span></div>
+        <div class="idea-card"><span class="main-idea">Smoke detection zones</span><span class="real-world"><span class="arrow">→</span>Cargo compartments, equipment bays, avionics areas, and lavatories use smoke detection.</span></div>
+        <div class="idea-card"><span class="main-idea">Different zone = different sensor type</span><span class="real-world"><span class="arrow">→</span>Don’t troubleshoot a smoke detector like a fire loop.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🌡️</div><h2>Detection Physics</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Fire loops sense temperature change</span><span class="real-world"><span class="arrow">→</span>Heat changes loop resistance and the system interprets the condition.</span></div>
+        <div class="idea-card"><span class="main-idea">System separates fire from electrical shorts</span><span class="real-world"><span class="arrow">→</span>Rate-of-change logic helps prevent false warnings.</span></div>
+        <div class="idea-card"><span class="main-idea">Loops detect overheat, open, and short</span><span class="real-world"><span class="arrow">→</span>Loop faults are common write-ups, not automatic fire events.</span><span class="tag">MX clue</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">✈️</div><h2>Engine Fire Protection</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Dual loops monitor each engine</span><span class="real-world"><span class="arrow">→</span>Normal logic prevents false warnings by requiring confirmation.</span></div>
+        <div class="idea-card"><span class="main-idea">FIRE PBA isolates the engine</span><span class="real-world"><span class="arrow">→</span>Fuel, bleed, hydraulics, generator, and FADEC shutdown actions are commanded.</span><span class="tag">isolation</span></div>
+        <div class="idea-card"><span class="main-idea">BTL PBA discharges the bottle</span><span class="real-world"><span class="arrow">→</span>Fire button isolates; bottle button releases extinguishing agent.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧯</div><h2>Bottle System</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Engine/APU bottles use Halon 1301</span><span class="real-world"><span class="arrow">→</span>Nitrogen pressure drives agent discharge.</span></div>
+        <div class="idea-card"><span class="main-idea">Pressure switches are continuously monitored</span><span class="real-world"><span class="arrow">→</span>Low pressure can create bottle fault indications.</span></div>
+        <div class="idea-card"><span class="main-idea">Green available = ready</span><span class="real-world"><span class="arrow">→</span>Amber or low indications point toward pressure or bottle faults.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">⚙️</div><h2>APU Fire Logic</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">APU uses dual-loop detection</span><span class="real-world"><span class="arrow">→</span>Like engine detection, but with its own extinguishing bottle.</span></div>
+        <div class="idea-card"><span class="main-idea">Ground fire can auto-shutdown</span><span class="real-world"><span class="arrow">→</span>On the ground, the system can shut down the APU automatically.</span></div>
+        <div class="idea-card"><span class="main-idea">Auto-discharge after timer</span><span class="real-world"><span class="arrow">→</span>If no crew action occurs, a ground APU fire may command automatic discharge.</span><span class="tag">unique feature</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📦</div><h2>Cargo Fire System</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Cargo uses smoke detection</span><span class="real-world"><span class="arrow">→</span>This is not a heat loop system.</span></div>
+        <div class="idea-card"><span class="main-idea">Timer confirmation logic matters</span><span class="real-world"><span class="arrow">→</span>One detector can start a timer; confirmation may require another detector.</span><span class="tag">logic-based</span></div>
+        <div class="idea-card"><span class="main-idea">Ventilation shuts off during cargo fire</span><span class="real-world"><span class="arrow">→</span>ATA 21 interaction helps contain smoke and agent concentration.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">⏱️</div><h2>Cargo Extinguishing</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">HRD bottle knocks the fire down fast</span><span class="real-world"><span class="arrow">→</span>High-rate discharge gives quick initial suppression.</span></div>
+        <div class="idea-card"><span class="main-idea">LRD bottle prevents re-ignition</span><span class="real-world"><span class="arrow">→</span>Low-rate discharge maintains agent concentration over time.</span></div>
+        <div class="idea-card"><span class="main-idea">Suppression is time-based</span><span class="real-world"><span class="arrow">→</span>The goal is sustained concentration, not just a quick blast.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🚻</div><h2>Lavatory & Smoke Detection</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Lav has detector plus automatic extinguisher</span><span class="real-world"><span class="arrow">→</span>The extinguisher releases automatically when heat melts the plug.</span></div>
+        <div class="idea-card"><span class="main-idea">Dual-wavelength optical detection</span><span class="real-world"><span class="arrow">→</span>Smoke and dust are separated better to reduce false alarms.</span><span class="tag">smart detector</span></div>
+        <div class="idea-card"><span class="main-idea">Detectors self-monitor and degrade</span><span class="real-world"><span class="arrow">→</span>Contamination or calibration drift may show up before total failure.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔧</div><h2>BITE, CAS & Troubleshooting</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Run FIDEX test early</span><span class="real-world"><span class="arrow">→</span>Tests check loops, detectors, FIDEX, bottles, and panels.</span></div>
+        <div class="idea-card"><span class="main-idea">CAS tells you where to start</span><span class="real-world"><span class="arrow">→</span>FIRE, DET FAIL, BTL LOW, and SYSTEM FAULT point to the affected area.</span></div>
+        <div class="idea-card"><span class="main-idea">Most faults are sensors, not fires</span><span class="real-world"><span class="arrow">→</span>Loop faults, detector contamination, pressure switches, and cartridges are common.</span><span class="tag">line MX</span></div>
+      </div></div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember ATA 26</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Detect</div><ul><li>Fire loops</li><li>Smoke sensors</li><li>Overheat detection</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Decide</div><ul><li>FIDEX</li><li>AND logic</li><li>OR degraded logic</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Protect</div><ul><li>Shutdown</li><li>Isolation</li><li>Ventilation changes</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Extinguish</div><ul><li>Engine/APU bottles</li><li>Cargo HRD/LRD</li><li>Lav auto bottle</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">FIDEX first<br><small>brain of ATA 26</small></div>
+        <div class="fail-chip">Loop logic<br><small>AND vs OR matters</small></div>
+        <div class="fail-chip">Most faults<br><small>sensors, not fires</small></div>
+        <div class="fail-chip">Cargo fire<br><small>time-based suppression</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>A220 ATA 26 quick-study page • Fire detection, smoke detection, FIDEX logic, extinguishing, and troubleshooting flow.</footer>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 31 Main Points</title>
+  <style>
+    :root {
+      --bg:#050505; --panel:#101010; --orange:#ff9f1c; --amber:#ffd27f;
+      --soft:rgba(255,159,28,.18); --line:rgba(255,159,28,.55);
+      --white:#f7efe4; --muted:#bda777; --red:#ff5f56; --blue:#62d8ff; --green:#8cffb1;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--white);background:radial-gradient(circle at 20% 0%,rgba(255,159,28,.22),transparent 28%),radial-gradient(circle at 85% 20%,rgba(98,216,255,.13),transparent 26%),radial-gradient(circle at 52% 100%,rgba(140,255,177,.07),transparent 26%),linear-gradient(135deg,#000,#080808 45%,#130b02);overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at center,black,transparent 82%)}
+    header{max-width:1180px;margin:0 auto;padding:36px 18px 18px;text-align:center;position:relative}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid var(--line);background:rgba(0,0,0,.55);border-radius:999px;padding:8px 14px;box-shadow:0 0 22px var(--soft);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}
+    h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2rem,6vw,4.8rem);line-height:.96;text-shadow:0 0 18px rgba(255,159,28,.38),0 0 42px rgba(255,159,28,.16)}
+    .subtitle{max-width:880px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.55}
+    .hero-strip{max-width:1180px;margin:24px auto 8px;padding:0 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .hero-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,159,28,.1),rgba(0,0,0,.72));border-radius:22px;padding:20px;min-height:140px;position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+    .hero-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 34px rgba(255,159,28,.24);border-color:var(--orange)}
+    .hero-card:after{content:"";position:absolute;width:150px;height:150px;right:-58px;bottom:-58px;border:1px solid rgba(255,159,28,.28);border-radius:50%}
+    .hero-icon{font-size:2.2rem;margin-bottom:8px}.hero-title{color:var(--amber);font-size:1.25rem;font-weight:900}.hero-text{color:var(--muted);margin-top:8px;line-height:1.42}
+    main{max-width:1240px;margin:0 auto;padding:22px 18px 48px}.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .system-section{border:1px solid var(--line);background:rgba(9,9,9,.88);border-radius:24px;padding:18px;box-shadow:0 0 30px rgba(0,0,0,.35);position:relative;overflow:hidden}
+    .system-section:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),transparent);opacity:.75}
+    .section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1}.section-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);background:radial-gradient(circle at top,rgba(255,159,28,.28),rgba(0,0,0,.75));font-size:1.65rem;box-shadow:inset 0 0 18px rgba(255,159,28,.12)}
+    h2{margin:0;color:var(--orange);font-size:1.2rem;letter-spacing:.01em}.cards{display:grid;gap:10px;position:relative;z-index:1}
+    .idea-card{border:1px solid rgba(255,159,28,.28);background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.02));border-radius:16px;padding:13px 14px;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;cursor:default;position:relative;overflow:hidden}
+    .idea-card:hover{transform:translateX(8px) scale(1.025);border-color:var(--orange);background:linear-gradient(135deg,rgba(255,159,28,.18),rgba(98,216,255,.06));box-shadow:0 0 26px rgba(255,159,28,.21)}
+    .idea-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s ease}.idea-card:hover:after{transform:translateX(120%)}
+    .main-idea{display:block;color:var(--amber);font-weight:900;font-size:1rem;margin-bottom:5px}.arrow{color:var(--orange);font-weight:900;margin-right:4px}.real-world{display:block;color:#ead9b8;line-height:1.42;font-size:.96rem}.tag{display:inline-block;margin-top:8px;color:#111;background:var(--orange);border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.wide{grid-column:1/-1}
+    .memory-map{margin-top:20px;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));position:relative;overflow:hidden}.memory-map h2{font-size:1.45rem;margin-bottom:14px}.map-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}.map-card{border:1px solid rgba(255,159,28,.38);border-radius:20px;padding:18px;background:rgba(0,0,0,.55);transition:transform .25s ease,box-shadow .25s ease}.map-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 0 28px rgba(98,216,255,.16),0 0 34px rgba(255,159,28,.12)}.map-number{color:var(--blue);font-size:2rem;font-weight:900}.map-title{color:var(--amber);font-weight:900;font-size:1.08rem;margin:4px 0 8px}.map-card ul{margin:0;padding-left:18px;color:#ead9b8;line-height:1.65}
+    .fail-list{margin-top:20px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fail-chip{border:1px solid rgba(255,95,86,.55);background:rgba(255,95,86,.08);color:#ffd6d3;padding:14px;border-radius:16px;font-weight:800;text-align:center;transition:transform .2s ease,background .2s ease}.fail-chip:hover{transform:scale(1.06);background:rgba(255,95,86,.18)}
+    footer{text-align:center;color:var(--muted);padding:26px 18px 38px}@media(max-width:1000px){.map-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:900px){.hero-strip{grid-template-columns:1fr}.section-grid{grid-template-columns:1fr}.fail-list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main{padding:18px 10px 34px}header{padding-top:24px}.system-section,.memory-map{border-radius:18px;padding:14px}.fail-list,.map-grid{grid-template-columns:1fr}.idea-card:hover{transform:scale(1.015)}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 31 • Indicating & Recording</div>
+    <h1>Data, Displays, Alerts & Recording Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for A220 ATA 31: DMC, IPC, IMA/AFDX, EFIS, EICAS, CAS, synoptics, ECL, ICCP, FDR, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">🧠</div><div class="hero-title">Data Translator</div><div class="hero-text">ATA 31 collects, processes, displays, alerts, and records aircraft data — it usually is not the original source.</div></div>
+    <div class="hero-card"><div class="hero-icon">🖥️</div><div class="hero-title">Crew Interface</div><div class="hero-text">EFIS, EICAS, CAS, synoptic pages, and ECL turn system data into cockpit awareness.</div></div>
+    <div class="hero-card"><div class="hero-icon">🔍</div><div class="hero-title">Trace the Data</div><div class="hero-text">Most problems are DMC, IPC, network, cooling, sensor, or source issues — not bad screens.</div></div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">ATA 31 = data processing + display + crew interface</span><span class="real-world"><span class="arrow">→</span>It takes aircraft data, processes it, displays it, alerts the crew, and records it.</span><span class="tag">big picture</span></div>
+        <div class="idea-card"><span class="main-idea">It is not usually the source of the data</span><span class="real-world"><span class="arrow">→</span>ATA 31 is the translator and presenter. Bad data can make a good display look wrong.</span></div>
+        <div class="idea-card"><span class="main-idea">Think input → process → display → alert → record</span><span class="real-world"><span class="arrow">→</span>That flow keeps troubleshooting clean.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔄</div><h2>System Architecture</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Core flow: sensors → DMC → IPC → AFDX → displays</span><span class="real-world"><span class="arrow">→</span>DMCs collect system data, IPCs process and route it, displays show it.</span></div>
+        <div class="idea-card"><span class="main-idea">DMC = data concentrator</span><span class="real-world"><span class="arrow">→</span>It gathers analog, digital, and discrete signals and converts them into usable aircraft data.</span></div>
+        <div class="idea-card"><span class="main-idea">IPC = integrated processing cabinet</span><span class="real-world"><span class="arrow">→</span>Think of it like the aircraft server rack.</span><span class="tag">server rack</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🌐</div><h2>IMA / AFDX Network</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">A220 uses Integrated Modular Avionics</span><span class="real-world"><span class="arrow">→</span>It is a networked computer architecture, not a bunch of isolated standalone boxes.</span></div>
+        <div class="idea-card"><span class="main-idea">AFDX Ethernet moves data fast</span><span class="real-world"><span class="arrow">→</span>High-speed network routing replaces the old-school mindset of only point-to-point wiring.</span></div>
+        <div class="idea-card"><span class="main-idea">Network faults can cascade</span><span class="real-world"><span class="arrow">→</span>A single processing or routing issue can appear as multiple system complaints.</span><span class="tag">MX clue</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧊</div><h2>IPC Protection</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">IPC houses computing modules and digital switches</span><span class="real-world"><span class="arrow">→</span>It supports FMS, OMS, data link, and display processing.</span></div>
+        <div class="idea-card"><span class="main-idea">Cooling matters</span><span class="real-world"><span class="arrow">→</span>If IPC temperature gets too high, it can shut off and require reset after cooling.</span></div>
+        <div class="idea-card"><span class="main-idea">Cooling faults can look like avionics failures</span><span class="real-world"><span class="arrow">→</span>Do not chase software until cooling and power are checked.</span><span class="tag">don’t skip</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📦</div><h2>DMC Details</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">DMC converts many signal types into aircraft data</span><span class="real-world"><span class="arrow">→</span>Analog, digital, and discrete signals become display/alert/recording data.</span></div>
+        <div class="idea-card"><span class="main-idea">DMC also supports EICAS, flight guidance, and autothrottle logic</span><span class="real-world"><span class="arrow">→</span>It is more than a passive data box.</span></div>
+        <div class="idea-card"><span class="main-idea">Dual channels compare data</span><span class="real-world"><span class="arrow">→</span>Channel A and B cross-talk helps prevent incorrect information from being trusted.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🖥️</div><h2>Display System / EFIS</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Five display units show flight, nav, engine, and system data</span><span class="real-world"><span class="arrow">→</span>The displays present information; they do not create the source data.</span></div>
+        <div class="idea-card"><span class="main-idea">Displays have internal cooling fans</span><span class="real-world"><span class="arrow">→</span>Display complaints can still be power or cooling related.</span></div>
+        <div class="idea-card"><span class="main-idea">Critical data can bypass the main network</span><span class="real-world"><span class="arrow">→</span>Some IRS, ADC, EEC, and PFCC inputs can go direct when needed.</span><span class="tag">critical path</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔁</div><h2>Display Reconfiguration</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Displays auto-reconfigure after failures</span><span class="real-world"><span class="arrow">→</span>The system prioritizes keeping PFD and EICAS visible.</span></div>
+        <div class="idea-card"><span class="main-idea">Half PFD, mini-map, and shared display modes can appear</span><span class="real-world"><span class="arrow">→</span>Weird layout does not always mean malfunction — it may be reversion logic.</span></div>
+        <div class="idea-card"><span class="main-idea">Even heavy display failures preserve critical data</span><span class="real-world"><span class="arrow">→</span>Flight-critical information gets priority over convenience.</span><span class="tag">safety priority</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">⚖️</div><h2>Comparator Logic</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">System compares airspeed, altitude, attitude, and engine data</span><span class="real-world"><span class="arrow">→</span>Disagreement creates flags and EFIS MISCOMPARE messages.</span></div>
+        <div class="idea-card"><span class="main-idea">Mismatch does not automatically mean failure</span><span class="real-world"><span class="arrow">→</span>It means the system sees disagreement and wants the crew/MX to verify the source.</span></div>
+        <div class="idea-card"><span class="main-idea">Red flags usually mean missing or invalid data</span><span class="real-world"><span class="arrow">→</span>Think sensor issue or data-path issue before screen replacement.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">⚠️</div><h2>EICAS / CAS</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">EICAS is the main MX clue machine</span><span class="real-world"><span class="arrow">→</span>It displays parameters, generates CAS messages, and supports the warning system.</span><span class="tag">start here</span></div>
+        <div class="idea-card"><span class="main-idea">CAS tells what is wrong, not always why</span><span class="real-world"><span class="arrow">→</span>Red = warning, amber = caution, cyan = advisory, white = status.</span></div>
+        <div class="idea-card"><span class="main-idea">Some alerts are inhibited during critical phases</span><span class="real-world"><span class="arrow">→</span>Takeoff and landing inhibition reduces nuisance alerts when crew workload is highest.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📊</div><h2>Synoptic Pages & ECL</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Synoptic pages visualize systems</span><span class="real-world"><span class="arrow">→</span>HYD, ELEC, FUEL, and AIR pages show status, flow, and abnormal indications.</span></div>
+        <div class="idea-card"><span class="main-idea">Color coding speeds troubleshooting</span><span class="real-world"><span class="arrow">→</span>Green normal, amber caution, red limit exceeded.</span></div>
+        <div class="idea-card"><span class="main-idea">Electronic Checklist integrates with CAS</span><span class="real-world"><span class="arrow">→</span>The airplane helps guide procedures based on active faults.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🎛️</div><h2>ICCP / Digital Switching</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Cockpit switches are digital data inputs</span><span class="real-world"><span class="arrow">→</span>ICCP panels use CAN bus, PIM modules, and RDCs.</span></div>
+        <div class="idea-card"><span class="main-idea">Switches are not always direct controls</span><span class="real-world"><span class="arrow">→</span>They request actions through the digital system.</span></div>
+        <div class="idea-card"><span class="main-idea">CONTROL PANEL FAULT points to communication or module issues</span><span class="real-world"><span class="arrow">→</span>Think PIM, RDC, or bus communication.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📼</div><h2>Clock & Flight Data Recorder</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Clock time comes from GNSS first</span><span class="real-world"><span class="arrow">→</span>Time supports logs, FDR data, and system records.</span></div>
+        <div class="idea-card"><span class="main-idea">FDR records around 2000 parameters</span><span class="real-world"><span class="arrow">→</span>It runs when an engine is running or the aircraft is airborne.</span></div>
+        <div class="idea-card"><span class="main-idea">FDR depends on DMC data</span><span class="real-world"><span class="arrow">→</span>If recorded data is bad, trace the DMC/source path before blaming the recorder.</span><span class="tag">source first</span></div>
+      </div></div>
+
+      <div class="system-section wide"><div class="section-head"><div class="section-icon">🔧</div><h2>Troubleshooting Flow — Display → Data → Source</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Step 1: Check CAS / EICAS</span><span class="real-world"><span class="arrow">→</span>Let the airplane tell you what it thinks is wrong.</span></div>
+        <div class="idea-card"><span class="main-idea">Step 2: Identify which data is missing or incorrect</span><span class="real-world"><span class="arrow">→</span>A blank, flag, or miscompare is a clue to the data path.</span></div>
+        <div class="idea-card"><span class="main-idea">Step 3: Compare left vs right</span><span class="real-world"><span class="arrow">→</span>Use channel comparison to isolate source, processing, or display-side issues.</span></div>
+        <div class="idea-card"><span class="main-idea">Step 4: Trace back DMC → IPC → source system</span><span class="real-world"><span class="arrow">→</span>Don’t fix the screen until you prove the data feeding it is good.</span><span class="tag">line MX rule</span></div>
+      </div></div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember A220 ATA 31</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Collect Data</div><ul><li>DMC</li><li>Sensors</li><li>Discrete inputs</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Process Data</div><ul><li>IPC</li><li>CCMs</li><li>DMC logic</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Send Data</div><ul><li>AFDX</li><li>Direct inputs</li><li>Network routing</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Display / Alert</div><ul><li>EFIS</li><li>EICAS</li><li>CAS</li></ul></div>
+        <div class="map-card"><div class="map-number">5</div><div class="map-title">Record Data</div><ul><li>FDR</li><li>Clock</li><li>Logs</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">ATA 31 is data<br><small>not the source</small></div>
+        <div class="fail-chip">Displays rarely fail<br><small>inputs do</small></div>
+        <div class="fail-chip">DMC/IPCs matter<br><small>trace routing</small></div>
+        <div class="fail-chip">CAS says what<br><small>not always why</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>A220 ATA 31 quick-study page • Indicating, recording, display logic, EICAS/CAS, IMA networking, and data-source troubleshooting.</footer>
+</body>
+</html>

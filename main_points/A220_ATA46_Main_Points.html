@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 46 Main Points</title>
+  <style>
+    :root{--bg:#050505;--panel:#101010;--orange:#ff9f1c;--amber:#ffd27f;--soft:rgba(255,159,28,.18);--line:rgba(255,159,28,.55);--white:#f7efe4;--muted:#bda777;--blue:#62d8ff;--green:#8cffb1;--red:#ff5f56;--purple:#caa8ff}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--white);background:radial-gradient(circle at 15% 0%,rgba(255,159,28,.22),transparent 30%),radial-gradient(circle at 85% 15%,rgba(98,216,255,.13),transparent 28%),radial-gradient(circle at 50% 100%,rgba(202,168,255,.1),transparent 26%),linear-gradient(135deg,#000,#090909 46%,#150b02);overflow-x:hidden} body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at center,black,transparent 82%)}
+    header{max-width:1180px;margin:0 auto;padding:36px 18px 18px;text-align:center;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid var(--line);background:rgba(0,0,0,.55);border-radius:999px;padding:8px 14px;box-shadow:0 0 22px var(--soft);font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2rem,6vw,4.75rem);line-height:.96;text-shadow:0 0 18px rgba(255,159,28,.38),0 0 42px rgba(255,159,28,.16)}.subtitle{max-width:900px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.55}
+    .hero-strip{max-width:1180px;margin:24px auto 8px;padding:0 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.hero-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,159,28,.1),rgba(0,0,0,.74));border-radius:22px;padding:20px;min-height:142px;position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.hero-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 34px rgba(255,159,28,.24);border-color:var(--orange)}.hero-card:after{content:"";position:absolute;width:150px;height:150px;right:-58px;bottom:-58px;border:1px solid rgba(255,159,28,.28);border-radius:50%}.hero-icon{font-size:2.25rem;margin-bottom:8px}.hero-title{color:var(--amber);font-size:1.25rem;font-weight:900}.hero-text{color:var(--muted);margin-top:8px;line-height:1.42}
+    main{max-width:1240px;margin:0 auto;padding:22px 18px 48px}.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.system-section{border:1px solid var(--line);background:rgba(9,9,9,.88);border-radius:24px;padding:18px;box-shadow:0 0 30px rgba(0,0,0,.35);position:relative;overflow:hidden}.system-section:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),transparent);opacity:.75}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1}.section-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);background:radial-gradient(circle at top,rgba(255,159,28,.28),rgba(0,0,0,.75));font-size:1.65rem;box-shadow:inset 0 0 18px rgba(255,159,28,.12)}h2{margin:0;color:var(--orange);font-size:1.2rem;letter-spacing:.01em}.cards{display:grid;gap:10px;position:relative;z-index:1}.idea-card{border:1px solid rgba(255,159,28,.28);background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.02));border-radius:16px;padding:13px 14px;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;cursor:default;position:relative;overflow:hidden}.idea-card:hover{transform:translateX(8px) scale(1.025);border-color:var(--orange);background:linear-gradient(135deg,rgba(255,159,28,.18),rgba(98,216,255,.06));box-shadow:0 0 26px rgba(255,159,28,.21)}.idea-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s ease}.idea-card:hover:after{transform:translateX(120%)}.main-idea{display:block;color:var(--amber);font-weight:900;font-size:1rem;margin-bottom:5px}.arrow{color:var(--orange);font-weight:900;margin-right:4px}.real-world{display:block;color:#ead9b8;line-height:1.42;font-size:.96rem}.tag{display:inline-block;margin-top:8px;color:#111;background:var(--orange);border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.wide{grid-column:1/-1}
+    .flow{margin:20px 0;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));overflow:hidden}.flow h2{font-size:1.45rem;margin-bottom:14px}.flow-line{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.flow-step{flex:1 1 145px;text-align:center;border:1px solid rgba(255,159,28,.38);border-radius:18px;background:rgba(0,0,0,.55);padding:16px;color:var(--amber);font-weight:900;transition:transform .25s ease,box-shadow .25s ease}.flow-step:hover{transform:translateY(-7px);box-shadow:0 0 28px rgba(98,216,255,.16),0 0 34px rgba(255,159,28,.12)}.flow-arrow{color:var(--blue);font-size:1.6rem;font-weight:900}.memory-map{margin-top:20px;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));position:relative;overflow:hidden}.memory-map h2{font-size:1.45rem;margin-bottom:14px}.map-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.map-card{border:1px solid rgba(255,159,28,.38);border-radius:20px;padding:18px;background:rgba(0,0,0,.55);transition:transform .25s ease,box-shadow .25s ease}.map-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 0 28px rgba(98,216,255,.16),0 0 34px rgba(255,159,28,.12)}.map-number{color:var(--blue);font-size:2rem;font-weight:900}.map-title{color:var(--amber);font-weight:900;font-size:1.12rem;margin:4px 0 8px}.map-card ul{margin:0;padding-left:18px;color:#ead9b8;line-height:1.65}.fail-list{margin-top:20px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fail-chip{border:1px solid rgba(255,95,86,.55);background:rgba(255,95,86,.08);color:#ffd6d3;padding:14px;border-radius:16px;font-weight:800;text-align:center;transition:transform .2s ease,background .2s ease}.fail-chip:hover{transform:scale(1.06);background:rgba(255,95,86,.18)}footer{text-align:center;color:var(--muted);padding:26px 18px 38px}@media(max-width:900px){.hero-strip,.map-grid{grid-template-columns:1fr}.section-grid{grid-template-columns:1fr}.fail-list{grid-template-columns:repeat(2,minmax(0,1fr))}.flow-line{display:grid;grid-template-columns:1fr}.flow-arrow{display:none}}@media(max-width:520px){main{padding:18px 10px 34px}header{padding-top:24px}.system-section,.memory-map,.flow{border-radius:18px;padding:14px}.fail-list{grid-template-columns:1fr}.idea-card:hover{transform:scale(1.015)}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 46 • Information Systems</div>
+    <h1>Software, Data & Aircraft Health Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for IMS, ODL loading, configuration management, APM validation, AHMS/HMU reporting, ANS networking, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">💾</div><div class="hero-title">Software Loading Hub</div><div class="hero-text">IMS and ODL stage software, load LRUs/LRMs, and help verify the aircraft configuration after updates.</div></div>
+    <div class="hero-card"><div class="hero-icon">🧬</div><div class="hero-title">Configuration Control</div><div class="hero-text">APM and configuration logic compare what is installed against what the airplane expects.</div></div>
+    <div class="hero-card"><div class="hero-icon">📡</div><div class="hero-title">Health Monitoring</div><div class="hero-text">AHMS, HMU, and network paths collect aircraft health data and send reports for maintenance review.</div></div>
+  </section>
+
+  <main>
+    <section class="flow wide">
+      <h2>🧠 ATA 46 Big Flow</h2>
+      <div class="flow-line">
+        <div class="flow-step">USB / Laptop</div><div class="flow-arrow">→</div><div class="flow-step">IMS / ODL</div><div class="flow-arrow">→</div><div class="flow-step">LRUs / LRMs</div><div class="flow-arrow">→</div><div class="flow-step">APM Verify</div><div class="flow-arrow">→</div><div class="flow-step">HMU Reports</div>
+      </div>
+    </section>
+
+    <section class="section-grid">
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">ATA 46 = software + aircraft health management</span><span class="real-world"><span class="arrow">→</span>It controls what software the airplane runs and tracks how healthy the airplane is.</span></div>
+        <div class="idea-card"><span class="main-idea">Two big pieces: IMS and AHMS</span><span class="real-world"><span class="arrow">→</span>IMS handles software/data loading. AHMS handles monitoring and reporting.</span><span class="tag">big picture</span></div>
+        <div class="idea-card"><span class="main-idea">Think software, configuration, and data</span><span class="real-world"><span class="arrow">→</span>Most ATA 46 issues are not “broken parts”; they are loading, configuration, or communication problems.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">💾</div><h2>IMS — Information Management System</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">IMS is the software loading hub</span><span class="real-world"><span class="arrow">→</span>USB or laptop data goes into IMS first before being sent to LRUs/LRMs.</span></div>
+        <div class="idea-card"><span class="main-idea">Contains ODL and internal storage</span><span class="real-world"><span class="arrow">→</span>It stages files, stores versions, and distributes software in the correct process.</span></div>
+        <div class="idea-card"><span class="main-idea">Files are not loaded directly to aircraft computers</span><span class="real-world"><span class="arrow">→</span>USB → IMS → LRU is the normal path.</span><span class="tag">key MX idea</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">⚙️</div><h2>ODL Loading Logic</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">ODL manages the load sequence</span><span class="real-world"><span class="arrow">→</span>It identifies targets and loads software in the correct order.</span></div>
+        <div class="idea-card"><span class="main-idea">Preconditions matter</span><span class="real-world"><span class="arrow">→</span>Aircraft must be on ground, maintenance switch active, and correct channel selected.</span><span class="tag">don’t skip</span></div>
+        <div class="idea-card"><span class="main-idea">Wrong channel = no load</span><span class="real-world"><span class="arrow">→</span>Channel A/B selection controls which LRUs are updated and prevents system overload.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📁</div><h2>File Management & Security</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">IMS keeps New / Installed / Backup folders</span><span class="real-world"><span class="arrow">→</span>New files become installed; older software moves to backup for version history.</span></div>
+        <div class="idea-card"><span class="main-idea">Files are encrypted</span><span class="real-world"><span class="arrow">→</span>This protects the airplane from unauthorized or incorrect software.</span></div>
+        <div class="idea-card"><span class="main-idea">Always verify after loading</span><span class="real-world"><span class="arrow">→</span>The load is not complete until configuration is checked through OMS/APM logic.</span><span class="tag">verify</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧬</div><h2>Configuration Management</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Configuration manager compares installed vs expected software</span><span class="real-world"><span class="arrow">→</span>It checks aircraft software against the aircraft personality/configuration standard.</span></div>
+        <div class="idea-card"><span class="main-idea">APM = aircraft reference standard</span><span class="real-world"><span class="arrow">→</span>The Aircraft Personality Module stores configuration data used to validate installations.</span></div>
+        <div class="idea-card"><span class="main-idea">Yellow means mismatch</span><span class="real-world"><span class="arrow">→</span>A yellow configuration item is not always failed hardware; it may be a software/config mismatch.</span><span class="tag">major clue</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔀</div><h2>AFDX / ARINC Verification</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">AFDX systems can auto-check configuration</span><span class="real-world"><span class="arrow">→</span>Networked systems can report configuration status automatically.</span></div>
+        <div class="idea-card"><span class="main-idea">ARINC 429 systems may need manual verification</span><span class="real-world"><span class="arrow">→</span>Some older-style data paths do not provide the same auto-check capability.</span></div>
+        <div class="idea-card"><span class="main-idea">Misconfiguration can create CAS messages</span><span class="real-world"><span class="arrow">→</span>Do not treat every config message like a failed LRU.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🖥️</div><h2>IMS Access & Hardware</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Access through display unit or laptop</span><span class="real-world"><span class="arrow">→</span>Laptop is preferred for larger loads and easier file handling.</span></div>
+        <div class="idea-card"><span class="main-idea">IMS has USB, Ethernet, and status LEDs</span><span class="real-world"><span class="arrow">→</span>LED behavior helps troubleshoot connection and data transfer issues.</span></div>
+        <div class="idea-card"><span class="main-idea">If ODL freezes, reset cleanly</span><span class="real-world"><span class="arrow">→</span>Power cycle and restart the load from the beginning; don’t assume a partial load is safe.</span><span class="tag">reset logic</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🛡️</div><h2>Memory Protection</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">IMS protects against cross-aircraft contamination</span><span class="real-world"><span class="arrow">→</span>If it detects a new aircraft, stored data can be deleted to prevent wrong-aircraft software/data use.</span></div>
+        <div class="idea-card"><span class="main-idea">Configuration integrity matters</span><span class="real-world"><span class="arrow">→</span>Wrong software on the right box can still be a major aircraft problem.</span></div>
+        <div class="idea-card"><span class="main-idea">Software control is a safety system</span><span class="real-world"><span class="arrow">→</span>ATA 46 protects the airplane by managing what data and software are allowed onboard.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📊</div><h2>AHMS — Aircraft Health Management</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">AHMS monitors aircraft systems and engines</span><span class="real-world"><span class="arrow">→</span>It generates reports and maintenance data for trend and fault review.</span></div>
+        <div class="idea-card"><span class="main-idea">HMU stores maintenance health data</span><span class="real-world"><span class="arrow">→</span>The Health Management Unit records system and engine data in non-volatile memory.</span><span class="tag">history tool</span></div>
+        <div class="idea-card"><span class="main-idea">Reports help validate events</span><span class="real-world"><span class="arrow">→</span>Use HMU data to confirm what actually happened, not just what was reported.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">⚠️</div><h2>High Load Events</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">HMU detects hard landing and turbulence events</span><span class="real-world"><span class="arrow">→</span>These events can generate CAS messages and require maintenance action.</span></div>
+        <div class="idea-card"><span class="main-idea">Events can stay latched</span><span class="real-world"><span class="arrow">→</span>The system may require maintenance review/clearance before the event is gone.</span></div>
+        <div class="idea-card"><span class="main-idea">Use reports for validation</span><span class="real-world"><span class="arrow">→</span>Do not rely on memory or word-of-mouth; check the recorded data.</span><span class="tag">line MX</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🌐</div><h2>ANS & Aircraft Network</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">ANS = aircraft Ethernet switch</span><span class="real-world"><span class="arrow">→</span>It routes data only to the intended systems.</span></div>
+        <div class="idea-card"><span class="main-idea">VLANs separate network traffic</span><span class="real-world"><span class="arrow">→</span>Maintenance, EFB, and maintenance ports can be separated for security and reliability.</span></div>
+        <div class="idea-card"><span class="main-idea">Wrong network path = communication failure</span><span class="real-world"><span class="arrow">→</span>Sometimes the system is fine; the data is just not reaching the right place.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔧</div><h2>Troubleshooting Flow</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Start with CAS / OMS faults</span><span class="real-world"><span class="arrow">→</span>Find out what the aircraft is actually reporting before touching hardware.</span></div>
+        <div class="idea-card"><span class="main-idea">Verify configuration: white vs yellow</span><span class="real-world"><span class="arrow">→</span>White usually means correct; yellow usually points toward mismatch.</span></div>
+        <div class="idea-card"><span class="main-idea">Check IMS load status and APM configuration</span><span class="real-world"><span class="arrow">→</span>Then use HMU reports for history and validation.</span><span class="tag">best order</span></div>
+      </div></div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember ATA 46</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Load Software</div><ul><li>IMS</li><li>ODL</li><li>USB / laptop</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Verify Software</div><ul><li>Configuration manager</li><li>APM</li><li>White vs yellow</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Monitor Aircraft</div><ul><li>AHMS</li><li>HMU</li><li>High load events</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Transmit Data</div><ul><li>ANS</li><li>VLANs</li><li>Reports</li></ul></div>
+      </div>
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">IMS is the hub<br><small>software loads start here</small></div>
+        <div class="fail-chip">Verify every load<br><small>configuration matters</small></div>
+        <div class="fail-chip">HMU gives history<br><small>validate events</small></div>
+        <div class="fail-chip">Most faults<br><small>config/data, not hardware</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>A220 ATA 46 quick-study page • Information systems, software loading, configuration control, AHMS/HMU reporting, and network troubleshooting.</footer>
+</body>
+</html>

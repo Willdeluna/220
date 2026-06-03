@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 21 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,159,28,0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(98,216,255,0.13), transparent 26%),
+        radial-gradient(circle at 52% 100%, rgba(140,255,177,0.07), transparent 26%),
+        linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 18px 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 0 22px var(--soft);
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      color: var(--orange);
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16);
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .hero-strip {
+      max-width: 1180px;
+      margin: 24px auto 8px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 0 34px rgba(255,159,28,.24);
+      border-color: var(--orange);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      border: 1px solid rgba(255,159,28,.28);
+      border-radius: 50%;
+    }
+
+    .hero-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .hero-title { color: var(--amber); font-size: 1.25rem; font-weight: 900; }
+    .hero-text { color: var(--muted); margin-top: 8px; line-height: 1.42; }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px 48px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .system-section {
+      border: 1px solid var(--line);
+      background: rgba(9,9,9,.88);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .system-section::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: .75;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75));
+      font-size: 1.65rem;
+      box-shadow: inset 0 0 18px rgba(255,159,28,.12);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--orange);
+      font-size: 1.2rem;
+      letter-spacing: .01em;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .idea-card {
+      border: 1px solid rgba(255,159,28,.28);
+      background: linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding: 13px 14px;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card:hover {
+      transform: translateX(8px) scale(1.025);
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06));
+      box-shadow: 0 0 26px rgba(255,159,28,.21);
+    }
+
+    .idea-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
+
+    .idea-card:hover::after { transform: translateX(120%); }
+
+    .main-idea {
+      display: block;
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .arrow {
+      color: var(--orange);
+      font-weight: 900;
+      margin-right: 4px;
+    }
+
+    .real-world {
+      display: block;
+      color: #ead9b8;
+      line-height: 1.42;
+      font-size: .96rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .memory-map {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memory-map h2 { font-size: 1.45rem; margin-bottom: 14px; }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .map-card {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-7px) rotate(-.5deg);
+      box-shadow: 0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12);
+    }
+
+    .map-number {
+      color: var(--blue);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .map-title {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin: 4px 0 8px;
+    }
+
+    .map-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #ead9b8;
+      line-height: 1.65;
+    }
+
+    .fail-list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fail-chip {
+      border: 1px solid rgba(255,95,86,.55);
+      background: rgba(255,95,86,.08);
+      color: #ffd6d3;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .fail-chip:hover {
+      transform: scale(1.06);
+      background: rgba(255,95,86,.18);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 26px 18px 38px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-strip, .map-grid { grid-template-columns: 1fr; }
+      .section-grid { grid-template-columns: 1fr; }
+      .fail-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      main { padding: 18px 10px 34px; }
+      header { padding-top: 24px; }
+      .system-section, .memory-map { border-radius: 18px; padding: 14px; }
+      .fail-list { grid-template-columns: 1fr; }
+      .idea-card:hover { transform: scale(1.015); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 21 • Air Conditioning & Pressurization</div>
+    <h1>ECS, Packs & Pressurization Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for A220 ATA 21: integrated ECS logic, IASCs, packs, trim air, pressurization, ventilation, sensors, BITE, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card">
+      <div class="hero-icon">🧠</div>
+      <div class="hero-title">IASC Controlled</div>
+      <div class="hero-text">Left and right IASCs are the main brains for air conditioning, ventilation, and pressurization logic.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">❄️</div>
+      <div class="hero-title">Demand-Based Packs</div>
+      <div class="hero-text">Pack output modulates based on cabin demand, flight phase, and temperature needs.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">📡</div>
+      <div class="hero-title">Data-Driven System</div>
+      <div class="hero-text">Sensors feed the computers. Bad data can make good hardware look broken.</div>
+    </div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>System Architecture — Big Picture</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ECS is fully integrated</span><span class="real-world"><span class="arrow">→</span>Air conditioning, pressurization, and ventilation all work together as one managed system.</span></div>
+          <div class="idea-card"><span class="main-idea">IASCs are the main system brain</span><span class="real-world"><span class="arrow">→</span>Left and right controllers manage the major air system functions.</span><span class="tag">core idea</span></div>
+          <div class="idea-card"><span class="main-idea">Multiple channels give redundancy</span><span class="real-world"><span class="arrow">→</span>The system can degrade instead of completely failing.</span></div>
+          <div class="idea-card"><span class="main-idea">Think computer system first</span><span class="real-world"><span class="arrow">→</span>You are troubleshooting data, logic, valves, and ducts together.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌬️</div><h2>Air Source & Flow</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Bleed air comes from engines or APU</span><span class="real-world"><span class="arrow">→</span>ATA 36 problems can show up as ATA 21 symptoms.</span></div>
+          <div class="idea-card"><span class="main-idea">Air is conditioned before entering packs</span><span class="real-world"><span class="arrow">→</span>Temperature and pressure are managed automatically.</span></div>
+          <div class="idea-card"><span class="main-idea">Pack flow is demand-driven</span><span class="real-world"><span class="arrow">→</span>Output changes with cabin demand, flight phase, and temperature.</span><span class="tag">not fixed output</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">❄️</div><h2>Packs — Cooling System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Air Cycle Machine still does the cooling</span><span class="real-world"><span class="arrow">→</span>Same basic cooling physics, but the A220 manages it with more automation.</span></div>
+          <div class="idea-card"><span class="main-idea">Pack outlet temperature is automatic</span><span class="real-world"><span class="arrow">→</span>The IASC commands the system to meet demand.</span></div>
+          <div class="idea-card"><span class="main-idea">Packs modulate instead of only ON/OFF</span><span class="real-world"><span class="arrow">→</span>Partial operation can be normal behavior.</span><span class="tag">line MX clue</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌡️</div><h2>Temperature Control Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Zone-based temperature control</span><span class="real-world"><span class="arrow">→</span>Cockpit, forward cabin, mid cabin, and aft cabin are managed as zones.</span></div>
+          <div class="idea-card"><span class="main-idea">Coldest zone logic drives pack cooling</span><span class="real-world"><span class="arrow">→</span>Packs cool to the coldest demand, then other zones get adjusted.</span></div>
+          <div class="idea-card"><span class="main-idea">Passenger/cabin sensors affect response</span><span class="real-world"><span class="arrow">→</span>The system constantly reacts to real temperature inputs.</span><span class="tag">dynamic</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔥</div><h2>Trim Air System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Hot trim air is added after cooling</span><span class="real-world"><span class="arrow">→</span>This fine-tunes each zone after the packs cool the air.</span></div>
+          <div class="idea-card"><span class="main-idea">Electronically controlled</span><span class="real-world"><span class="arrow">→</span>More logic-based than simple older valve control.</span></div>
+          <div class="idea-card"><span class="main-idea">Uneven cabin temp? Think trim air first</span><span class="real-world"><span class="arrow">→</span>Hot/cold zone complaints often point to trim air or sensor issues.</span><span class="tag">common write-up</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚠️</div><h2>Pressurization System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Fully automatic pressurization</span><span class="real-world"><span class="arrow">→</span>Normally there is very little manual pilot control compared to older aircraft.</span></div>
+          <div class="idea-card"><span class="main-idea">CPC controls cabin pressure</span><span class="real-world"><span class="arrow">→</span>The Cabin Pressure Controller works with IASC integration.</span></div>
+          <div class="idea-card"><span class="main-idea">Controls cabin altitude and rate</span><span class="real-world"><span class="arrow">→</span>Protects passenger comfort and aircraft structure.</span><span class="tag">critical</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚙️</div><h2>Outflow Valve Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Main pressure control = outflow valve</span><span class="real-world"><span class="arrow">→</span>It controls how much air leaves the aircraft.</span></div>
+          <div class="idea-card"><span class="main-idea">Inflow plus outflow creates pressure balance</span><span class="real-world"><span class="arrow">→</span>Packs bring air in; the outflow valve meters air out.</span></div>
+          <div class="idea-card"><span class="main-idea">More outflow = lower cabin pressure</span><span class="real-world"><span class="arrow">→</span>Easy mental model: opening the valve lets pressure escape.</span><span class="tag">easy memory</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🛡️</div><h2>System Protection</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Protections are built into ECS logic</span><span class="real-world"><span class="arrow">→</span>Overheat, overpressure, and sensor validation protect the aircraft.</span></div>
+          <div class="idea-card"><span class="main-idea">Many “failures” are protective actions</span><span class="real-world"><span class="arrow">→</span>Pack shutdown, flow reduction, or temp limiting may be commanded on purpose.</span></div>
+          <div class="idea-card"><span class="main-idea">Do not reset-and-forget</span><span class="real-world"><span class="arrow">→</span>Find what caused the protection to activate.</span><span class="tag">troubleshooting</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌬️</div><h2>Ventilation System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Continuous airflow through cabin and avionics</span><span class="real-world"><span class="arrow">→</span>Ventilation supports both passenger areas and equipment cooling.</span></div>
+          <div class="idea-card"><span class="main-idea">Avionics cooling ties into ECS airflow</span><span class="real-world"><span class="arrow">→</span>An ECS issue can trigger avionics cooling warnings.</span></div>
+          <div class="idea-card"><span class="main-idea">Ventilation is part of the same integrated picture</span><span class="real-world"><span class="arrow">→</span>Do not isolate air conditioning, pressurization, and ventilation too quickly.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">💧</div><h2>Moisture & Air Quality</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Water extraction removes moisture</span><span class="real-world"><span class="arrow">→</span>This helps prevent fogging, icing, and moisture-related problems.</span></div>
+          <div class="idea-card"><span class="main-idea">Recirculation reduces bleed demand</span><span class="real-world"><span class="arrow">→</span>The aircraft reuses filtered cabin air to improve efficiency.</span></div>
+          <div class="idea-card"><span class="main-idea">Air quality and performance are connected</span><span class="real-world"><span class="arrow">→</span>Moisture, filtering, and recirc all affect ECS behavior.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔄</div><h2>Recirculation System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Cabin air is partially recirculated</span><span class="real-world"><span class="arrow">→</span>Filtered recirc air reduces how much bleed air the system needs.</span></div>
+          <div class="idea-card"><span class="main-idea">Recirc failure increases bleed demand</span><span class="real-world"><span class="arrow">→</span>Pack performance symptoms can appear when recirc is not helping.</span></div>
+          <div class="idea-card"><span class="main-idea">Efficiency system, not just comfort</span><span class="real-world"><span class="arrow">→</span>Recirc helps reduce system load.</span><span class="tag">often missed</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📡</div><h2>Sensors & Inputs</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Sensors are a major troubleshooting area</span><span class="real-world"><span class="arrow">→</span>Temperature, pressure, and flow sensors drive the system logic.</span></div>
+          <div class="idea-card"><span class="main-idea">Bad sensor = bad behavior</span><span class="real-world"><span class="arrow">→</span>Hardware may be fine, but the computer reacts to incorrect data.</span><span class="tag">huge clue</span></div>
+          <div class="idea-card"><span class="main-idea">Trace data inputs before changing parts</span><span class="real-world"><span class="arrow">→</span>Do not let one symptom make you chase the wrong component.</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧮</div><h2>Logic-Based Operation</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">No fixed system state</span><span class="real-world"><span class="arrow">→</span>The aircraft constantly recalculates the best operating mode.</span></div>
+          <div class="idea-card"><span class="main-idea">Logic uses altitude, outside temp, and cabin demand</span><span class="real-world"><span class="arrow">→</span>Changing conditions can change ECS behavior.</span></div>
+          <div class="idea-card"><span class="main-idea">Weak cooling may be commanded behavior</span><span class="real-world"><span class="arrow">→</span>Compare actual values, demand, and controller status before calling it failed.</span><span class="tag">don’t overthink it</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚠️</div><h2>Failure Modes</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">System usually degrades in levels</span><span class="real-world"><span class="arrow">→</span>Reduced performance, backup channel control, or limited function may occur.</span></div>
+          <div class="idea-card"><span class="main-idea">Full ECS loss is rare</span><span class="real-world"><span class="arrow">→</span>Redundant control helps keep some function available.</span></div>
+          <div class="idea-card"><span class="main-idea">Protective shutdowns can look like failures</span><span class="real-world"><span class="arrow">→</span>Use BITE and fault history to understand why the system degraded.</span><span class="tag">BITE first</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance / Troubleshooting</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Most ECS problems are not purely mechanical</span><span class="real-world"><span class="arrow">→</span>Common causes include sensors, controller logic, and software faults.</span></div>
+          <div class="idea-card"><span class="main-idea">Common write-ups: hot/cold cabin</span><span class="real-world"><span class="arrow">→</span>Uneven temperature, low pack performance, and slow pressurization are typical complaints.</span></div>
+          <div class="idea-card"><span class="main-idea">Always check IASC/BITE</span><span class="real-world"><span class="arrow">→</span>Look at controller status, channel faults, history, and real-time values.</span><span class="tag">parts cannon warning</span></div>
+        </div>
+      </div>
+
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔗</div><h2>System Interaction</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 21 depends heavily on ATA 36</span><span class="real-world"><span class="arrow">→</span>Bleed air faults can become ECS faults.</span></div>
+          <div class="idea-card"><span class="main-idea">ATA 24 and ATA 31 matter too</span><span class="real-world"><span class="arrow">→</span>Electrical power and indications can change what you see.</span></div>
+          <div class="idea-card"><span class="main-idea">One problem can show in multiple systems</span><span class="real-world"><span class="arrow">→</span>Trace the source instead of chasing cockpit messages one by one.</span><span class="tag">real-world</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember A220 ATA 21</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Create Air</div><ul><li>Engine bleed</li><li>APU bleed</li><li>ATA 36 connection</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Condition Air</div><ul><li>Packs</li><li>ACM cooling</li><li>Moisture removal</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Control Air</div><ul><li>IASCs</li><li>Sensors</li><li>Trim air</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Balance Air</div><ul><li>Outflow valve</li><li>Pressurization</li><li>Cabin pressure rate</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">Most problems<br><small>sensors or logic</small></div>
+        <div class="fail-chip">Hot/cold cabin<br><small>trim air or sensors</small></div>
+        <div class="fail-chip">ECS degrades<br><small>rarely total failure</small></div>
+        <div class="fail-chip">Check IASC/BITE<br><small>before components</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    A220 ATA 21 quick-study page • ECS, packs, pressurization, ventilation, trim air, sensors, and line-maintenance troubleshooting.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 50–57 Main Points</title>
+  <style>
+    :root{--bg:#050505;--panel:#101010;--orange:#ff9f1c;--amber:#ffd27f;--soft:rgba(255,159,28,.18);--line:rgba(255,159,28,.55);--white:#f7efe4;--muted:#bda777;--red:#ff5f56;--blue:#62d8ff;--green:#8cffb1;}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--white);background:radial-gradient(circle at 20% 0%,rgba(255,159,28,.22),transparent 28%),radial-gradient(circle at 85% 20%,rgba(98,216,255,.13),transparent 26%),radial-gradient(circle at 52% 100%,rgba(140,255,177,.07),transparent 26%),linear-gradient(135deg,#000,#080808 45%,#130b02);overflow-x:hidden} body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at center,black,transparent 82%)}
+    header{max-width:1180px;margin:0 auto;padding:36px 18px 18px;text-align:center;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid var(--line);background:rgba(0,0,0,.55);border-radius:999px;padding:8px 14px;box-shadow:0 0 22px var(--soft);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2rem,6vw,4.7rem);line-height:.96;text-shadow:0 0 18px rgba(255,159,28,.38),0 0 42px rgba(255,159,28,.16)}.subtitle{max-width:890px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.55}.hero-strip{max-width:1180px;margin:24px auto 8px;padding:0 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.hero-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,159,28,.1),rgba(0,0,0,.72));border-radius:22px;padding:20px;min-height:140px;position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.hero-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 34px rgba(255,159,28,.24);border-color:var(--orange)}.hero-card:after{content:"";position:absolute;width:150px;height:150px;right:-58px;bottom:-58px;border:1px solid rgba(255,159,28,.28);border-radius:50%}.hero-icon{font-size:2.2rem;margin-bottom:8px}.hero-title{color:var(--amber);font-size:1.25rem;font-weight:900}.hero-text{color:var(--muted);margin-top:8px;line-height:1.42}
+    main{max-width:1240px;margin:0 auto;padding:22px 18px 48px}.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.system-section{border:1px solid var(--line);background:rgba(9,9,9,.88);border-radius:24px;padding:18px;box-shadow:0 0 30px rgba(0,0,0,.35);position:relative;overflow:hidden}.system-section:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),transparent);opacity:.75}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1}.section-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);background:radial-gradient(circle at top,rgba(255,159,28,.28),rgba(0,0,0,.75));font-size:1.65rem;box-shadow:inset 0 0 18px rgba(255,159,28,.12)}h2{margin:0;color:var(--orange);font-size:1.2rem;letter-spacing:.01em}.cards{display:grid;gap:10px;position:relative;z-index:1}.idea-card{border:1px solid rgba(255,159,28,.28);background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.02));border-radius:16px;padding:13px 14px;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;cursor:default;position:relative;overflow:hidden}.idea-card:hover{transform:translateX(8px) scale(1.025);border-color:var(--orange);background:linear-gradient(135deg,rgba(255,159,28,.18),rgba(98,216,255,.06));box-shadow:0 0 26px rgba(255,159,28,.21)}.idea-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s ease}.idea-card:hover:after{transform:translateX(120%)}.main-idea{display:block;color:var(--amber);font-weight:900;font-size:1rem;margin-bottom:5px}.arrow{color:var(--orange);font-weight:900;margin-right:4px}.real-world{display:block;color:#ead9b8;line-height:1.42;font-size:.96rem}.tag{display:inline-block;margin-top:8px;color:#111;background:var(--orange);border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.wide{grid-column:1/-1}.memory-map{margin-top:20px;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));position:relative;overflow:hidden}.memory-map h2{font-size:1.45rem;margin-bottom:14px}.map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.map-card{border:1px solid rgba(255,159,28,.38);border-radius:20px;padding:18px;background:rgba(0,0,0,.55);transition:transform .25s ease,box-shadow .25s ease}.map-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 0 28px rgba(98,216,255,.16),0 0 34px rgba(255,159,28,.12)}.map-number{color:var(--blue);font-size:2rem;font-weight:900}.map-title{color:var(--amber);font-weight:900;font-size:1.2rem;margin:4px 0 8px}.map-card ul{margin:0;padding-left:18px;color:#ead9b8;line-height:1.65}.fail-list{margin-top:20px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fail-chip{border:1px solid rgba(255,95,86,.55);background:rgba(255,95,86,.08);color:#ffd6d3;padding:14px;border-radius:16px;font-weight:800;text-align:center;transition:transform .2s ease,background .2s ease}.fail-chip:hover{transform:scale(1.06);background:rgba(255,95,86,.18)}footer{text-align:center;color:var(--muted);padding:26px 18px 38px}@media(max-width:900px){.hero-strip,.map-grid{grid-template-columns:1fr}.section-grid{grid-template-columns:1fr}.fail-list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main{padding:18px 10px 34px}header{padding-top:24px}.system-section,.memory-map{border-radius:18px;padding:14px}.fail-list{grid-template-columns:1fr}.idea-card:hover{transform:scale(1.015)}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 50–57 • Structures</div>
+    <h1>Structure, Load Paths & Pressure Boundary Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for A220 structural integrity: mixed materials, fuselage sections, pressurization, cargo linings, windows, wing-to-body fairing, and SRM-style inspection thinking.</p>
+  </header>
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">🏗️</div><div class="hero-title">Structural Integrity</div><div class="hero-text">Frames, stringers, skins, bulkheads, wings, and tail structure carry every load through the airplane.</div></div>
+    <div class="hero-card"><div class="hero-icon">🧪</div><div class="hero-title">Hybrid Materials</div><div class="hero-text">Aluminum-lithium, CFRP composites, titanium, and steel all show up where their strengths fit best.</div></div>
+    <div class="hero-card"><div class="hero-icon">🔎</div><div class="hero-title">Inspect, Then SRM</div><div class="hero-text">Structures work is location, damage type, severity, and approved repair data — not guessing.</div></div>
+  </section>
+  <main>
+    <section class="section-grid">
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept — ATA 50–57</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Structures = aircraft integrity system</span><span class="real-world"><span class="arrow">→</span>Provides strength, shape, pressurization containment, and load transfer.</span></div>
+        <div class="idea-card"><span class="main-idea">Everything attaches to structure</span><span class="real-world"><span class="arrow">→</span>Loads do not disappear — they flow through skins, frames, stringers, wings, gear, and tail.</span><span class="tag">big picture</span></div>
+        <div class="idea-card"><span class="main-idea">Most structure work is inspection-based</span><span class="real-world"><span class="arrow">→</span>Find the location, identify damage, judge significance, then use SRM data.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧬</div><h2>Material Concept</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">A220 uses mixed materials</span><span class="real-world"><span class="arrow">→</span>Aluminum-lithium fuselage, CFRP wings/empennage, and steel/titanium in high-stress areas.</span></div>
+        <div class="idea-card"><span class="main-idea">Composite + metal hybrid structure</span><span class="real-world"><span class="arrow">→</span>Each material is chosen for weight, strength, corrosion resistance, or damage tolerance.</span><span class="tag">A220 clue</span></div>
+        <div class="idea-card"><span class="main-idea">Inspection method depends on material</span><span class="real-world"><span class="arrow">→</span>Composite damage and metal damage do not always show or repair the same way.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">✈️</div><h2>Fuselage Construction</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Semi-monocoque design</span><span class="real-world"><span class="arrow">→</span>Skin and internal structure share loads instead of one part doing all the work.</span></div>
+        <div class="idea-card"><span class="main-idea">Frames = shape / Stringers = stiffness</span><span class="real-world"><span class="arrow">→</span>Frames support circumferential shape; stringers add longitudinal strength.</span><span class="tag">easy memory</span></div>
+        <div class="idea-card"><span class="main-idea">Skin is structural</span><span class="real-world"><span class="arrow">→</span>It carries pressure and aerodynamic loads — it is not just a cover.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🌬️</div><h2>Pressurized Structure</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Fuselage = pressure vessel</span><span class="real-world"><span class="arrow">→</span>The cabin, flight deck, and cargo areas are held inside the pressure boundary.</span></div>
+        <div class="idea-card"><span class="main-idea">Forward and aft bulkheads close the vessel</span><span class="real-world"><span class="arrow">→</span>Bulkheads are critical because they contain pressurization loads.</span></div>
+        <div class="idea-card"><span class="main-idea">Structure holds pressure — not the ECS</span><span class="real-world"><span class="arrow">→</span>ATA 21 controls air, but the airframe contains it.</span><span class="tag">critical</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧩</div><h2>Fuselage Sections & Joints</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Fuselage divided into multiple sections</span><span class="real-world"><span class="arrow">→</span>Nose, forward, mid, aft, rear fuselage, and tailcone sections help with zoning and repair.</span></div>
+        <div class="idea-card"><span class="main-idea">Circumferential butt joints connect sections</span><span class="real-world"><span class="arrow">→</span>Joint areas are important because load changes and fastener rows concentrate stress.</span></div>
+        <div class="idea-card"><span class="main-idea">Critical frame areas get extra attention</span><span class="real-world"><span class="arrow">→</span>Frame/joint zones are high-value inspection areas.</span><span class="tag">inspection zone</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🛠️</div><h2>Wing-to-Body Fairing</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">WTBF smooths airflow and reduces drag</span><span class="real-world"><span class="arrow">→</span>It is aerodynamic structure, but it also provides major system access.</span></div>
+        <div class="idea-card"><span class="main-idea">Houses major systems</span><span class="real-world"><span class="arrow">→</span>ECS, hydraulics, fuel, and electrical components can all be routed near this area.</span></div>
+        <div class="idea-card"><span class="main-idea">Major maintenance access area</span><span class="real-world"><span class="arrow">→</span>Large panels support inspection and component replacement.</span><span class="tag">MX hotspot</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🪶</div><h2>Aft Fuselage & Tail Loads</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Aft fuselage supports the stabilizers</span><span class="real-world"><span class="arrow">→</span>Horizontal and vertical tail loads transfer into the fuselage structure.</span></div>
+        <div class="idea-card"><span class="main-idea">Stabilizer attach structure is high-load</span><span class="real-world"><span class="arrow">→</span>Frames, load rods, and pivot fittings deserve serious inspection attention.</span></div>
+        <div class="idea-card"><span class="main-idea">Tail loads are not isolated</span><span class="real-world"><span class="arrow">→</span>Loads from the tail move forward through the aft fuselage.</span><span class="tag">load path</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🚪</div><h2>Cutouts, Doors & Windows</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Cutouts weaken the pressure shell</span><span class="real-world"><span class="arrow">→</span>Doors, windows, and equipment bays require reinforcement around openings.</span></div>
+        <div class="idea-card"><span class="main-idea">Windows are part of the pressure boundary</span><span class="real-world"><span class="arrow">→</span>Cabin windows use an outer structural pane and an inner protective pane.</span></div>
+        <div class="idea-card"><span class="main-idea">Leaks are often seal-related</span><span class="real-world"><span class="arrow">→</span>Seals, retainers, and clips are common places to start before blaming the window itself.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🪟</div><h2>Flight Deck Windows</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Windshield is structural + heated</span><span class="real-world"><span class="arrow">→</span>Triple-layer glass supports structural needs and electrical anti-ice heating.</span></div>
+        <div class="idea-card"><span class="main-idea">Side windows are different</span><span class="real-world"><span class="arrow">→</span>They are also layered, but heating is mainly for defog rather than full anti-ice.</span><span class="tag">don’t mix up</span></div>
+        <div class="idea-card"><span class="main-idea">Window condition affects safety</span><span class="real-world"><span class="arrow">→</span>Cracks, delamination, heating faults, and seal issues matter because windows are structural interfaces.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">📦</div><h2>Cargo Compartments</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Cargo areas are structural and safety zones</span><span class="real-world"><span class="arrow">→</span>They include structure, fire protection, smoke detection, and lighting interfaces.</span></div>
+        <div class="idea-card"><span class="main-idea">Cargo linings are fire barriers</span><span class="real-world"><span class="arrow">→</span>Fiberglass/Nomex panels help contain smoke and fire.</span><span class="tag">ATA 26 link</span></div>
+        <div class="idea-card"><span class="main-idea">Floor panels carry cargo loads</span><span class="real-world"><span class="arrow">→</span>Honeycomb panels and anti-skid surfaces help handle cargo weight and movement.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">💨</div><h2>Decompression Protection</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Decompression panels protect structure</span><span class="real-world"><span class="arrow">→</span>They open during pressure differential events to reduce damaging loads.</span></div>
+        <div class="idea-card"><span class="main-idea">Interior parts can be safety systems</span><span class="real-world"><span class="arrow">→</span>Panels are not always cosmetic; some manage pressure, airflow, and fire/smoke containment.</span></div>
+        <div class="idea-card"><span class="main-idea">Reinstallation matters</span><span class="real-world"><span class="arrow">→</span>Incorrect panel installation can affect pressure relief, airflow, noise, or protection.</span></div>
+      </div></div>
+
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance Reality</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Common findings: cracks, corrosion, fasteners, panels</span><span class="real-world"><span class="arrow">→</span>Structures usually fail slowly through damage growth, not instant system failure.</span></div>
+        <div class="idea-card"><span class="main-idea">High-risk zones: joints, cargo areas, floor panels</span><span class="real-world"><span class="arrow">→</span>Moisture, fastener loads, impact damage, and repeated stress are big players.</span></div>
+        <div class="idea-card"><span class="main-idea">Use the SRM</span><span class="real-world"><span class="arrow">→</span>Structures repairs require approved limits, inspections, and repair instructions.</span><span class="tag">no guessing</span></div>
+      </div></div>
+
+      <div class="system-section wide"><div class="section-head"><div class="section-icon">🧭</div><h2>Troubleshooting / Inspection Flow</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Step 1 — Identify exact location</span><span class="real-world"><span class="arrow">→</span>Use frame, station, zone, panel, or access area. Location changes the structural significance.</span></div>
+        <div class="idea-card"><span class="main-idea">Step 2 — Identify damage type</span><span class="real-world"><span class="arrow">→</span>Crack, dent, scratch, corrosion, delamination, missing fastener, loose panel, or seal issue.</span></div>
+        <div class="idea-card"><span class="main-idea">Step 3 — Evaluate severity</span><span class="real-world"><span class="arrow">→</span>Measure it, document it, compare to limits, and determine whether repair is required.</span></div>
+        <div class="idea-card"><span class="main-idea">Step 4 — Consult SRM</span><span class="real-world"><span class="arrow">→</span>Approved repair data is the final authority for structure. Follow location → damage → severity → repair.</span><span class="tag">line MX flow</span></div>
+      </div></div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember ATA 50–57</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Support Aircraft</div><ul><li>Frames</li><li>Stringers</li><li>Skins</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Carry Loads</div><ul><li>Wings</li><li>Fuselage</li><li>Landing gear paths</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Maintain Pressure</div><ul><li>Pressure bulkheads</li><li>Windows</li><li>Skin panels</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Protect Structure</div><ul><li>Fire linings</li><li>Reinforcements</li><li>Decompression panels</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">Load paths matter<br><small>know where forces go</small></div>
+        <div class="fail-chip">Mixed materials<br><small>different inspection methods</small></div>
+        <div class="fail-chip">Cargo panels<br><small>fire protection parts</small></div>
+        <div class="fail-chip">SRM rules<br><small>location, damage, limits</small></div>
+      </div>
+    </section>
+  </main>
+  <footer>A220 ATA 50–57 quick-study page • Structure, load paths, pressure boundary, windows, cargo panels, and inspection mindset.</footer>
+</body>
+</html>

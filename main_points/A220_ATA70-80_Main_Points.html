@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 70–80 Main Points</title>
+  <style>
+    :root{--bg:#050505;--panel:#101010;--orange:#ff9f1c;--amber:#ffd27f;--soft:rgba(255,159,28,.18);--line:rgba(255,159,28,.55);--white:#f7efe4;--muted:#bda777;--red:#ff5f56;--blue:#62d8ff;--green:#8cffb1}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--white);background:radial-gradient(circle at 20% 0%,rgba(255,159,28,.22),transparent 28%),radial-gradient(circle at 85% 20%,rgba(98,216,255,.13),transparent 26%),radial-gradient(circle at 52% 100%,rgba(140,255,177,.07),transparent 26%),linear-gradient(135deg,#000,#080808 45%,#130b02);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at center,black,transparent 82%)}header{max-width:1180px;margin:0 auto;padding:36px 18px 18px;text-align:center;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid var(--line);background:rgba(0,0,0,.55);border-radius:999px;padding:8px 14px;box-shadow:0 0 22px var(--soft);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2rem,6vw,4.8rem);line-height:.96;text-shadow:0 0 18px rgba(255,159,28,.38),0 0 42px rgba(255,159,28,.16)}.subtitle{max-width:900px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.55}.hero-strip{max-width:1180px;margin:24px auto 8px;padding:0 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.hero-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,159,28,.1),rgba(0,0,0,.72));border-radius:22px;padding:20px;min-height:140px;position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.hero-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 34px rgba(255,159,28,.24);border-color:var(--orange)}.hero-card:after{content:"";position:absolute;width:150px;height:150px;right:-58px;bottom:-58px;border:1px solid rgba(255,159,28,.28);border-radius:50%}.hero-icon{font-size:2.2rem;margin-bottom:8px}.hero-title{color:var(--amber);font-size:1.25rem;font-weight:900}.hero-text{color:var(--muted);margin-top:8px;line-height:1.42}main{max-width:1240px;margin:0 auto;padding:22px 18px 48px}.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.system-section{border:1px solid var(--line);background:rgba(9,9,9,.88);border-radius:24px;padding:18px;box-shadow:0 0 30px rgba(0,0,0,.35);position:relative;overflow:hidden}.system-section:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),transparent);opacity:.75}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1}.section-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);background:radial-gradient(circle at top,rgba(255,159,28,.28),rgba(0,0,0,.75));font-size:1.65rem;box-shadow:inset 0 0 18px rgba(255,159,28,.12)}h2{margin:0;color:var(--orange);font-size:1.2rem;letter-spacing:.01em}.cards{display:grid;gap:10px;position:relative;z-index:1}.idea-card{border:1px solid rgba(255,159,28,.28);background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.02));border-radius:16px;padding:13px 14px;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;cursor:default;position:relative;overflow:hidden}.idea-card:hover{transform:translateX(8px) scale(1.025);border-color:var(--orange);background:linear-gradient(135deg,rgba(255,159,28,.18),rgba(98,216,255,.06));box-shadow:0 0 26px rgba(255,159,28,.21)}.idea-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s ease}.idea-card:hover:after{transform:translateX(120%)}.main-idea{display:block;color:var(--amber);font-weight:900;font-size:1rem;margin-bottom:5px}.arrow{color:var(--orange);font-weight:900;margin-right:4px}.real-world{display:block;color:#ead9b8;line-height:1.42;font-size:.96rem}.tag{display:inline-block;margin-top:8px;color:#111;background:var(--orange);border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.wide{grid-column:1/-1}.memory-map{margin-top:20px;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));position:relative;overflow:hidden}.memory-map h2{font-size:1.45rem;margin-bottom:14px}.map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.map-card{border:1px solid rgba(255,159,28,.38);border-radius:20px;padding:18px;background:rgba(0,0,0,.55);transition:transform .25s ease,box-shadow .25s ease}.map-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 0 28px rgba(98,216,255,.16),0 0 34px rgba(255,159,28,.12)}.map-number{color:var(--blue);font-size:2rem;font-weight:900}.map-title{color:var(--amber);font-weight:900;font-size:1.2rem;margin:4px 0 8px}.map-card ul{margin:0;padding-left:18px;color:#ead9b8;line-height:1.65}.fail-list{margin-top:20px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fail-chip{border:1px solid rgba(255,95,86,.55);background:rgba(255,95,86,.08);color:#ffd6d3;padding:14px;border-radius:16px;font-weight:800;text-align:center;transition:transform .2s ease,background .2s ease}.fail-chip:hover{transform:scale(1.06);background:rgba(255,95,86,.18)}footer{text-align:center;color:var(--muted);padding:26px 18px 38px}@media(max-width:900px){.hero-strip,.map-grid{grid-template-columns:1fr}.section-grid{grid-template-columns:1fr}.fail-list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main{padding:18px 10px 34px}header{padding-top:24px}.system-section,.memory-map{border-radius:18px;padding:14px}.fail-list{grid-template-columns:1fr}.idea-card:hover{transform:scale(1.015)}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 70–80 • Powerplant</div>
+    <h1>PW1500G Engine System Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for the geared turbofan engine, FADEC control, fuel/oil/air systems, starting, thrust reverser logic, vibration monitoring, and line-maintenance troubleshooting.</p>
+  </header>
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">🌀</div><div class="hero-title">Geared Turbofan</div><div class="hero-text">PW1500G uses a fan drive gear system so the fan and turbine can run at their best speeds.</div></div>
+    <div class="hero-card"><div class="hero-icon">🧠</div><div class="hero-title">FADEC Controlled</div><div class="hero-text">Pilot commands go to FADEC; FADEC manages fuel, air, ignition, thrust, and protection.</div></div>
+    <div class="hero-card"><div class="hero-icon">🔧</div><div class="hero-title">System of Systems</div><div class="hero-text">Most engine write-ups come from data, sensors, valves, controls, oil, vibration, or protection logic.</div></div>
+  </section>
+  <main>
+    <section class="section-grid">
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept — Engine System</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">ATA 70–80 = full engine system</span><span class="real-world"><span class="arrow">→</span>Mechanical engine, fuel, oil, air, FADEC, starting, and thrust reverser all work together.</span></div>
+        <div class="idea-card"><span class="main-idea">Engine is controlled by FADEC</span><span class="real-world"><span class="arrow">→</span>It is not just a turbine; it is a digital + thermodynamic system.</span><span class="tag">big idea</span></div>
+        <div class="idea-card"><span class="main-idea">Think system interaction first</span><span class="real-world"><span class="arrow">→</span>Engine issues can involve fuel, oil, air, sensors, electrical power, or control logic.</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">⚙️</div><h2>PW1500G Architecture</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">PW1500G = geared turbofan</span><span class="real-world"><span class="arrow">→</span>High bypass engine with a gearbox between fan and low spool.</span></div>
+        <div class="idea-card"><span class="main-idea">Two spools: N1 and N2</span><span class="real-world"><span class="arrow">→</span>N1 = fan / low spool. N2 = core / high spool.</span></div>
+        <div class="idea-card"><span class="main-idea">N1 is thrust, N2 is core power</span><span class="real-world"><span class="arrow">→</span>Use both indications to understand what the engine is actually doing.</span><span class="tag">memory hook</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧩</div><h2>Fan Drive Gear System</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Gearbox reduces fan speed</span><span class="real-world"><span class="arrow">→</span>The turbine can spin faster while the fan spins slower and more efficiently.</span></div>
+        <div class="idea-card"><span class="main-idea">Efficiency gain, extra complexity</span><span class="real-world"><span class="arrow">→</span>Gearbox adds oil, bearings, vibration, and monitoring concerns.</span></div>
+        <div class="idea-card"><span class="main-idea">GTF signature feature</span><span class="real-world"><span class="arrow">→</span>This is what makes the PW1500G different from many older turbofans.</span><span class="tag">PW1500G key</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>FADEC / EEC</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">FADEC has full authority</span><span class="real-world"><span class="arrow">→</span>It controls fuel flow, airflow, ignition, start/stop, thrust, and protection.</span></div>
+        <div class="idea-card"><span class="main-idea">Dual-channel EEC</span><span class="real-world"><span class="arrow">→</span>One channel active, one standby. Channel switching protects operation.</span></div>
+        <div class="idea-card"><span class="main-idea">Pilot commands, FADEC decides</span><span class="real-world"><span class="arrow">→</span>Thrust lever movement is a request; FADEC manages the engine response.</span><span class="tag">core MX concept</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">⚡</div><h2>FADEC Power & Sensors</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">PMAG powers FADEC above about 45% N2</span><span class="real-world"><span class="arrow">→</span>Once running, the engine powers its own control system.</span></div>
+        <div class="idea-card"><span class="main-idea">Below that, aircraft DC power supports control</span><span class="real-world"><span class="arrow">→</span>Electrical issues can affect start and low-speed operation.</span></div>
+        <div class="idea-card"><span class="main-idea">Sensors drive everything</span><span class="real-world"><span class="arrow">→</span>N1, N2, EGT, pressures, and temperatures feed FADEC decisions.</span><span class="tag">data first</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">🛡️</div><h2>Engine Protection Logic</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">FADEC protects against overspeed and overtemp</span><span class="real-world"><span class="arrow">→</span>Shutdowns may be protective, not proof that the core failed.</span></div>
+        <div class="idea-card"><span class="main-idea">Stall and thrust malfunction protection</span><span class="real-world"><span class="arrow">→</span>The system limits damage when engine behavior goes outside safe limits.</span></div>
+        <div class="idea-card"><span class="main-idea">Protective shutdowns need root-cause thinking</span><span class="real-world"><span class="arrow">→</span>Check the trigger data before blaming the engine.</span><span class="tag">don’t parts cannon</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">⛽</div><h2>Fuel System</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Fuel flow: fuel → IFPC → manifolds → nozzles</span><span class="real-world"><span class="arrow">→</span>The IFPC pressurizes, meters, and distributes fuel.</span></div>
+        <div class="idea-card"><span class="main-idea">Start uses primary nozzles first</span><span class="real-world"><span class="arrow">→</span>Acceleration brings in primary + secondary fuel distribution.</span></div>
+        <div class="idea-card"><span class="main-idea">Fuel filter bypass is a clue</span><span class="real-world"><span class="arrow">→</span>High differential pressure can open bypass and create messages.</span><span class="tag">start issues</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">🛢️</div><h2>Oil System</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Oil is engine life support</span><span class="real-world"><span class="arrow">→</span>It lubricates, cools, cleans, and supports debris monitoring.</span></div>
+        <div class="idea-card"><span class="main-idea">Low pressure and high temperature are serious</span><span class="real-world"><span class="arrow">→</span>Oil indications can drive immediate maintenance or shutdown concerns.</span></div>
+        <div class="idea-card"><span class="main-idea">Debris monitoring gives early warning</span><span class="real-world"><span class="arrow">→</span>Metal/debris trends can point toward internal wear before major failure.</span><span class="tag">engine health</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">🌡️</div><h2>Thermal Management</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Fuel/oil and air/oil heat exchangers manage temperature</span><span class="real-world"><span class="arrow">→</span>The engine uses fuel and air as cooling media.</span></div>
+        <div class="idea-card"><span class="main-idea">Temperature affects multiple systems</span><span class="real-world"><span class="arrow">→</span>Oil, fuel, gearbox, and bearing health all depend on proper heat control.</span></div>
+        <div class="idea-card"><span class="main-idea">Cooling faults can look like engine faults</span><span class="real-world"><span class="arrow">→</span>Follow the thermal path before condemning major components.</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">🌬️</div><h2>Engine Air System</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Air system controls stability and efficiency</span><span class="real-world"><span class="arrow">→</span>It handles cooling, sealing, compressor stability, and performance.</span></div>
+        <div class="idea-card"><span class="main-idea">VSVs adjust compressor airflow</span><span class="real-world"><span class="arrow">→</span>Closed at start/idle, more open at high power.</span></div>
+        <div class="idea-card"><span class="main-idea">Bleed valves prevent surge</span><span class="real-world"><span class="arrow">→</span>FADEC opens/closes internal bleeds to manage compressor behavior.</span><span class="tag">stall prevention</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">🔄</div><h2>ACC & Buffer Air</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Active clearance control manages turbine case cooling</span><span class="real-world"><span class="arrow">→</span>It keeps blade clearances efficient as temperatures change.</span></div>
+        <div class="idea-card"><span class="main-idea">Buffer air protects bearing compartments</span><span class="real-world"><span class="arrow">→</span>Correct pressure helps maintain seals and prevent oil leaks.</span></div>
+        <div class="idea-card"><span class="main-idea">Air source changes with power setting</span><span class="real-world"><span class="arrow">→</span>Low and high power conditions use different pressure sources.</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">🚀</div><h2>Engine Starting</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Air turbine starter spins N2</span><span class="real-world"><span class="arrow">→</span>Start air can come from APU, external air, or cross-bleed.</span></div>
+        <div class="idea-card"><span class="main-idea">Watch N2, EGT, and oil pressure</span><span class="real-world"><span class="arrow">→</span>These three tell the story during start.</span></div>
+        <div class="idea-card"><span class="main-idea">Hot, hung, or no-light-off starts follow logic</span><span class="real-world"><span class="arrow">→</span>Separate fuel, ignition, starter air, and sensor issues.</span><span class="tag">line MX</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">↩️</div><h2>Thrust Reverser</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Cascade type thrust reverser</span><span class="real-world"><span class="arrow">→</span>Translating sleeves and blocker doors redirect fan airflow forward.</span></div>
+        <div class="idea-card"><span class="main-idea">Controlled by FADEC and control units</span><span class="real-world"><span class="arrow">→</span>Electrical logic commands hydraulic actuation.</span></div>
+        <div class="idea-card"><span class="main-idea">WOW, locks, and feedback sensors protect deployment</span><span class="real-world"><span class="arrow">→</span>If the system disagrees, thrust may reduce automatically.</span><span class="tag">highly interlocked</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">⚠️</div><h2>PDOS & Cowl Safety</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">PDOS opens the T/R cowl hydraulically</span><span class="real-world"><span class="arrow">→</span>It uses high pressure and must be treated with respect.</span></div>
+        <div class="idea-card"><span class="main-idea">Hold-open rods are mandatory</span><span class="real-world"><span class="arrow">→</span>Always secure the cowl before working underneath it.</span></div>
+        <div class="idea-card"><span class="main-idea">Maintenance safety is part of the system</span><span class="real-world"><span class="arrow">→</span>Locks, rods, and safe positions matter as much as electrical indications.</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">📈</div><h2>Vibration Monitoring</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Vibration sensors feed PHMU</span><span class="real-world"><span class="arrow">→</span>Vibration is an early warning for fan, core, bearing, or imbalance issues.</span></div>
+        <div class="idea-card"><span class="main-idea">Trends matter</span><span class="real-world"><span class="arrow">→</span>One reading matters, but rising trend tells the bigger story.</span></div>
+        <div class="idea-card"><span class="main-idea">Vibration can be mechanical or indication-related</span><span class="real-world"><span class="arrow">→</span>Validate data before assuming major engine damage.</span><span class="tag">trend watch</span></div>
+      </div></div>
+      <div class="system-section"><div class="section-head"><div class="section-icon">📊</div><h2>Engine Indications & Limits</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">N1, N2, and EGT are core references</span><span class="real-world"><span class="arrow">→</span>N1 shows thrust, N2 shows core speed, EGT shows thermal limit.</span></div>
+        <div class="idea-card"><span class="main-idea">EGT exceedance requires maintenance action</span><span class="real-world"><span class="arrow">→</span>Do not treat high EGT like a casual indication.</span></div>
+        <div class="idea-card"><span class="main-idea">APR and N1 sync are automatic functions</span><span class="real-world"><span class="arrow">→</span>APR helps takeoff performance after engine failure; N1 sync reduces noise.</span></div>
+      </div></div>
+      <div class="system-section wide"><div class="section-head"><div class="section-icon">🔧</div><h2>Troubleshooting Flow</h2></div><div class="cards">
+        <div class="idea-card"><span class="main-idea">Step 1: Check EICAS / CAS</span><span class="real-world"><span class="arrow">→</span>Start with the reported effect and warning message.</span></div>
+        <div class="idea-card"><span class="main-idea">Step 2: Identify the system area</span><span class="real-world"><span class="arrow">→</span>Fuel, oil, air, start, control, vibration, or thrust reverser?</span></div>
+        <div class="idea-card"><span class="main-idea">Step 3: Check FADEC data in OMS</span><span class="real-world"><span class="arrow">→</span>Use data to see what FADEC commanded and what the engine actually did.</span></div>
+        <div class="idea-card"><span class="main-idea">Step 4: Validate sensors before components</span><span class="real-world"><span class="arrow">→</span>Always follow Input → FADEC → Output → Protection.</span><span class="tag">money path</span></div>
+      </div></div>
+    </section>
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember ATA 70–80</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Make Thrust</div><ul><li>Air</li><li>Fuel</li><li>Combustion</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Control Engine</div><ul><li>FADEC</li><li>EEC channels</li><li>Sensor inputs</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Support Engine</div><ul><li>Fuel system</li><li>Oil system</li><li>Air system</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Protect Engine</div><ul><li>Overspeed / overtemp</li><li>Vibration</li><li>Shutdown logic</li></ul></div>
+      </div>
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">FADEC is everything<br><small>commands + protects</small></div>
+        <div class="fail-chip">Oil health matters<br><small>engine life support</small></div>
+        <div class="fail-chip">Vibration trends<br><small>early warning clues</small></div>
+        <div class="fail-chip">Think data first<br><small>sensor/control before core</small></div>
+      </div>
+    </section>
+  </main>
+  <footer>A220 ATA 70–80 quick-study page • PW1500G engine, FADEC, fuel, oil, air, thrust reverser, indications, and troubleshooting.</footer>
+</body>
+</html>

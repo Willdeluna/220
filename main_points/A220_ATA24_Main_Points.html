@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 24 Main Points</title>
+  <style>
+    :root{--bg:#050505;--panel:#101010;--orange:#ff9f1c;--amber:#ffd27f;--soft:rgba(255,159,28,.18);--line:rgba(255,159,28,.55);--white:#f7efe4;--muted:#bda777;--red:#ff5f56;--blue:#62d8ff;--green:#8cffb1}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--white);background:radial-gradient(circle at 18% 0%,rgba(255,159,28,.22),transparent 28%),radial-gradient(circle at 86% 20%,rgba(98,216,255,.13),transparent 26%),radial-gradient(circle at 52% 100%,rgba(140,255,177,.07),transparent 26%),linear-gradient(135deg,#000,#080808 45%,#130b02);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at center,black,transparent 82%)}header{max-width:1180px;margin:0 auto;padding:36px 18px 18px;text-align:center;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid var(--line);background:rgba(0,0,0,.55);border-radius:999px;padding:8px 14px;box-shadow:0 0 22px var(--soft);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2rem,6vw,4.8rem);line-height:.96;text-shadow:0 0 18px rgba(255,159,28,.38),0 0 42px rgba(255,159,28,.16)}.subtitle{max-width:900px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.55}.hero-strip{max-width:1180px;margin:24px auto 8px;padding:0 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.hero-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,159,28,.1),rgba(0,0,0,.72));border-radius:22px;padding:20px;min-height:140px;position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.hero-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 34px rgba(255,159,28,.24);border-color:var(--orange)}.hero-card:after{content:"";position:absolute;width:150px;height:150px;right:-58px;bottom:-58px;border:1px solid rgba(255,159,28,.28);border-radius:50%}.hero-icon{font-size:2.2rem;margin-bottom:8px}.hero-title{color:var(--amber);font-size:1.25rem;font-weight:900}.hero-text{color:var(--muted);margin-top:8px;line-height:1.42}main{max-width:1240px;margin:0 auto;padding:22px 18px 48px}.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.system-section{border:1px solid var(--line);background:rgba(9,9,9,.88);border-radius:24px;padding:18px;box-shadow:0 0 30px rgba(0,0,0,.35);position:relative;overflow:hidden}.system-section:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),transparent);opacity:.75}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1}.section-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);background:radial-gradient(circle at top,rgba(255,159,28,.28),rgba(0,0,0,.75));font-size:1.65rem;box-shadow:inset 0 0 18px rgba(255,159,28,.12)}h2{margin:0;color:var(--orange);font-size:1.2rem;letter-spacing:.01em}.cards{display:grid;gap:10px;position:relative;z-index:1}.idea-card{border:1px solid rgba(255,159,28,.28);background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.02));border-radius:16px;padding:13px 14px;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;cursor:default;position:relative;overflow:hidden}.idea-card:hover{transform:translateX(8px) scale(1.025);border-color:var(--orange);background:linear-gradient(135deg,rgba(255,159,28,.18),rgba(98,216,255,.06));box-shadow:0 0 26px rgba(255,159,28,.21)}.idea-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s ease}.idea-card:hover:after{transform:translateX(120%)}.main-idea{display:block;color:var(--amber);font-weight:900;font-size:1rem;margin-bottom:5px}.arrow{color:var(--orange);font-weight:900;margin-right:4px}.real-world{display:block;color:#ead9b8;line-height:1.42;font-size:.96rem}.tag{display:inline-block;margin-top:8px;color:#111;background:var(--orange);border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.memory-map{margin-top:20px;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));position:relative;overflow:hidden}.memory-map h2{font-size:1.45rem;margin-bottom:14px}.map-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.map-card{border:1px solid rgba(255,159,28,.38);border-radius:20px;padding:16px;background:rgba(0,0,0,.55);transition:transform .25s ease,box-shadow .25s ease}.map-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 0 28px rgba(98,216,255,.16),0 0 34px rgba(255,159,28,.12)}.map-number{color:var(--blue);font-size:2rem;font-weight:900}.map-title{color:var(--amber);font-weight:900;font-size:1.04rem;margin:4px 0 8px}.map-card ul{margin:0;padding-left:18px;color:#ead9b8;line-height:1.55}.fail-list{margin-top:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.fail-chip{border:1px solid rgba(255,95,86,.55);background:rgba(255,95,86,.08);color:#ffd6d3;padding:14px;border-radius:16px;font-weight:800;text-align:center;transition:transform .2s ease,background .2s ease}.fail-chip:hover{transform:scale(1.06);background:rgba(255,95,86,.18)}footer{text-align:center;color:var(--muted);padding:26px 18px 38px}@media(max-width:1000px){.map-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:900px){.hero-strip{grid-template-columns:1fr}.section-grid{grid-template-columns:1fr}.fail-list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main{padding:18px 10px 34px}header{padding-top:24px}.system-section,.memory-map{border-radius:18px;padding:14px}.fail-list,.map-grid{grid-template-columns:1fr}.idea-card:hover{transform:scale(1.015)}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 24 • Electrical System</div>
+    <h1>Smart Power Management Made Simple</h1>
+    <p class="subtitle">A line-maintenance study page for A220 power sources, VFGs, EPCs, BPCUs, buses, TRUs, batteries, SSPCs, fly-by-wire backup power, RAT logic, and electrical protection.</p>
+  </header>
+  <section class="hero-strip">
+    <div class="hero-card"><div class="hero-icon">⚡</div><div class="hero-title">Generate & Convert</div><div class="hero-text">VFGs, APU, external power, TRUs, and batteries create the power foundation.</div></div>
+    <div class="hero-card"><div class="hero-icon">🧠</div><div class="hero-title">Manage & Route</div><div class="hero-text">BPCUs, CDCs, EPCs, buses, and contactors decide where power goes.</div></div>
+    <div class="hero-card"><div class="hero-icon">🛡️</div><div class="hero-title">Protect & Backup</div><div class="hero-text">SSPCs, differential protection, PMAG, and RAT logic keep essential systems alive.</div></div>
+  </section>
+  <main>
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">A220 electrical system = smart power network</span><span class="real-world"><span class="arrow">→</span>Automatically selects sources, transfers buses, sheds loads, and protects itself.</span><span class="tag">core idea</span></div><div class="idea-card"><span class="main-idea">You do not manually control most power flow</span><span class="real-world"><span class="arrow">→</span>The system decides routing; maintenance needs to understand the logic behind the decision.</span></div><div class="idea-card"><span class="main-idea">Troubleshooting starts with power path logic</span><span class="real-world"><span class="arrow">→</span>Follow source → bus → controller → load → protection.</span><span class="tag">MX mindset</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🧩</div><h2>System Architecture</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Three main channels</span><span class="real-world"><span class="arrow">→</span>Left channel EPC 1, right channel EPC 2, and emergency channel EPC 3.</span></div><div class="idea-card"><span class="main-idea">BPCU 1 and 2 manage distribution</span><span class="real-world"><span class="arrow">→</span>They handle source switching, bus transfers, load shedding, and fault isolation.</span></div><div class="idea-card"><span class="main-idea">EMPC controls emergency power</span><span class="real-world"><span class="arrow">→</span>Emergency logic manages RAT deployment and essential bus routing.</span><span class="tag">emergency brain</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">⚡</div><h2>Power Sources</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">AC power is primary</span><span class="real-world"><span class="arrow">→</span>Main sources are engine VFGs, APU generator, and external power.</span></div><div class="idea-card"><span class="main-idea">DC power comes from AC</span><span class="real-world"><span class="arrow">→</span>TRUs convert AC power to 28V DC for DC buses and essential systems.</span></div><div class="idea-card"><span class="main-idea">RAT is emergency backup</span><span class="real-world"><span class="arrow">→</span>The ram air turbine is the last-line backup when normal AC power is lost.</span><span class="tag">backup</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🔄</div><h2>Variable Frequency Generators</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">VFGs are engine-driven</span><span class="real-world"><span class="arrow">→</span>Frequency changes with engine speed; no constant-speed drive like older systems.</span></div><div class="idea-card"><span class="main-idea">GCU controls generator operation</span><span class="real-world"><span class="arrow">→</span>Generator control includes regulation, monitoring, and protection.</span></div><div class="idea-card"><span class="main-idea">Generator trips are usually protection</span><span class="real-world"><span class="arrow">→</span>Overvoltage, undervoltage, frequency faults, overcurrent, or differential faults can trip it.</span><span class="tag">protective shutdown</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🛡️</div><h2>OPU Backup Protection</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">OPU adds hardware backup</span><span class="real-world"><span class="arrow">→</span>It gives independent protection separate from GCU logic.</span></div><div class="idea-card"><span class="main-idea">Two protection layers</span><span class="real-world"><span class="arrow">→</span>Software/control protection plus hardware backup reduces damage risk.</span></div><div class="idea-card"><span class="main-idea">Do not assume a bad generator immediately</span><span class="real-world"><span class="arrow">→</span>A trip may be the system protecting itself from abnormal conditions.</span><span class="tag">line clue</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🏢</div><h2>Electrical Power Centers</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">EPC = physical routing hub</span><span class="real-world"><span class="arrow">→</span>Contains buses, contactors, TRUs, and distribution hardware.</span></div><div class="idea-card"><span class="main-idea">Power is routed inside EPCs</span><span class="real-world"><span class="arrow">→</span>This is where source power is physically connected to buses and loads.</span></div><div class="idea-card"><span class="main-idea">Separation barriers limit damage spread</span><span class="real-world"><span class="arrow">→</span>The design helps contain fire or fault damage.</span><span class="tag">safety design</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🚌</div><h2>Bus System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Main buses distribute power</span><span class="real-world"><span class="arrow">→</span>AC BUS 1/2, AC ESS BUS, DC BUS 1/2, and DC ESS buses feed aircraft loads.</span></div><div class="idea-card"><span class="main-idea">Normal operation is split bus</span><span class="real-world"><span class="arrow">→</span>Left and right sides normally operate independently.</span></div><div class="idea-card"><span class="main-idea">Tie logic connects sides during failures</span><span class="real-world"><span class="arrow">→</span>Unexpected routing can be normal automatic protection behavior.</span><span class="tag">important</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>BPCU Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">BPCU = decision maker</span><span class="real-world"><span class="arrow">→</span>Controls source switching, power routing, load shedding, and fault isolation.</span></div><div class="idea-card"><span class="main-idea">It responds automatically</span><span class="real-world"><span class="arrow">→</span>The airplane may reconfigure before the crew or mechanic sees the full symptom.</span></div><div class="idea-card"><span class="main-idea">CAS and synoptic pages are key</span><span class="real-world"><span class="arrow">→</span>Use indications to understand what the BPCU commanded.</span><span class="tag">use displays</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">📉</div><h2>Load Management</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Load shedding is priority based</span><span class="real-world"><span class="arrow">→</span>Non-essential loads drop first when demand is too high or power is limited.</span></div><div class="idea-card"><span class="main-idea">Galleys and IFE are common shed loads</span><span class="real-world"><span class="arrow">→</span>Loss of comfort systems may be normal load management, not a failed component.</span></div><div class="idea-card"><span class="main-idea">Loss of a system may be intentional</span><span class="real-world"><span class="arrow">→</span>The system protects essential loads by removing lower-priority ones.</span><span class="tag">don’t chase ghosts</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🔋</div><h2>DC Power & Batteries</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">TRUs convert AC to 28V DC</span><span class="real-world"><span class="arrow">→</span>Three TRUs support DC distribution and essential DC power.</span></div><div class="idea-card"><span class="main-idea">TRUs protect themselves</span><span class="real-world"><span class="arrow">→</span>Overtemperature, fan failure, and overvoltage can trip a TRU.</span></div><div class="idea-card"><span class="main-idea">Two NiCad batteries support backup power</span><span class="real-world"><span class="arrow">→</span>Batteries feed emergency/essential loads and can support APU start.</span><span class="tag">survival power</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">⚡</div><h2>No-Break Power & SSPCs</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">SSRPCs provide instant switching support</span><span class="real-world"><span class="arrow">→</span>They help prevent avionics or FBW resets during source transfer.</span></div><div class="idea-card"><span class="main-idea">SSPCs replace many traditional CB functions</span><span class="real-world"><span class="arrow">→</span>They switch, protect, monitor, and report electronically.</span></div><div class="idea-card"><span class="main-idea">CB page matters on modern aircraft</span><span class="real-world"><span class="arrow">→</span>Do not expect every issue to be solved with old-school physical breaker pulling.</span><span class="tag">modern MX</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🧰</div><h2>CDC Distribution Cabinets</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">CDCs support software-driven distribution</span><span class="real-world"><span class="arrow">→</span>Master CDCs control logic while satellite CDCs follow commands.</span></div><div class="idea-card"><span class="main-idea">SSPC logic can be simple or advanced</span><span class="real-world"><span class="arrow">→</span>Some loads require combinational logic and time delays.</span></div><div class="idea-card"><span class="main-idea">Example: wing anti-ice logic</span><span class="real-world"><span class="arrow">→</span>A system may need multiple valid inputs before power is applied.</span><span class="tag">logic based</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🕹️</div><h2>Fly-By-Wire Power</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">FBW must never lose power</span><span class="real-world"><span class="arrow">→</span>Dedicated FBW power paths keep flight controls alive.</span></div><div class="idea-card"><span class="main-idea">FBWPC provides dedicated power</span><span class="real-world"><span class="arrow">→</span>Backups include DC bus, PMAG, and battery support.</span></div><div class="idea-card"><span class="main-idea">PMAG supports FBW/EEC power</span><span class="real-world"><span class="arrow">→</span>Even after major generator loss, critical control power remains available.</span><span class="tag">critical</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🚨</div><h2>Emergency Electrical System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">RAT deploys if both AC buses fail</span><span class="real-world"><span class="arrow">→</span>It provides emergency AC essential power and hydraulic pressure.</span></div><div class="idea-card"><span class="main-idea">Deployment logic is conditional</span><span class="real-world"><span class="arrow">→</span>RAT deploys in flight above about 50 knots.</span></div><div class="idea-card"><span class="main-idea">EMPC manages emergency routing</span><span class="real-world"><span class="arrow">→</span>When things go bad, EMPC controls essential power distribution.</span><span class="tag">last line</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🔥</div><h2>Protection & Smoke Isolation</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Differential protection detects wiring faults</span><span class="real-world"><span class="arrow">→</span>The system isolates bad sections before damage spreads.</span></div><div class="idea-card"><span class="main-idea">Bus tie protection limits fault propagation</span><span class="real-world"><span class="arrow">→</span>The airplane tries to protect the healthy side from the failed side.</span></div><div class="idea-card"><span class="main-idea">BUS ISOL can intentionally cut power</span><span class="real-world"><span class="arrow">→</span>During smoke/fire events, power removal may be commanded—not a failure.</span><span class="tag">critical insight</span></div>
+        </div>
+      </div>
+<div class="system-section">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance Reality</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Most issues are not failed generators</span><span class="real-world"><span class="arrow">→</span>Often the problem is contactors, sensors, SSPCs, or control logic.</span></div><div class="idea-card"><span class="main-idea">Use synoptic, CAS, and BPCU status</span><span class="real-world"><span class="arrow">→</span>Those tell you what the aircraft thinks is happening.</span></div><div class="idea-card"><span class="main-idea">Lost power may be reconfiguration</span><span class="real-world"><span class="arrow">→</span>Treat it as a system event before calling a component bad.</span><span class="tag">MX takeaway</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember A220 ATA 24</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Generate Power</div><ul><li>VFG</li><li>APU</li><li>External</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Convert Power</div><ul><li>TRU</li><li>Batteries</li><li>28V DC</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Manage Power</div><ul><li>BPCU</li><li>CDC</li><li>EPC</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Protect Power</div><ul><li>SSPC</li><li>OPU</li><li>Differential</li></ul></div>
+        <div class="map-card"><div class="map-number">5</div><div class="map-title">Backup Power</div><ul><li>PMAG</li><li>RAT</li><li>EMPC</li></ul></div>
+      </div>
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">System reconfigures<br><small>before it fully fails</small></div>
+        <div class="fail-chip">BPCU decides<br><small>understand the logic</small></div>
+        <div class="fail-chip">SSPC faults<br><small>replace many CB issues</small></div>
+        <div class="fail-chip">Load shedding<br><small>can be normal protection</small></div>
+        <div class="fail-chip">FBW power<br><small>has deep redundancy</small></div>
+        <div class="fail-chip">Follow flow<br><small>source → bus → load</small></div>
+      </div>
+    </section>
+  </main>
+  <footer>A220 ATA 24 quick-study page • Intelligent power routing, protection, backup power, and line-maintenance troubleshooting.</footer>
+</body>
+</html>

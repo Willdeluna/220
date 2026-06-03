@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 35 Main Points</title>
+  <style>
+    :root{--bg:#050505;--panel:#101010;--orange:#ff9f1c;--amber:#ffd27f;--soft:rgba(255,159,28,.18);--line:rgba(255,159,28,.55);--white:#f7efe4;--muted:#bda777;--red:#ff5f56;--blue:#62d8ff;--green:#8cffb1}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--white);background:radial-gradient(circle at 20% 0%,rgba(255,159,28,.22),transparent 28%),radial-gradient(circle at 85% 20%,rgba(98,216,255,.13),transparent 26%),radial-gradient(circle at 52% 100%,rgba(140,255,177,.07),transparent 26%),linear-gradient(135deg,#000,#080808 45%,#130b02);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at center,black,transparent 82%)}header{max-width:1180px;margin:0 auto;padding:36px 18px 18px;text-align:center;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid var(--line);background:rgba(0,0,0,.55);border-radius:999px;padding:8px 14px;box-shadow:0 0 22px var(--soft);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2rem,6vw,4.8rem);line-height:.96;text-shadow:0 0 18px rgba(255,159,28,.38),0 0 42px rgba(255,159,28,.16)}.subtitle{max-width:850px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.55}.hero-strip{max-width:1180px;margin:24px auto 8px;padding:0 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.hero-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,159,28,.1),rgba(0,0,0,.72));border-radius:22px;padding:20px;min-height:140px;position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.hero-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 34px rgba(255,159,28,.24);border-color:var(--orange)}.hero-card:after{content:"";position:absolute;width:150px;height:150px;right:-58px;bottom:-58px;border:1px solid rgba(255,159,28,.28);border-radius:50%}.hero-icon{font-size:2.2rem;margin-bottom:8px}.hero-title{color:var(--amber);font-size:1.25rem;font-weight:900}.hero-text{color:var(--muted);margin-top:8px;line-height:1.42}main{max-width:1240px;margin:0 auto;padding:22px 18px 48px}.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.system-section{border:1px solid var(--line);background:rgba(9,9,9,.88);border-radius:24px;padding:18px;box-shadow:0 0 30px rgba(0,0,0,.35);position:relative;overflow:hidden}.system-section:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),transparent);opacity:.75}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1}.section-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);background:radial-gradient(circle at top,rgba(255,159,28,.28),rgba(0,0,0,.75));font-size:1.65rem;box-shadow:inset 0 0 18px rgba(255,159,28,.12)}h2{margin:0;color:var(--orange);font-size:1.2rem;letter-spacing:.01em}.cards{display:grid;gap:10px;position:relative;z-index:1}.idea-card{border:1px solid rgba(255,159,28,.28);background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.02));border-radius:16px;padding:13px 14px;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;cursor:default;position:relative;overflow:hidden}.idea-card:hover{transform:translateX(8px) scale(1.025);border-color:var(--orange);background:linear-gradient(135deg,rgba(255,159,28,.18),rgba(98,216,255,.06));box-shadow:0 0 26px rgba(255,159,28,.21)}.idea-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s ease}.idea-card:hover:after{transform:translateX(120%)}.main-idea{display:block;color:var(--amber);font-weight:900;font-size:1rem;margin-bottom:5px}.arrow{color:var(--orange);font-weight:900;margin-right:4px}.real-world{display:block;color:#ead9b8;line-height:1.42;font-size:.96rem}.tag{display:inline-block;margin-top:8px;color:#111;background:var(--orange);border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.wide{grid-column:1/-1}.memory-map{margin-top:20px;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));position:relative;overflow:hidden}.memory-map h2{font-size:1.45rem;margin-bottom:14px}.map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.map-card{border:1px solid rgba(255,159,28,.38);border-radius:20px;padding:18px;background:rgba(0,0,0,.55);transition:transform .25s ease,box-shadow .25s ease}.map-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 0 28px rgba(98,216,255,.16),0 0 34px rgba(255,159,28,.12)}.map-number{color:var(--blue);font-size:2rem;font-weight:900}.map-title{color:var(--amber);font-weight:900;font-size:1.2rem;margin:4px 0 8px}.map-card ul{margin:0;padding-left:18px;color:#ead9b8;line-height:1.65}.fail-list{margin-top:20px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fail-chip{border:1px solid rgba(255,95,86,.55);background:rgba(255,95,86,.08);color:#ffd6d3;padding:14px;border-radius:16px;font-weight:800;text-align:center;transition:transform .2s ease,background .2s ease}.fail-chip:hover{transform:scale(1.06);background:rgba(255,95,86,.18)}footer{text-align:center;color:var(--muted);padding:26px 18px 38px}@media(max-width:900px){.hero-strip,.map-grid{grid-template-columns:1fr}.section-grid{grid-template-columns:1fr}.fail-list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main{padding:18px 10px 34px}header{padding-top:24px}.system-section,.memory-map{border-radius:18px;padding:14px}.fail-list{grid-template-columns:1fr}.idea-card:hover{transform:scale(1.015)}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">✅ A220 ATA 35 • Oxygen System</div>
+  <h1>Emergency Oxygen Made Simple</h1>
+  <p class="subtitle">A fast interactive study page for crew oxygen, passenger oxygen, lav oxygen, portable bottles, deployment logic, hazards, and line-maintenance troubleshooting.</p>
+</header>
+<section class="hero-strip">
+  <div class="hero-card"><div class="hero-icon">🎭</div><div class="hero-title">Crew Oxygen</div><div class="hero-text">Reusable gaseous oxygen system with monitored pressure, regulators, masks, microphone integration, and emergency positive-pressure modes.</div></div>
+  <div class="hero-card"><div class="hero-icon">👥</div><div class="hero-title">Passenger Oxygen</div><div class="hero-text">Chemical generators in PSUs deploy during cabin altitude events. Once activated, they are hot and one-time use.</div></div>
+  <div class="hero-card"><div class="hero-icon">🔥</div><div class="hero-title">High-Risk System</div><div class="hero-text">Oxygen supports life, but it also increases fire risk. Cleanliness, safety pins, and pressure control matter.</div></div>
+</section>
+<main>
+<section class="section-grid">
+  <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">ATA 35 = emergency life-support system</span><span class="real-world"><span class="arrow">→</span>It provides oxygen for crew, passengers, lavatories, and portable use.</span></div>
+    <div class="idea-card"><span class="main-idea">Used when things go wrong</span><span class="real-world"><span class="arrow">→</span>Depressurization, cockpit smoke/fumes, and medical situations are the big drivers.</span><span class="tag">safety critical</span></div>
+    <div class="idea-card"><span class="main-idea">Different users = different oxygen systems</span><span class="real-world"><span class="arrow">→</span>Crew, passenger, lav, and portable systems do not all work the same way.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🧩</div><h2>System Architecture</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Crew oxygen = gaseous cylinder system</span><span class="real-world"><span class="arrow">→</span>Compressed oxygen is stored, regulated, monitored, and delivered to the flight deck masks.</span></div>
+    <div class="idea-card"><span class="main-idea">Passenger oxygen = chemical generator system</span><span class="real-world"><span class="arrow">→</span>PSU masks start a chemical oxygen reaction when pulled.</span><span class="tag">one-time use</span></div>
+    <div class="idea-card"><span class="main-idea">Lav and portable oxygen have separate designs</span><span class="real-world"><span class="arrow">→</span>Lav oxygen uses bottle logic; portable oxygen supports medical and crew movement needs.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🛢️</div><h2>Crew Oxygen Storage</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Stored as compressed oxygen</span><span class="real-world"><span class="arrow">→</span>Typical bottle pressure is around 1850 psi with a protected cylinder location below the cockpit.</span></div>
+    <div class="idea-card"><span class="main-idea">High pressure gets regulated down</span><span class="real-world"><span class="arrow">→</span>High-pressure storage is reduced to low pressure for breathing supply.</span></div>
+    <div class="idea-card"><span class="main-idea">Crew oxygen is reusable and monitored</span><span class="real-world"><span class="arrow">→</span>Unlike passenger chemical generators, the crew system can be serviced and reused.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">⚠️</div><h2>Pressure Protection</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Relief valves protect the system</span><span class="real-world"><span class="arrow">→</span>High-pressure and low-pressure relief prevent overpressure damage.</span></div>
+    <div class="idea-card"><span class="main-idea">ODI disc is a major clue</span><span class="real-world"><span class="arrow">→</span>If the overboard discharge indicator popped, suspect overpressure or oxygen release.</span><span class="tag">MX clue</span></div>
+    <div class="idea-card"><span class="main-idea">Oxygen pressure data can mislead you</span><span class="real-world"><span class="arrow">→</span>Bad pressure or temperature transducer data can make the system look low or abnormal.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">📊</div><h2>Crew Oxygen Indications</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">EICAS shows bottle pressure</span><span class="real-world"><span class="arrow">→</span>Normal pressure indication is white; low pressure becomes amber.</span></div>
+    <div class="idea-card"><span class="main-idea">CREW OXY LO PRESS matters</span><span class="real-world"><span class="arrow">→</span>Low pressure means reduced crew protection time.</span><span class="tag">dispatch impact</span></div>
+    <div class="idea-card"><span class="main-idea">Powered by essential electrical supply</span><span class="real-world"><span class="arrow">→</span>Monitoring depends on electrical power and sensor health.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🎭</div><h2>Crew Masks</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Quick-donning masks protect and communicate</span><span class="real-world"><span class="arrow">→</span>The mask provides breathing oxygen and microphone capability.</span></div>
+    <div class="idea-card"><span class="main-idea">Modes: NORM, 100%, EMERGENCY</span><span class="real-world"><span class="arrow">→</span>NORM mixes oxygen and cabin air; 100% gives pure oxygen; EMERGENCY gives positive pressure.</span></div>
+    <div class="idea-card"><span class="main-idea">Emergency mode helps during smoke</span><span class="real-world"><span class="arrow">→</span>Positive pressure helps keep smoke/fumes out of the mask.</span><span class="tag">cockpit smoke</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">✅</div><h2>Mask Activation & Test</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Opening the stowage box starts flow</span><span class="real-world"><span class="arrow">→</span>The OXY ON flag confirms oxygen flow.</span></div>
+    <div class="idea-card"><span class="main-idea">Flow indicator tells the truth</span><span class="real-world"><span class="arrow">→</span>Use the blinker/indicator during test to verify actual flow.</span></div>
+    <div class="idea-card"><span class="main-idea">Mic selection integrates with ATA 23</span><span class="real-world"><span class="arrow">→</span>Mask use ties oxygen to communication systems.</span><span class="tag">cross ATA</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">👥</div><h2>Passenger Oxygen</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Chemical generators in PSUs</span><span class="real-world"><span class="arrow">→</span>Passenger oxygen is produced chemically, not fed from the crew bottle.</span></div>
+    <div class="idea-card"><span class="main-idea">Auto deployment by cabin altitude</span><span class="real-world"><span class="arrow">→</span>Masks deploy automatically at high cabin altitude, or manually from the cockpit.</span></div>
+    <div class="idea-card"><span class="main-idea">Electrical release, chemical oxygen</span><span class="real-world"><span class="arrow">→</span>Power opens the doors; pulling the mask starts the generator.</span><span class="tag">big distinction</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🔥</div><h2>Chemical Generator Hazards</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Once started, it cannot be stopped</span><span class="real-world"><span class="arrow">→</span>Pulling the mask starts the chemical reaction until the generator is spent.</span></div>
+    <div class="idea-card"><span class="main-idea">Generators get extremely hot</span><span class="real-world"><span class="arrow">→</span>Treat them as a burn and fire hazard after activation.</span><span class="tag">danger zone</span></div>
+    <div class="idea-card"><span class="main-idea">Safety pins matter</span><span class="real-world"><span class="arrow">→</span>Improper servicing can cause accidental activation.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🚻</div><h2>Lavatory Oxygen</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Lav oxygen uses a bottle system</span><span class="real-world"><span class="arrow">→</span>It is different from passenger PSU chemical generators.</span></div>
+    <div class="idea-card"><span class="main-idea">Tamper-proof design</span><span class="real-world"><span class="arrow">→</span>Lav oxygen has added protection due to passenger access and fire risk.</span></div>
+    <div class="idea-card"><span class="main-idea">Know which oxygen system you are checking</span><span class="real-world"><span class="arrow">→</span>Crew, passenger, lav, and portable oxygen troubleshooting are different paths.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🧑‍⚕️</div><h2>Portable Oxygen</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Used for medical emergencies</span><span class="real-world"><span class="arrow">→</span>Portable bottles provide flexible oxygen away from fixed mask stations.</span></div>
+    <div class="idea-card"><span class="main-idea">Supports crew movement</span><span class="real-world"><span class="arrow">→</span>Useful if crew must leave the seat during an oxygen/smoke event.</span></div>
+    <div class="idea-card"><span class="main-idea">Check pressure and availability</span><span class="real-world"><span class="arrow">→</span>Missing, low, or improperly serviced portable bottles can affect dispatch.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🔗</div><h2>Passenger Deployment Integration</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Deployment triggers cabin reactions</span><span class="real-world"><span class="arrow">→</span>Seatbelt signs, lights, audio volume, and IFE behavior may change automatically.</span></div>
+    <div class="idea-card"><span class="main-idea">Controlled by multiple systems</span><span class="real-world"><span class="arrow">→</span>CDC, IASC, and DMC logic can be involved in deployment decisions.</span></div>
+    <div class="idea-card"><span class="main-idea">One oxygen event can look like many faults</span><span class="real-world"><span class="arrow">→</span>Cabin systems reacting together may be normal emergency logic.</span><span class="tag">system logic</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🧯</div><h2>Oxygen System Hazards</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Oxygen increases fire risk</span><span class="real-world"><span class="arrow">→</span>Oil, grease, contamination, and rapid pressurization are serious hazards.</span></div>
+    <div class="idea-card"><span class="main-idea">Clean handling is mandatory</span><span class="real-world"><span class="arrow">→</span>Keep oxygen fittings and components free from contamination.</span><span class="tag">no shortcuts</span></div>
+    <div class="idea-card"><span class="main-idea">Follow servicing procedures exactly</span><span class="real-world"><span class="arrow">→</span>This is one ATA where casual handling can become dangerous fast.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance Reality</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Crew faults are often pressure/sensor related</span><span class="real-world"><span class="arrow">→</span>Check bottle pressure, regulator, transducer, and indication path.</span></div>
+    <div class="idea-card"><span class="main-idea">Passenger faults are often latch/generator related</span><span class="real-world"><span class="arrow">→</span>Check PSU doors, release logic, generator expiry, and installation status.</span></div>
+    <div class="idea-card"><span class="main-idea">Complete system failure is rare</span><span class="real-world"><span class="arrow">→</span>Most problems are local to one supply, mask, latch, bottle, or indication.</span></div>
+  </div></div>
+  <div class="system-section"><div class="section-head"><div class="section-icon">🛠️</div><h2>Troubleshooting Flow</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Step 1: Check CAS</span><span class="real-world"><span class="arrow">→</span>Start with the message and determine which oxygen system is involved.</span></div>
+    <div class="idea-card"><span class="main-idea">Step 2: Identify the system</span><span class="real-world"><span class="arrow">→</span>Crew, passenger, lav, and portable oxygen each troubleshoot differently.</span></div>
+    <div class="idea-card"><span class="main-idea">Step 3: Follow supply → control → output</span><span class="real-world"><span class="arrow">→</span>Pressure or generator, valve/latch logic, then mask/output confirmation.</span><span class="tag">line MX flow</span></div>
+  </div></div>
+</section>
+<section class="memory-map">
+  <h2>🧠 Easy Way to Remember ATA 35</h2>
+  <div class="map-grid">
+    <div class="map-card"><div class="map-number">1</div><div class="map-title">Store Oxygen</div><ul><li>Crew cylinder</li><li>Portable bottles</li><li>Lav bottle</li></ul></div>
+    <div class="map-card"><div class="map-number">2</div><div class="map-title">Deliver Oxygen</div><ul><li>Regulators</li><li>Masks</li><li>Stowage boxes</li></ul></div>
+    <div class="map-card"><div class="map-number">3</div><div class="map-title">Generate Oxygen</div><ul><li>Passenger chemical generators</li><li>PSU masks</li><li>One-time activation</li></ul></div>
+    <div class="map-card"><div class="map-number">4</div><div class="map-title">Protect System</div><ul><li>Relief valves</li><li>ODI indicator</li><li>Pressure monitoring</li></ul></div>
+  </div>
+  <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+  <div class="fail-list">
+    <div class="fail-chip">Crew oxygen<br><small>pressure + transducer</small></div>
+    <div class="fail-chip">Passenger oxygen<br><small>latch + generator</small></div>
+    <div class="fail-chip">ODI disc<br><small>major clue</small></div>
+    <div class="fail-chip">Oxygen hazard<br><small>fire risk</small></div>
+  </div>
+</section>
+</main>
+<footer>A220 ATA 35 quick-study page • Oxygen supply, deployment, masks, hazards, and line-maintenance troubleshooting.</footer>
+</body>
+</html>

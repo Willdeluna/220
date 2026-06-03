@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 49 Main Points</title>
+  <style>
+    :root{--bg:#050505;--panel:#101010;--orange:#ff9f1c;--amber:#ffd27f;--soft:rgba(255,159,28,.18);--line:rgba(255,159,28,.55);--white:#f7efe4;--muted:#bda777;--red:#ff5f56;--blue:#62d8ff;--green:#8cffb1}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--white);background:radial-gradient(circle at 20% 0%,rgba(255,159,28,.22),transparent 28%),radial-gradient(circle at 85% 20%,rgba(98,216,255,.13),transparent 26%),radial-gradient(circle at 52% 100%,rgba(140,255,177,.07),transparent 26%),linear-gradient(135deg,#000,#080808 45%,#130b02);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,159,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,159,28,.045) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(circle at center,black,transparent 82%)}header{max-width:1180px;margin:0 auto;padding:36px 18px 18px;text-align:center;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid var(--line);background:rgba(0,0,0,.55);border-radius:999px;padding:8px 14px;box-shadow:0 0 22px var(--soft);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}h1{margin:18px 0 8px;color:var(--orange);font-size:clamp(2rem,6vw,4.8rem);line-height:.96;text-shadow:0 0 18px rgba(255,159,28,.38),0 0 42px rgba(255,159,28,.16)}.subtitle{max-width:850px;margin:0 auto;color:var(--muted);font-size:1.08rem;line-height:1.55}.hero-strip{max-width:1180px;margin:24px auto 8px;padding:0 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.hero-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,159,28,.1),rgba(0,0,0,.72));border-radius:22px;padding:20px;min-height:140px;position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.hero-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 34px rgba(255,159,28,.24);border-color:var(--orange)}.hero-card:after{content:"";position:absolute;width:150px;height:150px;right:-58px;bottom:-58px;border:1px solid rgba(255,159,28,.28);border-radius:50%}.hero-icon{font-size:2.2rem;margin-bottom:8px}.hero-title{color:var(--amber);font-size:1.25rem;font-weight:900}.hero-text{color:var(--muted);margin-top:8px;line-height:1.42}main{max-width:1240px;margin:0 auto;padding:22px 18px 48px}.section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.system-section{border:1px solid var(--line);background:rgba(9,9,9,.88);border-radius:24px;padding:18px;box-shadow:0 0 30px rgba(0,0,0,.35);position:relative;overflow:hidden}.system-section:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,transparent,var(--orange),var(--blue),transparent);opacity:.75}.section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1}.section-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;border:1px solid var(--line);background:radial-gradient(circle at top,rgba(255,159,28,.28),rgba(0,0,0,.75));font-size:1.65rem;box-shadow:inset 0 0 18px rgba(255,159,28,.12)}h2{margin:0;color:var(--orange);font-size:1.2rem;letter-spacing:.01em}.cards{display:grid;gap:10px;position:relative;z-index:1}.idea-card{border:1px solid rgba(255,159,28,.28);background:linear-gradient(135deg,rgba(255,159,28,.06),rgba(255,255,255,.02));border-radius:16px;padding:13px 14px;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;cursor:default;position:relative;overflow:hidden}.idea-card:hover{transform:translateX(8px) scale(1.025);border-color:var(--orange);background:linear-gradient(135deg,rgba(255,159,28,.18),rgba(98,216,255,.06));box-shadow:0 0 26px rgba(255,159,28,.21)}.idea-card:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s ease}.idea-card:hover:after{transform:translateX(120%)}.main-idea{display:block;color:var(--amber);font-weight:900;font-size:1rem;margin-bottom:5px}.arrow{color:var(--orange);font-weight:900;margin-right:4px}.real-world{display:block;color:#ead9b8;line-height:1.42;font-size:.96rem}.tag{display:inline-block;margin-top:8px;color:#111;background:var(--orange);border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.wide{grid-column:1/-1}.memory-map{margin-top:20px;border:1px solid var(--line);border-radius:28px;padding:22px;background:linear-gradient(135deg,rgba(255,159,28,.1),rgba(0,0,0,.72));position:relative;overflow:hidden}.memory-map h2{font-size:1.45rem;margin-bottom:14px}.map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.map-card{border:1px solid rgba(255,159,28,.38);border-radius:20px;padding:18px;background:rgba(0,0,0,.55);transition:transform .25s ease,box-shadow .25s ease}.map-card:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 0 28px rgba(98,216,255,.16),0 0 34px rgba(255,159,28,.12)}.map-number{color:var(--blue);font-size:2rem;font-weight:900}.map-title{color:var(--amber);font-weight:900;font-size:1.2rem;margin:4px 0 8px}.map-card ul{margin:0;padding-left:18px;color:#ead9b8;line-height:1.65}.fail-list{margin-top:20px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fail-chip{border:1px solid rgba(255,95,86,.55);background:rgba(255,95,86,.08);color:#ffd6d3;padding:14px;border-radius:16px;font-weight:800;text-align:center;transition:transform .2s ease,background .2s ease}.fail-chip:hover{transform:scale(1.06);background:rgba(255,95,86,.18)}footer{text-align:center;color:var(--muted);padding:26px 18px 38px}@media(max-width:900px){.hero-strip,.map-grid{grid-template-columns:1fr}.section-grid{grid-template-columns:1fr}.fail-list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main{padding:18px 10px 34px}header{padding-top:24px}.system-section,.memory-map{border-radius:18px;padding:14px}.fail-list{grid-template-columns:1fr}.idea-card:hover{transform:scale(1.015)}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">✅ A220 ATA 49 • APU</div>
+  <h1>Auxiliary Power Made Simple</h1>
+  <p class="subtitle">A fast interactive study page for the A220 APU: ECU control, start sequence, electrical output, bleed air, fuel/oil systems, inlet door logic, protective shutdowns, and line-maintenance troubleshooting.</p>
+</header>
+<section class="hero-strip">
+  <div class="hero-card"><div class="hero-icon">⚙️</div><div class="hero-title">Self-Contained Engine</div><div class="hero-text">The APU is a small gas turbine in the tail that provides electrical power and pneumatic air independently of the main engines.</div></div>
+  <div class="hero-card"><div class="hero-icon">🧠</div><div class="hero-title">ECU Controlled</div><div class="hero-text">The ECU runs the start, fuel, ignition, speed, load, protection, and shutdown logic.</div></div>
+  <div class="hero-card"><div class="hero-icon">🔥</div><div class="hero-title">Protects Itself</div><div class="hero-text">Many APU “failures” are protective ECU shutdowns caused by unsafe start, oil, temp, speed, sensor, or load conditions.</div></div>
+</section>
+<main>
+<section class="section-grid">
+  <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">ATA 49 = self-contained auxiliary power plant</span><span class="real-world"><span class="arrow">→</span>It supplies electrical power and bleed air while operating independently of the engines.</span></div>
+    <div class="idea-card"><span class="main-idea">APU supports ground ops and in-flight redundancy</span><span class="real-world"><span class="arrow">→</span>It can power ECS, engine starts, and electrical backup functions.</span><span class="tag">big picture</span></div>
+    <div class="idea-card"><span class="main-idea">Think like an engine</span><span class="real-world"><span class="arrow">→</span>Fuel + air + ignition + control + protection drive most troubleshooting.</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">🌀</div><h2>System Architecture</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Major sections: power section, load compressor, accessory gearbox</span><span class="real-world"><span class="arrow">→</span>Air is compressed, mixed with fuel, burned, and expanded through the turbine.</span></div>
+    <div class="idea-card"><span class="main-idea">Single-shaft turbine drives multiple outputs</span><span class="real-world"><span class="arrow">→</span>One shaft powers the compressor, generator, and gearbox accessories.</span><span class="tag">easy memory</span></div>
+    <div class="idea-card"><span class="main-idea">Accessory gearbox also acts as oil reservoir</span><span class="real-world"><span class="arrow">→</span>It powers the FCU, oil pump, generator drive, and supports lubrication storage.</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">🧠</div><h2>ECU — APU Brain</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">ECU has full authority control</span><span class="real-world"><span class="arrow">→</span>It controls start, fuel, ignition, speed, load, shutdown, and protection logic.</span></div>
+    <div class="idea-card"><span class="main-idea">Most APU failures are ECU protective actions</span><span class="real-world"><span class="arrow">→</span>The ECU may inhibit start or shut down the APU to prevent damage.</span><span class="tag">key MX idea</span></div>
+    <div class="idea-card"><span class="main-idea">Watch the phase of operation</span><span class="real-world"><span class="arrow">→</span>Start, running, loading, and shutdown each have different fault logic.</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">🔄</div><h2>Start Sequence</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Start begins with BIT and inlet door opening</span><span class="real-world"><span class="arrow">→</span>If the door does not open correctly, start may be inhibited.</span></div>
+    <div class="idea-card"><span class="main-idea">Starter, ignition, then fuel introduction</span><span class="real-world"><span class="arrow">→</span>Fuel comes in around low RPM after the ECU confirms start conditions.</span></div>
+    <div class="idea-card"><span class="main-idea">Starter disengages when the APU becomes self-sustaining</span><span class="real-world"><span class="arrow">→</span>Watch RPM and EGT for no light-off, hung start, or hot start clues.</span><span class="tag">line clue</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">⚡</div><h2>Electrical Output</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">APU generator powers aircraft buses</span><span class="real-world"><span class="arrow">→</span>APU must reach proper speed before electrical loading is allowed.</span></div>
+    <div class="idea-card"><span class="main-idea">GCU controls generator protection</span><span class="real-world"><span class="arrow">→</span>The generator side is managed and protected separately from the turbine core.</span></div>
+    <div class="idea-card"><span class="main-idea">ECU sends ready-to-load signal</span><span class="real-world"><span class="arrow">→</span>No ready-to-load means chase APU speed, control logic, or protection status first.</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">🌬️</div><h2>Pneumatic / Bleed Output</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Load compressor supplies bleed air</span><span class="real-world"><span class="arrow">→</span>Used for packs and engine starts.</span></div>
+    <div class="idea-card"><span class="main-idea">BAV controls bleed delivery</span><span class="real-world"><span class="arrow">→</span>Air output depends on demand and ECU-controlled valve logic.</span></div>
+    <div class="idea-card"><span class="main-idea">Engine start is high-priority pneumatic demand</span><span class="real-world"><span class="arrow">→</span>APU air control may change behavior during start support.</span><span class="tag">ATA 36 link</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">🧯</div><h2>Air System Control</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">IGV adjusts compressor airflow</span><span class="real-world"><span class="arrow">→</span>More demand opens the inlet guide vanes for more air.</span></div>
+    <div class="idea-card"><span class="main-idea">SCV prevents compressor surge</span><span class="real-world"><span class="arrow">→</span>Low demand can open the surge control valve to protect the compressor.</span></div>
+    <div class="idea-card"><span class="main-idea">Air system is dynamic, not fixed</span><span class="real-world"><span class="arrow">→</span>APU bleed behavior changes with load and protection needs.</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">⛽</div><h2>Fuel System</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Fuel comes from the left engine feed line</span><span class="real-world"><span class="arrow">→</span>Fuel supply issues can look like APU start or flameout faults.</span></div>
+    <div class="idea-card"><span class="main-idea">FCU filters, pressurizes, and meters fuel</span><span class="real-world"><span class="arrow">→</span>The ECU commands fuel flow electronically through the control system.</span></div>
+    <div class="idea-card"><span class="main-idea">Primary and secondary manifolds sequence fuel</span><span class="real-world"><span class="arrow">→</span>Wrong sequencing can trigger shutdown.</span><span class="tag">start logic</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">🛢️</div><h2>Oil System</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Wet sump oil system lubricates, cools, and cleans</span><span class="real-world"><span class="arrow">→</span>Oil health is critical because the APU is a turbine engine.</span></div>
+    <div class="idea-card"><span class="main-idea">Low oil pressure causes shutdown</span><span class="real-world"><span class="arrow">→</span>Oil pressure protection is strict and immediate.</span></div>
+    <div class="idea-card"><span class="main-idea">High oil temperature causes shutdown</span><span class="real-world"><span class="arrow">→</span>Oil temperature problems are treated as serious protection events.</span><span class="tag">protective</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">🚪</div><h2>Inlet Door Logic</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Door opens automatically during start</span><span class="real-world"><span class="arrow">→</span>Without the correct door position, airflow is not available for start.</span></div>
+    <div class="idea-card"><span class="main-idea">Different positions for flight and ground</span><span class="real-world"><span class="arrow">→</span>Door position supports airflow needs and aerodynamic conditions.</span></div>
+    <div class="idea-card"><span class="main-idea">Door faults are common start-inhibit clues</span><span class="real-world"><span class="arrow">→</span>Check door indication before chasing fuel or ignition.</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">🚨</div><h2>Shutdown & Protection</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Normal shutdown removes load, cools, then cuts fuel</span><span class="real-world"><span class="arrow">→</span>Cooldown prevents turbine heat damage.</span></div>
+    <div class="idea-card"><span class="main-idea">Protective shutdown has no cooldown period</span><span class="real-world"><span class="arrow">→</span>Overspeed, overtemp, low oil pressure, and sensor faults can command immediate shutdown.</span><span class="tag">critical</span></div>
+    <div class="idea-card"><span class="main-idea">Most shutdowns protect the machine</span><span class="real-world"><span class="arrow">→</span>Do not treat every shutdown as a failed APU core.</span></div>
+  </div></div>
+
+  <div class="system-section"><div class="section-head"><div class="section-icon">📊</div><h2>Indications & Interfaces</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Status page shows RPM, EGT, door position, and oil parameters</span><span class="real-world"><span class="arrow">→</span>Use these as the quick health check.</span></div>
+    <div class="idea-card"><span class="main-idea">APU links to ATA 24, 36, 21, and 45</span><span class="real-world"><span class="arrow">→</span>Electrical, bleed air, ECS, and OMS faults can all connect back to ATA 49.</span></div>
+    <div class="idea-card"><span class="main-idea">APU problems may look like ECS or electrical faults</span><span class="real-world"><span class="arrow">→</span>Always check what load the APU was carrying.</span><span class="tag">cross-system</span></div>
+  </div></div>
+
+  <div class="system-section wide"><div class="section-head"><div class="section-icon">🔧</div><h2>Maintenance / Troubleshooting Flow</h2></div><div class="cards">
+    <div class="idea-card"><span class="main-idea">Step 1 — Check CAS message</span><span class="real-world"><span class="arrow">→</span>Start with what the aircraft is telling you.</span></div>
+    <div class="idea-card"><span class="main-idea">Step 2 — Check RPM, EGT, and oil</span><span class="real-world"><span class="arrow">→</span>These tell you if the problem is start, combustion, temperature, or lubrication.</span></div>
+    <div class="idea-card"><span class="main-idea">Step 3 — Identify the phase</span><span class="real-world"><span class="arrow">→</span>Was it during start, running, loading, or shutdown?</span></div>
+    <div class="idea-card"><span class="main-idea">Step 4 — Check fuel, electrical, and air support systems</span><span class="real-world"><span class="arrow">→</span>Follow: Start → control → load → shutdown.</span><span class="tag">use this</span></div>
+  </div></div>
+</section>
+
+<section class="memory-map">
+  <h2>🧠 Easy Way to Remember ATA 49</h2>
+  <div class="map-grid">
+    <div class="map-card"><div class="map-number">1</div><div class="map-title">Start</div><ul><li>Starter</li><li>Ignition</li><li>Inlet door</li></ul></div>
+    <div class="map-card"><div class="map-number">2</div><div class="map-title">Run</div><ul><li>Fuel</li><li>Air</li><li>Combustion</li></ul></div>
+    <div class="map-card"><div class="map-number">3</div><div class="map-title">Produce Power</div><ul><li>Generator</li><li>Bleed air</li><li>Engine start support</li></ul></div>
+    <div class="map-card"><div class="map-number">4</div><div class="map-title">Protect</div><ul><li>ECU logic</li><li>Oil protection</li><li>Overtemp / overspeed shutdown</li></ul></div>
+  </div>
+  <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+  <div class="fail-list">
+    <div class="fail-chip">ECU is everything<br><small>control + protection</small></div>
+    <div class="fail-chip">Shutdowns<br><small>often protective</small></div>
+    <div class="fail-chip">Start faults<br><small>watch RPM + EGT</small></div>
+    <div class="fail-chip">Cross-system clues<br><small>ATA 24 / 36 / 21</small></div>
+  </div>
+</section>
+</main>
+<footer>A220 ATA 49 quick-study page • APU start, control, bleed, electrical, shutdown protection, and line-maintenance logic.</footer>
+</body>
+</html>

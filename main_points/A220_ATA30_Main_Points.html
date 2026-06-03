@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A220 ATA 30 Main Points</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #101010;
+      --orange: #ff9f1c;
+      --amber: #ffd27f;
+      --soft: rgba(255, 159, 28, 0.18);
+      --line: rgba(255, 159, 28, 0.55);
+      --white: #f7efe4;
+      --muted: #bda777;
+      --red: #ff5f56;
+      --blue: #62d8ff;
+      --green: #8cffb1;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,159,28,0.22), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(98,216,255,0.13), transparent 26%),
+        radial-gradient(circle at 52% 100%, rgba(140,255,177,0.07), transparent 26%),
+        linear-gradient(135deg, #000, #080808 45%, #130b02);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,159,28,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,159,28,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black, transparent 82%);
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 18px 18px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 0 22px var(--soft);
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      color: var(--orange);
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .96;
+      text-shadow: 0 0 18px rgba(255,159,28,.38), 0 0 42px rgba(255,159,28,.16);
+    }
+
+    .subtitle {
+      max-width: 850px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .hero-strip {
+      max-width: 1180px;
+      margin: 24px auto 8px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 0 34px rgba(255,159,28,.24);
+      border-color: var(--orange);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -58px;
+      bottom: -58px;
+      border: 1px solid rgba(255,159,28,.28);
+      border-radius: 50%;
+    }
+
+    .hero-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .hero-title { color: var(--amber); font-size: 1.25rem; font-weight: 900; }
+    .hero-text { color: var(--muted); margin-top: 8px; line-height: 1.42; }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px 48px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .system-section {
+      border: 1px solid var(--line);
+      background: rgba(9,9,9,.88);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 0 30px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .system-section::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--blue), transparent);
+      opacity: .75;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: radial-gradient(circle at top, rgba(255,159,28,.28), rgba(0,0,0,.75));
+      font-size: 1.65rem;
+      box-shadow: inset 0 0 18px rgba(255,159,28,.12);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--orange);
+      font-size: 1.2rem;
+      letter-spacing: .01em;
+    }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .idea-card {
+      border: 1px solid rgba(255,159,28,.28);
+      background: linear-gradient(135deg, rgba(255,159,28,.06), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding: 13px 14px;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card:hover {
+      transform: translateX(8px) scale(1.025);
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(255,159,28,.18), rgba(98,216,255,.06));
+      box-shadow: 0 0 26px rgba(255,159,28,.21);
+    }
+
+    .idea-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
+
+    .idea-card:hover::after { transform: translateX(120%); }
+
+    .main-idea {
+      display: block;
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .arrow {
+      color: var(--orange);
+      font-weight: 900;
+      margin-right: 4px;
+    }
+
+    .real-world {
+      display: block;
+      color: #ead9b8;
+      line-height: 1.42;
+      font-size: .96rem;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      color: #111;
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .memory-map {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(255,159,28,.1), rgba(0,0,0,.72));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memory-map h2 { font-size: 1.45rem; margin-bottom: 14px; }
+
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .map-card {
+      border: 1px solid rgba(255,159,28,.38);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-7px) rotate(-.5deg);
+      box-shadow: 0 0 28px rgba(98,216,255,.16), 0 0 34px rgba(255,159,28,.12);
+    }
+
+    .map-number {
+      color: var(--blue);
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .map-title {
+      color: var(--amber);
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin: 4px 0 8px;
+    }
+
+    .map-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #ead9b8;
+      line-height: 1.65;
+    }
+
+    .fail-list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fail-chip {
+      border: 1px solid rgba(255,95,86,.55);
+      background: rgba(255,95,86,.08);
+      color: #ffd6d3;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .fail-chip:hover {
+      transform: scale(1.06);
+      background: rgba(255,95,86,.18);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 26px 18px 38px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-strip, .map-grid { grid-template-columns: 1fr; }
+      .section-grid { grid-template-columns: 1fr; }
+      .fail-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      main { padding: 18px 10px 34px; }
+      header { padding-top: 24px; }
+      .system-section, .memory-map { border-radius: 18px; padding: 14px; }
+      .fail-list { grid-template-columns: 1fr; }
+      .idea-card:hover { transform: scale(1.015); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">✅ A220 ATA 30 • Ice & Rain Protection</div>
+    <h1>Detection, Logic & Protection Made Simple</h1>
+    <p class="subtitle">A fast interactive study page for A220 ice detection, cowl anti-ice, wing anti-ice, probe heat, window heat, wipers, fail-safe logic, and line-maintenance troubleshooting.</p>
+  </header>
+
+  <section class="hero-strip">
+    <div class="hero-card">
+      <div class="hero-icon">❄️</div>
+      <div class="hero-title">Detect Ice</div>
+      <div class="hero-text">Vibrating ice detectors feed logic into engine anti-ice, wing anti-ice, and flight-control protection behavior.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">🔥</div>
+      <div class="hero-title">Protect Automatically</div>
+      <div class="hero-text">CAIS and WAIS use bleed air, while probes and windows use electrical heat.</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-icon">🔧</div>
+      <div class="hero-title">Troubleshoot Logic</div>
+      <div class="hero-text">Follow detection, controller logic, pressure, temperature, valve position, and airflow before replacing parts.</div>
+    </div>
+  </section>
+
+  <main>
+    <section class="section-grid">
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Core Concept — What ATA 30 Really Is</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Automatic ice detection + protection system</span><span class="real-world"><span class="arrow">→</span>Detects icing and automatically protects engines, wings, sensors, windows, and visibility.</span><span class="tag">core idea</span></div>
+          <div class="idea-card"><span class="main-idea">Logic-driven, not just manual anti-ice</span><span class="real-world"><span class="arrow">→</span>The system reacts to detection signals, controller logic, pressure, and temperature.</span></div>
+          <div class="idea-card"><span class="main-idea">Two types of protection power</span><span class="real-world"><span class="arrow">→</span>Bleed air handles engine/wing anti-ice; electrical power handles probes, windows, and wipers.</span><span class="tag">big picture</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">❄️</div><h2>Ice Detection System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Vibrating probe detects ice</span><span class="real-world"><span class="arrow">→</span>Ice buildup changes the probe frequency, then the heater melts it and the cycle repeats.</span></div>
+          <div class="idea-card"><span class="main-idea">Ice detection talks to multiple systems</span><span class="real-world"><span class="arrow">→</span>Signals go to EECs, IASCs, and PFCC logic — not just anti-ice valves.</span><span class="tag">important</span></div>
+          <div class="idea-card"><span class="main-idea">Detection affects flight controls too</span><span class="real-world"><span class="arrow">→</span>Ice signals can change stall/protection logic, so it is bigger than just warm air.</span><span class="tag">MX clue</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚠️</div><h2>Ice Detection Failure Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Fail-safe behavior assumes icing</span><span class="real-world"><span class="arrow">→</span>If detector data is invalid, the aircraft treats conditions as icing to protect itself.</span><span class="tag">fail-safe</span></div>
+          <div class="idea-card"><span class="main-idea">ICE DET FAIL points to detection path</span><span class="real-world"><span class="arrow">→</span>Start with detector status, signals, and associated controller logic before chasing valves.</span></div>
+          <div class="idea-card"><span class="main-idea">System protects first</span><span class="real-world"><span class="arrow">→</span>A “weird” anti-ice activation can be normal protection logic, not a random failure.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔥</div><h2>Engine Anti-Ice — CAIS</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Uses engine bleed air</span><span class="real-world"><span class="arrow">→</span>Bleed air from the compressor heats the engine inlet/cowl area.</span></div>
+          <div class="idea-card"><span class="main-idea">Each engine is independent</span><span class="real-world"><span class="arrow">→</span>Left and right CAIS can operate separately based on their own control and monitoring.</span></div>
+          <div class="idea-card"><span class="main-idea">CAIV valves are fail-safe open</span><span class="real-world"><span class="arrow">→</span>Loss of power tends toward protection, so the valve opens rather than leaving the inlet unprotected.</span><span class="tag">key safety</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧩</div><h2>CAIS Control Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Controlled by the EEC</span><span class="real-world"><span class="arrow">→</span>Pilot selection is not direct valve movement; EEC logic commands the system.</span></div>
+          <div class="idea-card"><span class="main-idea">AUTO follows ice detection</span><span class="real-world"><span class="arrow">→</span>In AUTO, CAIS activates when icing is detected and conditions allow.</span></div>
+          <div class="idea-card"><span class="main-idea">ON forces protection</span><span class="real-world"><span class="arrow">→</span>ON commands anti-ice regardless of normal detection logic, with condition-based inhibits still important.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌡️</div><h2>CAIS Monitoring & Fault Clues</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Temperature monitors overheat</span><span class="real-world"><span class="arrow">→</span>Hot duct or leak conditions can generate nacelle overheat indications.</span></div>
+          <div class="idea-card"><span class="main-idea">Pressure verifies airflow</span><span class="real-world"><span class="arrow">→</span>Low or high pressure faults point toward flow, valve, or duct problems.</span></div>
+          <div class="idea-card"><span class="main-idea">COWL A/ICE FAIL is usually pressure/logic</span><span class="real-world"><span class="arrow">→</span>Do not assume the valve is bad until pressure, temp, and command state are checked.</span><span class="tag">troubleshooting</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🪽</div><h2>Wing Anti-Ice — WAIS</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Protects selected slats only</span><span class="real-world"><span class="arrow">→</span>WAIS heats slats 2, 3, and 4 — not the entire wing.</span></div>
+          <div class="idea-card"><span class="main-idea">Bleed air flows through piccolo tubes</span><span class="real-world"><span class="arrow">→</span>Hot air enters the protected slat zones and exhausts overboard.</span></div>
+          <div class="idea-card"><span class="main-idea">Controlled by IASCs</span><span class="real-world"><span class="arrow">→</span>ATA 21 controllers are heavily involved in ATA 30 wing anti-ice operation.</span><span class="tag">cross ATA</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🎛️</div><h2>WAIS Logic & Inhibits</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">AUTO turns on with ice detection</span><span class="real-world"><span class="arrow">→</span>WAIS activates in flight when icing is detected, then turns off after icing stops.</span></div>
+          <div class="idea-card"><span class="main-idea">Takeoff and ground inhibit logic matters</span><span class="real-world"><span class="arrow">→</span>The system may intentionally stay off to protect performance or because conditions do not allow operation.</span></div>
+          <div class="idea-card"><span class="main-idea">ON forces the request</span><span class="real-world"><span class="arrow">→</span>Even with switch ON, controller conditions and protections still decide final behavior.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🚨</div><h2>WAIS Protection & Leak Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Temperature + pressure are the key checks</span><span class="real-world"><span class="arrow">→</span>High temp, low heat, and low pressure messages point toward flow or thermal problems.</span></div>
+          <div class="idea-card"><span class="main-idea">Leak detection shuts system off</span><span class="real-world"><span class="arrow">→</span>The system protects structure first if a bleed leak is suspected.</span></div>
+          <div class="idea-card"><span class="main-idea">Cross-bleed can protect both wings</span><span class="real-world"><span class="arrow">→</span>If one engine source is lost, cross-bleed logic can keep wing protection available.</span><span class="tag">redundancy</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">⚙️</div><h2>IASCs — WAIS Brain</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Two IASCs provide redundancy</span><span class="real-world"><span class="arrow">→</span>Multi-channel logic enables, disables, monitors, and diagnoses WAIS operation.</span></div>
+          <div class="idea-card"><span class="main-idea">Controls pressure and temperature monitoring</span><span class="real-world"><span class="arrow">→</span>The IASC decides whether the heat being commanded is actually valid.</span></div>
+          <div class="idea-card"><span class="main-idea">ATA 21 faults can look like ATA 30 faults</span><span class="real-world"><span class="arrow">→</span>Do not ignore ECS controller status when troubleshooting wing anti-ice.</span><span class="tag">MX clue</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">📍</div><h2>Probe Heat System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Protects air data and AOA sensors</span><span class="real-world"><span class="arrow">→</span>AOA vanes, air data probes, and TAT probes are electrically heated.</span></div>
+          <div class="idea-card"><span class="main-idea">Ground heat is lower / regulated</span><span class="real-world"><span class="arrow">→</span>On the ground, heating is controlled to prevent damage while still protecting sensors.</span></div>
+          <div class="idea-card"><span class="main-idea">Flight heat is full power</span><span class="real-world"><span class="arrow">→</span>In flight the system increases heat because air data reliability is safety critical.</span><span class="tag">safety critical</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">✋</div><h2>Probe Heat Maintenance Hazard</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Probes get extremely hot</span><span class="real-world"><span class="arrow">→</span>Always verify power is off and allow cooling before touching probes.</span><span class="tag">warning</span></div>
+          <div class="idea-card"><span class="main-idea">Usually automatic</span><span class="real-world"><span class="arrow">→</span>Probe heat normally comes on with engines running or when airborne.</span></div>
+          <div class="idea-card"><span class="main-idea">Bad probe heat can corrupt air data</span><span class="real-world"><span class="arrow">→</span>A probe heat issue may show up as air data or flight control behavior, not just ATA 30.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🪟</div><h2>Window Heat System</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Windshields are anti-ice + defog</span><span class="real-world"><span class="arrow">→</span>Windshields are heated for visibility and icing protection.</span></div>
+          <div class="idea-card"><span class="main-idea">Side windows are mostly defog</span><span class="real-world"><span class="arrow">→</span>Side windows run lower heat for visibility support.</span></div>
+          <div class="idea-card"><span class="main-idea">WIPC controllers manage heat</span><span class="real-world"><span class="arrow">→</span>Controllers use sensors and protection logic to avoid thermal damage.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🧠</div><h2>Window Heat Logic</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Always on when powered</span><span class="real-world"><span class="arrow">→</span>The system is designed to maintain window readiness automatically.</span></div>
+          <div class="idea-card"><span class="main-idea">Cold start reduces power</span><span class="real-world"><span class="arrow">→</span>Thermal protection prevents shocking the glass with too much heat too quickly.</span></div>
+          <div class="idea-card"><span class="main-idea">Three sensors per window</span><span class="real-world"><span class="arrow">→</span>One controls, two monitor; if all fail, the system shuts down heat.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🌧️</div><h2>Windshield Wipers</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Left and right are independent</span><span class="real-world"><span class="arrow">→</span>Each side has its own electrically powered wiper system.</span></div>
+          <div class="idea-card"><span class="main-idea">Auto park and synchronization built in</span><span class="real-world"><span class="arrow">→</span>The system manages position and smooth operation automatically.</span></div>
+          <div class="idea-card"><span class="main-idea">No CAS for many wiper failures</span><span class="real-world"><span class="arrow">→</span>Use BITE/OMS and direct checks because EICAS may not tell the whole story.</span><span class="tag">MX clue</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔗</div><h2>System Integration</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">ATA 36 supplies bleed air</span><span class="real-world"><span class="arrow">→</span>Bleed pressure and temperature issues can create anti-ice faults.</span></div>
+          <div class="idea-card"><span class="main-idea">ATA 21 controls WAIS through IASCs</span><span class="real-world"><span class="arrow">→</span>ECS controller logic is part of the ice protection chain.</span></div>
+          <div class="idea-card"><span class="main-idea">ATA 27 can change stall logic</span><span class="real-world"><span class="arrow">→</span>Ice detection can affect flight-control protection behavior.</span></div>
+          <div class="idea-card"><span class="main-idea">ATA 24 powers electrical heat</span><span class="real-world"><span class="arrow">→</span>Probe heat, windows, controllers, and wipers depend on electrical supply.</span></div>
+        </div>
+      </div>
+      <div class="system-section">
+        <div class="section-head"><div class="section-icon">🔧</div><h2>Troubleshooting Flow</h2></div>
+        <div class="cards">
+          <div class="idea-card"><span class="main-idea">Start with the CAS message</span><span class="real-world"><span class="arrow">→</span>Identify whether the fault is CAIS, WAIS, probe heat, window heat, or wipers.</span><span class="tag">step 1</span></div>
+          <div class="idea-card"><span class="main-idea">Check the AIR/synoptic page</span><span class="real-world"><span class="arrow">→</span>Look at valve position, pressure, temperature, and command state.</span><span class="tag">step 2</span></div>
+          <div class="idea-card"><span class="main-idea">Follow detection → logic → airflow</span><span class="real-world"><span class="arrow">→</span>Do not jump straight to the valve until controller inputs make sense.</span><span class="tag">step 3</span></div>
+          <div class="idea-card"><span class="main-idea">Verify pressure/temp sensors</span><span class="real-world"><span class="arrow">→</span>Most faults are sensors, valves, pressure, temperature, or logic — not total system failure.</span><span class="tag">step 4</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="memory-map">
+      <h2>🧠 Easy Way to Remember ATA 30</h2>
+      <div class="map-grid">
+        <div class="map-card"><div class="map-number">1</div><div class="map-title">Detect Ice</div><ul><li>Vibrating ice detectors</li><li>Fail-safe icing assumption</li><li>Signals to EEC / IASC / PFCC</li></ul></div>
+        <div class="map-card"><div class="map-number">2</div><div class="map-title">Protect Structure</div><ul><li>Engine cowl anti-ice</li><li>Wing anti-ice</li><li>Bleed-air heating</li></ul></div>
+        <div class="map-card"><div class="map-number">3</div><div class="map-title">Protect Sensors</div><ul><li>Probe heat</li><li>AOA / TAT / air data</li><li>Electrical heating</li></ul></div>
+        <div class="map-card"><div class="map-number">4</div><div class="map-title">Maintain Visibility</div><ul><li>Window heat</li><li>Windshield wipers</li><li>Defog / anti-ice</li></ul></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔥 Real Line MX Takeaways</h2>
+      <div class="fail-list">
+        <div class="fail-chip">Ice detection<br><small>drives everything</small></div>
+        <div class="fail-chip">Fail-safe logic<br><small>assumes icing</small></div>
+        <div class="fail-chip">WAIS / CAIS<br><small>check pressure & temp</small></div>
+        <div class="fail-chip">Probe heat<br><small>hot hazard</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    A220 ATA 30 quick-study page • Ice detection, anti-ice logic, probe heat, window heat, wipers, and line-maintenance troubleshooting.
+  </footer>
+</body>
+</html>
