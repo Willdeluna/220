@@ -1392,14 +1392,11 @@
     // images/36/chapter36.png, images/38/chapter38.png, etc.
     // The extra chapter thumbnails are inserted in the thumbnail bar after image/chapter 35.
     const AVAILABLE_CHAPTER_IMAGES = [
-      "00", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
-      "31", "32", "33", "34", "35",
-      "36", "38", "44", "45", "46", "49", "52", "57", "72", "80"
+      "00", "25", "26", "27", "28", "29", "30",
+      "31", "32", "33", "34", "35"
     ];
 
-    const EXTRA_CHAPTER_THUMBNAILS_AFTER_35 = [
-      "36", "38", "44", "45", "46", "49", "52", "57", "72", "80"
-    ];
+    const EXTRA_CHAPTER_THUMBNAILS_AFTER_35 = [];
 
     // Folder image setup.
     // For Chapter 21, your image names are:
@@ -1409,10 +1406,6 @@
     // "22": { count: 60, prefix: "1" },
     // "23": { count: 80, prefix: "1" },
     const CHAPTER_FOLDER_CONFIG = {
-      "21": { count: 17, prefix: "21" },
-      "22": { count: 80, prefix: "22" },
-      "23": { count: 80, prefix: "23" },
-      "24": { count: 80, prefix: "24" },
       "25": { count: 80, prefix: "25" },
       "26": { count: 80, prefix: "26" },
       "27": { count: 80, prefix: "27" },
@@ -1423,17 +1416,7 @@
       "32": { count: 80, prefix: "32" },
       "33": { count: 80, prefix: "33" },
       "34": { count: 80, prefix: "34" },
-      "35": { count: 80, prefix: "35" },
-      "36": { count: 80, prefix: "36" },
-      "38": { count: 80, prefix: "38" },
-      "44": { count: 80, prefix: "44" },
-      "45": { count: 80, prefix: "45" },
-      "46": { count: 80, prefix: "46" },
-      "49": { count: 80, prefix: "49" },
-      "52": { count: 80, prefix: "52" },
-      "57": { count: 80, prefix: "57" },
-      "72": { count: 80, prefix: "72" },
-      "80": { count: 80, prefix: "80" }
+      "35": { count: 80, prefix: "35" }
     };
 
     // ─────────────────────────────────────────────────────────────
@@ -2324,7 +2307,14 @@ let filterToCurrentImageDots = false;
 
 
     function isChapterCoverItem(item) {
-      return item && item.type === "chapter" && Number(item.chapterImageNumber || 0) === 0;
+      // A chapter cover is a chapter-derived item with image number 0.
+      // Note: when a cover matches an aircraft_images6 row it is re-typed to
+      // "image" by attachImageRowsToMediaItems, so we must NOT require
+      // type === "chapter" here or uploaded covers would stop showing.
+      return !!item
+        && Number(item.chapterImageNumber || 0) === 0
+        && !!item.chapter
+        && String(item.key || "").indexOf("chapter-") === 0;
     }
 
     function isLearningThumbItem(item) {
@@ -5692,7 +5682,15 @@ let filterToCurrentImageDots = false;
           // image, but raw serves it immediately. Without this fallback,
           // newly-uploaded thumbnails just disappear from the strip.
           withRawFallback(image, () => {
-            if (item.type === "chapter") {
+            if (isChapterCoverItem(item)) {
+              // Cover image unreachable — keep the chapter visible as a labeled
+              // tile so it can still be opened/expanded.
+              image.remove();
+              const tile = document.createElement("div");
+              tile.className = "quiz-fallback-tile";
+              tile.innerHTML = `<div class="quiz-title">${escapeHtml(item.chapter === "00" ? "INTRO" : "CH " + item.chapter)}</div>`;
+              btn.insertBefore(tile, btn.firstChild);
+            } else if (item.type === "chapter") {
               btn.style.display = "none";
             }
           });
