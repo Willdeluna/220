@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A220 ATA 25 – Equipment / Furnishings Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1a1f;
+  --card:#0f2028;
+  --card2:#142530;
+  --teal:#00c2cb;
+  --teal2:#008f96;
+  --green:#58cc02;
+  --green2:#46a302;
+  --green-bg:#071a0a;
+  --green-bdr:#1a4d1a;
+  --red:#ff4b4b;
+  --red2:#cc2a2a;
+  --red-bg:#1f0a0a;
+  --red-bdr:#5c1212;
+  --blue:#1cb0f6;
+  --gold:#ffc800;
+  --gold2:#c89800;
+  --text:#e0f4f8;
+  --muted:#5a8a9a;
+  --border:#1e3a45;
+  --r:14px;
+}
+html,body{min-height:100vh;background:var(--bg);font-family:'Nunito',sans-serif;color:var(--text)}
+body{
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  background:
+    radial-gradient(ellipse at 15% 0%,rgba(0,194,203,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,rgba(28,176,246,0.04) 0%,transparent 50%),
+    var(--bg);
+}
+.wrap{width:100%;max-width:520px}
+.screen{display:none}
+.screen.on{display:block}
+
+/* ── HOME ── */
+.home-card{background:var(--card);border-radius:22px;padding:28px 24px;border:1px solid var(--border);box-shadow:0 0 0 1px #0a1a20,0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.home-card::before{content:'';position:absolute;top:-80px;left:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,194,203,.08) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.home-card::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(28,176,246,.05) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.plane{font-size:58px;display:block;animation:bob 3s ease-in-out infinite;margin-bottom:2px;filter:drop-shadow(0 0 18px rgba(0,194,203,.5))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-11px) rotate(4deg)}}
+.home-badge{display:inline-block;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:99px;margin-bottom:8px;border:1.5px solid var(--teal2);position:relative;z-index:1}
+.home-h1{font-size:clamp(20px,5vw,28px);font-weight:900;line-height:1.15;margin-bottom:6px;color:#fff;position:relative;z-index:1}
+.home-h1 span{color:var(--teal)}
+.home-sub{font-size:12px;color:var(--muted);font-weight:600;line-height:1.55;max-width:340px;margin:0 auto 16px;position:relative;z-index:1}
+.home-pills{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:16px;position:relative;z-index:1}
+.pill{background:#0a1e26;border:1.5px solid #1a3545;border-radius:99px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--teal2)}
+.home-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;position:relative;z-index:1}
+.meta-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:11px 6px}
+.meta-n{font-size:26px;font-weight:900;color:var(--teal)}
+.meta-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.btn-go{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 8px 24px rgba(0,194,203,.25);transition:transform .12s,box-shadow .12s;letter-spacing:.3px;position:relative;z-index:1}
+.btn-go:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--teal2),0 12px 28px rgba(0,194,203,.3)}
+.btn-go:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+
+/* ── QUIZ SHELL ── */
+.q-shell{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);overflow:hidden;max-height:490px;display:flex;flex-direction:column}
+.topbar{padding:10px 14px 9px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;flex-shrink:0;background:var(--card2)}
+.xbtn{width:27px;height:27px;border:1.5px solid var(--border);border-radius:7px;background:none;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.xbtn:hover{background:#1f0709;border-color:var(--red);color:var(--red)}
+.prog-col{flex:1}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.prog-cat{font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.prog-n{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap}
+.bar-bg{height:7px;background:#0a1820;border-radius:99px;overflow:hidden;border:1px solid #1a3040}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--teal2),var(--teal),var(--blue));border-radius:99px;transition:width .5s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 8px rgba(0,194,203,.4)}
+.topbar-r{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.hearts{display:flex;gap:1px;font-size:14px}
+.heart{transition:all .3s}
+.heart.gone{opacity:.15;filter:grayscale(1);transform:scale(.65)}
+.xp-tag{background:#0a1820;border:1.5px solid #1a3a28;border-radius:99px;padding:3px 9px;font-size:12px;font-weight:800;color:var(--gold);white-space:nowrap}
+.streak-tag{background:#0a1820;border:1.5px solid #2a1a00;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:800;color:#ff9600;white-space:nowrap}
+
+/* ── QUESTION BODY ── */
+.q-body{flex:1;overflow-y:auto;padding:13px 15px 0;scrollbar-width:thin;scrollbar-color:#1a3040 transparent}
+.q-body::-webkit-scrollbar{width:4px}
+.q-body::-webkit-scrollbar-thumb{background:#1a3040;border-radius:4px}
+.q-cat{font-size:11px;font-weight:800;color:var(--teal2);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.q-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;box-shadow:0 0 6px rgba(0,194,203,.7)}
+.q-text{font-size:clamp(13px,2.6vw,14.5px);font-weight:700;line-height:1.52;margin-bottom:12px;color:#ddf0f5}
+.opts{display:flex;flex-direction:column;gap:6px;padding-bottom:12px}
+.opt{width:100%;padding:10px 12px;background:#0a1820;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:9px;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:700;color:#b8d8e0;transition:all .13s;line-height:1.32;position:relative;overflow:hidden}
+.opt:hover:not(:disabled){border-color:var(--teal2);background:#0d2535;color:var(--teal);transform:translateX(3px)}
+.opt-l{width:24px;height:24px;border-radius:6px;background:#142530;border:1.5px solid #2a4055;font-size:11px;font-weight:900;color:#4a7a8a;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.opt.picked-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0;animation:bumpR .4s cubic-bezier(.34,1.56,.64,1)}
+.opt.picked-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.picked-wrong{border-color:var(--red);background:var(--red-bg);color:#ffaaaa;animation:shakeW .35s}
+.opt.picked-wrong .opt-l{background:var(--red);border-color:var(--red);color:#fff}
+.opt.reveal-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0}
+.opt.reveal-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.faded{opacity:.22}
+.opt:disabled{cursor:default;transform:none!important}
+@keyframes bumpR{0%{transform:scale(1)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
+@keyframes shakeW{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+/* ── FEEDBACK ── */
+.fb{flex-shrink:0;display:none;align-items:center;gap:9px;padding:10px 15px;border-top:1.5px solid transparent}
+.fb.on{display:flex}
+.fb.ok{background:#071a0a;border-color:var(--green-bdr)}
+.fb.no{background:#190408;border-color:var(--red-bdr)}
+.fb-icon{font-size:24px;flex-shrink:0}
+.fb-txt{flex:1;min-width:0}
+.fb-head{font-size:13px;font-weight:900}
+.fb.ok .fb-head{color:var(--green)}
+.fb.no .fb-head{color:var(--red)}
+.fb-detail{font-size:11px;font-weight:600;color:#5a8a9a;line-height:1.4;margin-top:2px}
+.btn-cont{padding:8px 14px;border:none;border-radius:9px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .12s}
+.fb.ok .btn-cont{background:var(--green);color:#000;box-shadow:0 3px 0 var(--green2)}
+.fb.ok .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--green2)}
+.fb.no .btn-cont{background:var(--red);color:#fff;box-shadow:0 3px 0 var(--red2)}
+.fb.no .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--red2)}
+
+/* ── RESULTS ── */
+.res-card{background:var(--card);border-radius:22px;padding:28px 22px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.res-card::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(0,194,203,.07) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+.trophy{font-size:66px;display:block;animation:dropIn .7s cubic-bezier(.34,1.56,.64,1);position:relative;z-index:1;filter:drop-shadow(0 0 20px rgba(0,194,203,.4))}
+@keyframes dropIn{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.stars-row{display:flex;justify-content:center;gap:8px;margin:5px 0 12px;position:relative;z-index:1}
+.rstar{font-size:32px;opacity:0;filter:drop-shadow(0 0 8px rgba(0,194,203,.5))}
+.rstar.lit{animation:starIn .5s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes starIn{to{opacity:1;transform:scale(1) rotate(0)}from{opacity:0;transform:scale(0) rotate(-20deg)}}
+.res-title{font-size:clamp(20px,5vw,26px);font-weight:900;margin-bottom:3px;color:#fff;position:relative;z-index:1}
+.res-sub{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:18px;position:relative;z-index:1}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;position:relative;z-index:1}
+.res-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:12px 6px}
+.res-n{font-size:24px;font-weight:900;color:var(--teal)}
+.res-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.res-btns{display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
+.btn-again{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 7px 20px rgba(0,194,203,.2);transition:all .12s;letter-spacing:.3px}
+.btn-again:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--teal2),0 10px 24px rgba(0,194,203,.25)}
+.btn-again:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+.btn-home-sm{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;background:none;color:var(--muted);transition:all .15s}
+.btn-home-sm:hover{border-color:var(--teal2);color:var(--teal)}
+
+/* ── EFFECTS ── */
+.confetti{position:fixed;pointer-events:none;z-index:9999;animation:cfall linear forwards}
+@keyframes cfall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(110vh) rotate(700deg)}}
+.spark{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;animation:spark ease-out forwards}
+@keyframes spark{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}
+.floatxp{position:fixed;pointer-events:none;z-index:9999;font-size:16px;font-weight:900;color:var(--gold);text-shadow:0 0 12px rgba(255,200,0,.5);animation:fxp .9s ease-out forwards}
+@keyframes fxp{0%{opacity:1;transform:translateY(0) scale(.7)}20%{transform:translateY(-8px) scale(1.1)}100%{opacity:0;transform:translateY(-60px) scale(.9)}}
+.popbadge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;font-size:34px;font-weight:900;animation:pbadge 1s ease forwards;white-space:nowrap;text-shadow:0 0 30px rgba(0,194,203,.7),0 4px 20px rgba(0,0,0,.5)}
+@keyframes pbadge{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-55%) scale(.9)}}
+@keyframes heartBreak{0%{transform:scale(1)}30%{transform:scale(1.5)}100%{transform:scale(1)}}
+.hb{animation:heartBreak .35s ease}
+
+@media(max-width:400px){.topbar{padding:9px 11px}.q-body{padding:11px 11px 0}.opts{gap:5px}.opt{padding:9px 10px;font-size:12px}.fb{padding:9px 12px}.home-card,.res-card{padding:22px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ HOME ═══ -->
+<div id="home" class="screen on">
+<div class="home-card">
+  <span class="plane">✈️</span>
+  <div class="home-badge">A220 · ATA Chapter 25</div>
+  <h1 class="home-h1">A220 Equipment /<br><span>Furnishings Quiz</span></h1>
+  <p class="home-sub">28 questions on seats, bins, PSUs, panels, galleys, lavs, emergency equipment, and tribal knowledge.</p>
+  <div class="home-pills">
+    <span class="pill">🧠 Core</span>
+    <span class="pill">🧑‍✈️ Flight Deck</span>
+    <span class="pill">🚪 Escape Gear</span>
+    <span class="pill">🪑 Seat Tracks</span>
+    <span class="pill">🧳 Bins</span>
+    <span class="pill">🎛️ PSU</span>
+    <span class="pill">🧩 Panels</span>
+    <span class="pill">🍽️ Galleys</span>
+    <span class="pill">🚻 Lavatory</span>
+    <span class="pill">📦 Emergency Eq</span>
+    <span class="pill">💡 Closets</span>
+    <span class="pill">🔧 Troubleshooting</span>
+    <span class="pill">🧠 Tribal</span>
+  </div>
+  <div class="home-meta">
+    <div class="meta-box"><div class="meta-n">28</div><div class="meta-l">Questions</div></div>
+    <div class="meta-box"><div class="meta-n">3</div><div class="meta-l">Lives</div></div>
+    <div class="meta-box"><div class="meta-n">13</div><div class="meta-l">Topics</div></div>
+  </div>
+  <button class="btn-go" onclick="startGame()">✈️ Start Quiz</button>
+</div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div id="quiz" class="screen">
+<div class="q-shell">
+  <div class="topbar">
+    <button class="xbtn" onclick="confirmQuit()">✕</button>
+    <div class="prog-col">
+      <div class="prog-top">
+        <span class="prog-cat" id="cat-lbl">Core</span>
+        <span class="prog-n"><span id="qn">1</span>/<span id="qtot">28</span></span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+    </div>
+    <div class="topbar-r">
+      <div class="streak-tag">🔥<span id="streak-n">0</span></div>
+      <div class="hearts" id="hearts">
+        <span class="heart" id="h0">❤️</span><span class="heart" id="h1">❤️</span><span class="heart" id="h2">❤️</span>
+      </div>
+      <div class="xp-tag">⚡<span id="xpdis">0</span></div>
+    </div>
+  </div>
+  <div class="q-body" id="q-body">
+    <div class="q-cat"><div class="q-dot"></div><span id="q-cat">Core</span></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="opts" id="opts"></div>
+  </div>
+  <div class="fb" id="fb">
+    <span class="fb-icon" id="fb-icon">✅</span>
+    <div class="fb-txt">
+      <div class="fb-head" id="fb-head">Correct!</div>
+      <div class="fb-detail" id="fb-det"></div>
+    </div>
+    <button class="btn-cont" id="btn-cont" onclick="advance()">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ RESULT ═══ -->
+<div id="result" class="screen">
+<div class="res-card">
+  <span class="trophy" id="trophy">🏆</span>
+  <div class="stars-row">
+    <span class="rstar" id="rs0">⭐</span>
+    <span class="rstar" id="rs1">⭐</span>
+    <span class="rstar" id="rs2">⭐</span>
+  </div>
+  <div class="res-title" id="res-title">Session Complete!</div>
+  <div class="res-sub" id="res-sub">Great work!</div>
+  <div class="res-grid">
+    <div class="res-box"><div class="res-n" id="r-xp">0</div><div class="res-l">XP</div></div>
+    <div class="res-box"><div class="res-n" id="r-acc">0%</div><div class="res-l">Accuracy</div></div>
+    <div class="res-box"><div class="res-n" id="r-str">0</div><div class="res-l">Best Streak</div></div>
+  </div>
+  <div class="res-btns">
+    <button class="btn-again" onclick="startGame()">🔁 Play Again</button>
+    <button class="btn-home-sm" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ═══════════════ AUDIO ═══════════════
+const AC=window.AudioContext||window.webkitAudioContext;
+let actx=null;
+function ctx(){if(!actx)actx=new AC();return actx;}
+function playCorrect(){
+  try{const c=ctx();[523,659,784,1047].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.07;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.start(t);o.stop(t+.25);});}catch(e){}
+}
+function playWrong(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(280,c.currentTime);o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.35);g.gain.setValueAtTime(.13,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start();o.stop(c.currentTime+.45);}catch(e){}
+}
+function playCombo(){
+  try{const c=ctx();[880,1108,1320,1760].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='triangle';o.frequency.value=f;const t=c.currentTime+i*.05;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.start(t);o.stop(t+.3);});}catch(e){}
+}
+function playVictory(){
+  try{const c=ctx();[523,659,784,1047,1319,1568,2093].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.09;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.start(t);o.stop(t+.35);});}catch(e){}
+}
+function playClick(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=440;g.gain.setValueAtTime(.06,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.08);}catch(e){}
+}
+
+// ═══════════════ QUESTIONS ═══════════════
+const BANK=[
+{c:"🧠 Core",q:"ATA 25 (Equipment / Furnishings) on the A220 covers more than just cosmetic interior. Which BEST captures its scope?",o:["Just decorative panels and carpets","Passenger and crew support, evacuation, safety, and system interfaces (seats, bins, PSUs, galleys, lavs, emergency gear)","Only the cargo compartment","Only the flight deck"],a:1,d:"ATA 25 supports passengers, crew, evacuation, safety, AND system interfaces. Seats, bins, panels, PSUs, galleys, lavs, and emergency equipment all live here — many are STRUCTURAL items, not just trim."},
+{c:"🧠 Core",q:"Why are many cabin items in ATA 25 considered structural?",o:["They reduce cabin noise","Seats, bins, panels, and tracks must handle loads (including crash loads) and stay secure","They affect range and fuel burn","They have nothing to do with structure"],a:1,d:"Seats, bins, panels, and tracks are part of the load path during normal flight and crash loads. That\'s why fitting integrity, hardware torque, and locking mechanisms are taken seriously — not cosmetic."},
+{c:"🧠 Core",q:"Two A220s of the same model rarely have identical interiors because:",o:["Manufacturing variation","Customer / operator configuration varies — layouts, galleys, lavs, and seat counts differ","ATA 25 isn\'t standardized","The aircraft type rating doesn\'t allow uniformity"],a:1,d:"Customer configuration drives big interior variations. Always confirm the SPECIFIC configuration for the tail you\'re working on — referring to a generic AMM diagram can mislead you."},
+{c:"🧑‍✈️ Flight Deck",q:"On the A220, pilot seats use which actuation?",o:["Hydraulic only","Pneumatic only","Electric movement with mechanical backup","Manual cranks only"],a:2,d:"Pilot seats are electrically adjustable with mechanical backup. Proper seat position is critical for sidestick reach and rudder pedal geometry — bad adjustment can feel like a control problem."},
+{c:"🧑‍✈️ Flight Deck",q:"A pilot complains the sidestick \'feels off\' — bind, restricted, or out of reach. The MOST overlooked first check is:",o:["Replace the sidestick assembly","Verify pilot seat position and adjustment — seat geometry affects sidestick ergonomics","Replace the PFCC","Adjust the rudder trim"],a:1,d:"Seat position affects control ergonomics. A seat slightly out of position can make the sidestick feel restricted or out of reach. Always rule out seat-adjustment issues before chasing the FBW system."},
+{c:"🧑‍✈️ Flight Deck",q:"On a seat ECU complaint (e.g. seat won\'t move), what is the first low-cost troubleshooting step?",o:["Order a new seat ECU","Use the seat\'s power cut switch and verify electrical supply — many \'mechanical\' seat faults are electrical/control","Replace the entire seat","Defer the aircraft"],a:1,d:"Seat ECU faults often LOOK mechanical (no movement) but are electrical. Use the power cut switch, verify supply, and check connectors before condemning the seat or ECU. Cheap to rule out."},
+{c:"🚪 Escape Gear",q:"What is the function of the cockpit escape rope?",o:["Tie-down for ground servicing","Allows flight crew escape via the sliding window when normal doors are blocked","Lifting bridle for engine maintenance","Backup tow strap"],a:1,d:"The escape rope lets the flight crew exit through the sliding window without using normal cabin doors — for example, if the cabin is blocked. A small but critical item; missing/damaged ropes can ground the aircraft."},
+{c:"🚪 Escape Gear",q:"Standard flight deck emergency equipment on the A220 typically includes:",o:["Flashlights, crash axe, fire extinguisher, PBE (smoke hood), and escape rope","Only a fire extinguisher","Only oxygen masks","Only personal flotation devices"],a:0,d:"Flashlights, crash axe, fire extinguisher, PBE (Protective Breathing Equipment / smoke hood), and escape rope — all must be present, accessible, and serviceable. Missing or expired items affect dispatch."},
+{c:"🪑 Seat Tracks",q:"Passenger seats on the A220 mount to seat tracks using which hardware?",o:["Velcro and adhesive only","Fittings, studs, locking plungers, and anti-rattle nuts","Heavy bolts welded to the floor","Magnetic mounts"],a:1,d:"Seats engage the tracks via fittings, studs, locking plungers, and anti-rattle nuts. ALL of these must be correctly engaged and torqued — improper installation creates a structural and safety concern."},
+{c:"🪑 Seat Tracks",q:"A passenger reports their seat \'wobbles slightly\' during taxi. The MOST likely cause is:",o:["The seat itself has failed — replace it","An installation issue: track engagement, alignment, missing anti-rattle nut, or loose fittings","Software fault","Pressurization fluctuation"],a:1,d:"Seat complaints are USUALLY installation issues — track engagement, alignment, hardware torque — NOT the seat itself. Check the mount hardware before condemning the seat. Saves time and parts."},
+{c:"🧳 Bins",q:"Overhead bins on the A220 use 9G tie rods. Their function is:",o:["To suspend the bin only for normal flight","To handle forward crash loads (the 9G certification requirement) so bins don\'t dislodge in a survivable accident","To provide cabin noise damping","Decorative only"],a:1,d:"9G tie rods carry forward crash loads. In a survivable crash, bins must not dislodge and become projectiles. Bin structural integrity = passenger safety, not just baggage storage."},
+{c:"🧳 Bins",q:"A flight attendant reports an overhead bin that \'opens too fast\' or \'won\'t latch properly\'. The MOST likely cause is:",o:["Software issue","Mechanical: gas strut wear, latch wear, or hinge issue","Cabin pressure differential","Electrical malfunction"],a:1,d:"Fast opening, hard closing, or loose bin behavior is overwhelmingly mechanical: gas strut (assist) condition, latch wear, or hinge alignment. Don\'t search for electrical or software causes — bins are dumb mechanical items."},
+{c:"🎛️ PSU",q:"A PSU (Passenger Service Unit) on the A220 combines:",o:["Only reading lights","Reading lights, gaspers (air outlets), oxygen masks, and call buttons in one assembly","Only the oxygen system","Only call buttons"],a:1,d:"PSUs combine multiple systems: reading lights (ATA 33), gaspers (ATA 21), oxygen masks (ATA 35), and call buttons (ATA 23/25). A PSU \'fault\' often traces into one of these other ATAs."},
+{c:"🎛️ PSU",q:"A passenger reports their reading light is inoperative and the gasper is weak. The MOST efficient first diagnosis is:",o:["Replace the entire PSU","Check the PSU mechanically/electrically, then trace the affected sub-functions into their owning ATAs (33 light, 21 air)","Replace the cabin PA","Reset all PFCCs"],a:1,d:"Don\'t condemn the whole PSU. Symptoms can come from ATA 33 (cabin lighting bus), ATA 21 (gasper feed), ATA 35 (oxygen), or ATA 24 (electrical power). The PSU is an INTERFACE — fix the underlying ATA, not the package."},
+{c:"🎛️ PSU",q:"When opening (swinging down) a PSU for maintenance, what is the critical awareness item?",o:["Hydraulic pressure inside","Oxygen mask deployment hardware and seals — handle with care","Battery acid","Sharp edges only"],a:1,d:"PSUs contain oxygen mask deployment hardware. Improper handling can dislodge masks, damage seals, or trigger inadvertent deployment. Always follow AMM precautions when accessing PSUs."},
+{c:"🧩 Panels",q:"Cabin sidewall and dado (lower) panels serve what functional role beyond decoration?",o:["Only sound absorption","Cover structure, wiring, ducts, and help manage cabin finish and airflow","Provide structural strength","Carry hydraulic lines"],a:1,d:"Panels cover structure, wiring, and ducts. They also affect airflow management and cabin acoustics. They\'re functional — not just cosmetic. Improper installation creates noise complaints, airflow issues, and loose-trim writeups."},
+{c:"🧩 Panels",q:"Dado panels contain decompression flaps. What is their function?",o:["Provide additional storage","Open at low differential pressure to equalize air between cabin and underfloor area during rapid decompression — preventing structural damage","Provide additional lighting","Filter cabin air"],a:1,d:"Decompression flaps in dado panels open at low ΔP to equalize cabin and underfloor air rapidly. Without them, a rapid decompression could damage floor structure as trapped air expanded. Safety-critical, often overlooked feature."},
+{c:"🍽️ Galleys",q:"A flight attendant reports the galley oven won\'t turn on. The wet galley is otherwise normal. Before condemning the oven, check:",o:["The PFCC software version","ATA 24 load shedding logic — galley loads can be shed automatically during certain electrical configurations","The wing anti-ice","The IRU alignment"],a:1,d:"Galley loads (ovens, coffee makers) can be shed by the electrical system based on load priority and bus configuration. A \'broken\' oven may be a perfectly healthy oven that got shed. Check ATA 24 status first."},
+{c:"🍽️ Galleys",q:"Galleys touch multiple ATAs. A leaking galley water faucet is likely:",o:["Pure ATA 25 only","An ATA 38 (potable water/waste) interface — investigate the water plumbing and drain, not the galley structure","An ATA 26 (fire detection) issue","An ATA 22 (autoflight) issue"],a:1,d:"Water/drainage issues are ATA 38. Galleys integrate electrical, water, drainage, doors, and latches — any one of those owning ATAs can drive a \'galley\' write-up. Trace to the right system, don\'t get stuck on ATA 25."},
+{c:"🚻 Lavatory",q:"Lav smoke detectors on the A220 are:",o:["Optional comfort items","Safety-critical and tamper-resistant — protecting one of the highest-risk cabin areas (smoking in lavs has caused fatal fires historically)","Identical to cargo smoke detectors","Voluntary, deactivated by the FA"],a:1,d:"Lav smoke detection is safety-critical. The lav is a confined space with combustibles (paper, plastic) and historically a high-risk area for in-cabin fires. Detectors are tamper-resistant for a reason — never disable them."},
+{c:"🚻 Lavatory",q:"A persistent lav flush fault: what\'s the smartest first investigation?",o:["Replace the lav module","Look at ATA 38 (water/waste) — flush valve, vacuum generator, water pressure — most flush faults are in the plumbing, not the lav structure","Reset the autopilot","Defer the aircraft"],a:1,d:"Flush faults are typically ATA 38 (potable water and waste). Diagnose vacuum generator status, flush valve, and water pressure. Lav \'failures\' rarely require module replacement."},
+{c:"📦 Emergency Eq",q:"On a walkaround, you notice a missing megaphone in the cabin. The impact is:",o:["No impact — megaphones are optional","Dispatch impact — correct quantity, location, and serviceability of emergency equipment is required","Only paperwork issue","Only affects autopilot"],a:1,d:"Missing emergency equipment is a no-dispatch item. Fire extinguishers, oxygen bottles, life vests, megaphones, ELT — all required by quantity, location, and serviceability. Missing items ground the aircraft until replaced."},
+{c:"📦 Emergency Eq",q:"Where on the A220 might portable emergency equipment be stored?",o:["Only in the cockpit","Multiple locations — galleys, FA stations, closets, and overhead bins designated for emergency use","Cargo compartment only","External equipment bays"],a:1,d:"Emergency equipment is distributed: galley areas, FA stations, designated bins/closets, flight deck. Storage areas are part of the system — knowing the layout matters during pre-flight and dispatch checks."},
+{c:"💡 Closets",q:"A closet light won\'t turn off when the door closes. The MOST likely cause is:",o:["Failed LED bulb","Door microswitch fault, sticking, or out of adjustment","Software bug in the FMS","Cabin pressurization issue"],a:1,d:"Closet lights use door microswitch logic — door closed = switch opens = light off. A stuck or misadjusted microswitch is the typical cause. Simple to inspect, often resolved with cleaning or adjustment."},
+{c:"🔧 Troubleshooting",q:"The recommended ATA 25 troubleshooting flow on the A220 is:",o:["Replace, then troubleshoot","Identify the component → check mechanical integrity (locks, hinges, mounts, latches) → then check power and interfaces to other ATAs","Reset the IASC first","Run BITE on the PFCC"],a:1,d:"Flow: 1) Identify the component, 2) Check mechanical integrity FIRST (locks, hinges, mounts, latches, fittings, tracks, alignment), 3) Only then look at power and interfaces. Cabin items are mechanical first."},
+{c:"🧠 Tribal",q:"TRIBAL: Cabin interior write-ups are often \'small\' but can stop dispatch because:",o:["They are graded harshly by maintenance","Loose hardware, missing emergency equipment, or unsecured galley items can become safety, accessibility, or evacuation issues","They affect engine performance","They cause autopilot disengage"],a:1,d:"Small items become big problems: a loose bin, a missing extinguisher, or an unsecured galley cart can fail the safety/accessibility requirements that ground the aircraft. ATA 25 \'small stuff\' matters."},
+{c:"🧠 Tribal",q:"TRIBAL: \'Seat won\'t recline\' complaint. Best diagnostic mindset is:",o:["Order a new seat — seats fail constantly","Mechanism first (cable, lever, mechanical lock) → then power if powered → then ECU last. Don\'t start expensive.","Replace the floor","Replace the cabin lighting controller"],a:1,d:"Cheapest-first diagnosis: mechanism → power → ECU. Most recline issues are mechanical (broken lever cable, jammed lock) or simple power. Replacing the ECU first is the \'parts cannon\' mistake — wasteful and often wrong."},
+{c:"🧠 Tribal",q:"TRIBAL: ATA 25 cabin write-ups that point to other systems should be:",o:["Closed as \'cabin issue\' and signed off","Re-routed: a galley electrical fault is ATA 24, a flush issue is ATA 38, a smoke detector is ATA 26, a light is ATA 33 — fix the OWNING system","Forwarded to the customer","Ignored if the cabin looks OK"],a:1,d:"ATA 25 is a HOST for many other systems\' interfaces. A galley electrical issue is ATA 24. Lav flush is ATA 38. Smoke detector is ATA 26. Reading light is ATA 33. Route the write-up to the OWNING ATA — otherwise it\'ll come back unfixed."}
+];
+
+// ═══════════════ STATE ═══════════════
+const G={qs:[],idx:0,hearts:3,xp:0,streak:0,bestStreak:0,correct:0,done:false};
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on')}
+function goHome(){show('home')}
+function confirmQuit(){if(confirm('Quit this quiz?'))goHome();}
+
+function startGame(){
+  // Deep-copy BANK and shuffle both question order AND options within each question
+  G.qs=shuffle([...BANK]).map(q=>{
+    // Build [text, isCorrect] pairs, shuffle, then split back out and find new correct index
+    const pairs=q.o.map((txt,i)=>({txt,correct:i===q.a}));
+    shuffle(pairs);
+    return{
+      c:q.c,
+      q:q.q,
+      o:pairs.map(p=>p.txt),
+      a:pairs.findIndex(p=>p.correct),
+      d:q.d,
+    };
+  });
+  G.idx=0;G.hearts=3;G.xp=0;G.streak=0;G.bestStreak=0;G.correct=0;
+  updateHearts();
+  document.getElementById('xpdis').textContent='0';
+  document.getElementById('streak-n').textContent='0';
+  document.getElementById('qtot').textContent=G.qs.length;
+  show('quiz');
+  renderQ();
+}
+
+function renderQ(){
+  G.done=false;
+  const fb=document.getElementById('fb');
+  fb.className='fb';fb.style.display='none';
+  const q=G.qs[G.idx];
+  document.getElementById('cat-lbl').textContent=q.c;
+  document.getElementById('q-cat').textContent=q.c;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('qn').textContent=G.idx+1;
+  document.getElementById('bar').style.width=Math.round((G.idx/G.qs.length)*100)+'%';
+
+  const cont=document.getElementById('opts');
+  cont.innerHTML='';
+  const keys=['A','B','C','D'];
+  q.o.forEach((txt,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="opt-l">${keys[i]}</span><span>${txt}</span>`;
+    b.onclick=()=>pick(i);
+    cont.appendChild(b);
+    b.style.opacity='0';b.style.transform='translateX(-16px)';
+    setTimeout(()=>{b.style.transition='opacity .22s ease,transform .22s ease';b.style.opacity='1';b.style.transform='translateX(0)';},70+i*50);
+  });
+
+  // scroll q-body back to top on each new question
+  document.getElementById('q-body').scrollTop=0;
+}
+
+function pick(idx){
+  if(G.done)return;
+  G.done=true;
+  const q=G.qs[G.idx];
+  const correct=idx===q.a;
+  const btns=[...document.querySelectorAll('.opt')];
+  btns.forEach(b=>b.disabled=true);
+  btns[q.a].classList.add('reveal-right');
+  if(correct){
+    btns[idx].classList.remove('reveal-right');
+    btns[idx].classList.add('picked-right');
+    btns.forEach((b,i)=>{if(i!==idx)b.classList.add('faded');});
+    G.correct++;G.streak++;
+    if(G.streak>G.bestStreak)G.bestStreak=G.streak;
+    const xpGain=G.streak>=5?20:G.streak>=3?15:10;
+    G.xp+=xpGain;
+    document.getElementById('xpdis').textContent=G.xp;
+    document.getElementById('streak-n').textContent=G.streak;
+    showFeedback(true,q.d,xpGain);
+    spawnSparks(btns[idx]);
+    playCorrect();
+    if(G.streak===3){showPopBadge('🔥 3 Streak!');playCombo();}
+    if(G.streak===5){showPopBadge('⚡ 5 in a row!');playCombo();}
+    if(G.streak===10){showPopBadge('🌟 10 Streak!');playCombo();}
+  } else {
+    btns[idx].classList.add('picked-wrong');
+    btns.forEach((b,i)=>{if(i!==idx&&i!==q.a)b.classList.add('faded');});
+    G.streak=0;G.hearts--;
+    document.getElementById('streak-n').textContent=0;
+    updateHearts();
+    showFeedback(false,q.d,0);
+    playWrong();
+  }
+}
+
+function showFeedback(ok,detail,xp){
+  const fb=document.getElementById('fb');
+  fb.className='fb on '+(ok?'ok':'no');
+  fb.style.display='flex';
+  const icons=ok?['✅','🎉','🌟','⭐','🔥','💡','🎯','🏅']:['❌'];
+  const heads=ok?['Correct!','Great!','Well done!','Spot on!','Nailed it!','Right on!','Excellent!']:['Not quite!'];
+  document.getElementById('fb-icon').textContent=icons[Math.floor(Math.random()*icons.length)];
+  document.getElementById('fb-head').textContent=heads[Math.floor(Math.random()*heads.length)];
+  document.getElementById('fb-det').textContent=detail;
+  const cont=document.getElementById('btn-cont');
+  cont.textContent=(G.idx>=G.qs.length-1||G.hearts<=0)?'See Results →':'Continue →';
+  if(ok&&xp)floatXP('+'+xp+' XP',cont);
+}
+
+function advance(){
+  playClick();
+  G.idx++;
+  if(G.idx>=G.qs.length||G.hearts<=0)showResult();
+  else renderQ();
+}
+
+function updateHearts(){
+  [0,1,2].forEach(i=>{
+    const h=document.getElementById('h'+i);
+    h.classList.toggle('gone',i>=G.hearts);
+  });
+}
+
+function showResult(){
+  const acc=G.idx?Math.round((G.correct/G.idx)*100):0;
+  const stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
+  const trophies=['😅','🥉','🥈','🏆'];
+  const titles=['Keep Practicing!','Nice Try!','Well Done!','Outstanding! 🎯'];
+  const subs=['Review the ATA 21 manual and try again.','Good effort — study the explanations!','Strong Air Conditioning knowledge!','You are an ATA 21 expert! ✈️'];
+  document.getElementById('trophy').textContent=trophies[stars];
+  document.getElementById('res-title').textContent=titles[stars];
+  document.getElementById('res-sub').textContent=subs[stars];
+  document.getElementById('r-xp').textContent=G.xp;
+  document.getElementById('r-acc').textContent=acc+'%';
+  document.getElementById('r-str').textContent=G.bestStreak;
+  ['rs0','rs1','rs2'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.classList.remove('lit');el.style.animationDelay='0s';
+    if(i<stars)setTimeout(()=>{el.style.animationDelay=(i*.2)+'s';el.classList.add('lit');},500+i*120);
+  });
+  show('result');
+  if(acc>=60)setTimeout(()=>{launchConfetti(acc);playVictory();},300);
+}
+
+function launchConfetti(acc){
+  const cols=['#00c2cb','#1cb0f6','#58cc02','#ffc800','#ff9600','#ff4b4b','#fff'];
+  const shapes=['●','■','▲','◆','★','✦','✧'];
+  const count=Math.min(35+Math.floor(acc/4),70);
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti';
+      el.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+      el.style.cssText=`left:${Math.random()*100}vw;top:-20px;color:${cols[Math.floor(Math.random()*cols.length)]};font-size:${9+Math.random()*13}px;animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.4}s`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),4000);
+    },i*22);
+  }
+}
+
+function spawnSparks(btn){
+  const rect=btn.getBoundingClientRect();
+  const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+  const cols=['#00c2cb','#1cb0f6','#ffc800','#fff','#58cc02'];
+  for(let i=0;i<10;i++){
+    const el=document.createElement('div');
+    el.className='spark';
+    const a=(i/10)*Math.PI*2,d=28+Math.random()*44;
+    el.style.cssText=`left:${cx}px;top:${cy}px;width:${4+Math.random()*5}px;height:${4+Math.random()*5}px;background:${cols[i%cols.length]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;animation-duration:${.4+Math.random()*.25}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),800);
+  }
+}
+
+function floatXP(txt,refEl){
+  const rect=refEl.getBoundingClientRect();
+  const el=document.createElement('div');
+  el.className='floatxp';el.textContent=txt;
+  el.style.cssText=`left:${rect.left+rect.width*.5}px;top:${rect.top-10}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1000);
+}
+
+function showPopBadge(txt){
+  const el=document.createElement('div');
+  el.className='popbadge';el.textContent=txt;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1100);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('quiz').classList.contains('on'))return;
+  const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+  const k=e.key.toLowerCase();
+  if(!G.done&&map[k]!==undefined)pick(map[k]);
+  if(G.done&&(e.key==='Enter'||e.key===' ')){e.preventDefault();advance();}
+});
+</script>
+</body>
+</html>

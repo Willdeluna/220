@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A220 ATA 46 – Information Systems Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1a1f;
+  --card:#0f2028;
+  --card2:#142530;
+  --teal:#00c2cb;
+  --teal2:#008f96;
+  --green:#58cc02;
+  --green2:#46a302;
+  --green-bg:#071a0a;
+  --green-bdr:#1a4d1a;
+  --red:#ff4b4b;
+  --red2:#cc2a2a;
+  --red-bg:#1f0a0a;
+  --red-bdr:#5c1212;
+  --blue:#1cb0f6;
+  --gold:#ffc800;
+  --gold2:#c89800;
+  --text:#e0f4f8;
+  --muted:#5a8a9a;
+  --border:#1e3a45;
+  --r:14px;
+}
+html,body{min-height:100vh;background:var(--bg);font-family:'Nunito',sans-serif;color:var(--text)}
+body{
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  background:
+    radial-gradient(ellipse at 15% 0%,rgba(0,194,203,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,rgba(28,176,246,0.04) 0%,transparent 50%),
+    var(--bg);
+}
+.wrap{width:100%;max-width:520px}
+.screen{display:none}
+.screen.on{display:block}
+
+/* ── HOME ── */
+.home-card{background:var(--card);border-radius:22px;padding:28px 24px;border:1px solid var(--border);box-shadow:0 0 0 1px #0a1a20,0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.home-card::before{content:'';position:absolute;top:-80px;left:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,194,203,.08) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.home-card::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(28,176,246,.05) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.plane{font-size:58px;display:block;animation:bob 3s ease-in-out infinite;margin-bottom:2px;filter:drop-shadow(0 0 18px rgba(0,194,203,.5))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-11px) rotate(4deg)}}
+.home-badge{display:inline-block;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:99px;margin-bottom:8px;border:1.5px solid var(--teal2);position:relative;z-index:1}
+.home-h1{font-size:clamp(20px,5vw,28px);font-weight:900;line-height:1.15;margin-bottom:6px;color:#fff;position:relative;z-index:1}
+.home-h1 span{color:var(--teal)}
+.home-sub{font-size:12px;color:var(--muted);font-weight:600;line-height:1.55;max-width:340px;margin:0 auto 16px;position:relative;z-index:1}
+.home-pills{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:16px;position:relative;z-index:1}
+.pill{background:#0a1e26;border:1.5px solid #1a3545;border-radius:99px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--teal2)}
+.home-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;position:relative;z-index:1}
+.meta-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:11px 6px}
+.meta-n{font-size:26px;font-weight:900;color:var(--teal)}
+.meta-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.btn-go{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 8px 24px rgba(0,194,203,.25);transition:transform .12s,box-shadow .12s;letter-spacing:.3px;position:relative;z-index:1}
+.btn-go:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--teal2),0 12px 28px rgba(0,194,203,.3)}
+.btn-go:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+
+/* ── QUIZ SHELL ── */
+.q-shell{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);overflow:hidden;max-height:490px;display:flex;flex-direction:column}
+.topbar{padding:10px 14px 9px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;flex-shrink:0;background:var(--card2)}
+.xbtn{width:27px;height:27px;border:1.5px solid var(--border);border-radius:7px;background:none;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.xbtn:hover{background:#1f0709;border-color:var(--red);color:var(--red)}
+.prog-col{flex:1}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.prog-cat{font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.prog-n{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap}
+.bar-bg{height:7px;background:#0a1820;border-radius:99px;overflow:hidden;border:1px solid #1a3040}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--teal2),var(--teal),var(--blue));border-radius:99px;transition:width .5s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 8px rgba(0,194,203,.4)}
+.topbar-r{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.hearts{display:flex;gap:1px;font-size:14px}
+.heart{transition:all .3s}
+.heart.gone{opacity:.15;filter:grayscale(1);transform:scale(.65)}
+.xp-tag{background:#0a1820;border:1.5px solid #1a3a28;border-radius:99px;padding:3px 9px;font-size:12px;font-weight:800;color:var(--gold);white-space:nowrap}
+.streak-tag{background:#0a1820;border:1.5px solid #2a1a00;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:800;color:#ff9600;white-space:nowrap}
+
+/* ── QUESTION BODY ── */
+.q-body{flex:1;overflow-y:auto;padding:13px 15px 0;scrollbar-width:thin;scrollbar-color:#1a3040 transparent}
+.q-body::-webkit-scrollbar{width:4px}
+.q-body::-webkit-scrollbar-thumb{background:#1a3040;border-radius:4px}
+.q-cat{font-size:11px;font-weight:800;color:var(--teal2);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.q-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;box-shadow:0 0 6px rgba(0,194,203,.7)}
+.q-text{font-size:clamp(13px,2.6vw,14.5px);font-weight:700;line-height:1.52;margin-bottom:12px;color:#ddf0f5}
+.opts{display:flex;flex-direction:column;gap:6px;padding-bottom:12px}
+.opt{width:100%;padding:10px 12px;background:#0a1820;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:9px;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:700;color:#b8d8e0;transition:all .13s;line-height:1.32;position:relative;overflow:hidden}
+.opt:hover:not(:disabled){border-color:var(--teal2);background:#0d2535;color:var(--teal);transform:translateX(3px)}
+.opt-l{width:24px;height:24px;border-radius:6px;background:#142530;border:1.5px solid #2a4055;font-size:11px;font-weight:900;color:#4a7a8a;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.opt.picked-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0;animation:bumpR .4s cubic-bezier(.34,1.56,.64,1)}
+.opt.picked-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.picked-wrong{border-color:var(--red);background:var(--red-bg);color:#ffaaaa;animation:shakeW .35s}
+.opt.picked-wrong .opt-l{background:var(--red);border-color:var(--red);color:#fff}
+.opt.reveal-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0}
+.opt.reveal-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.faded{opacity:.22}
+.opt:disabled{cursor:default;transform:none!important}
+@keyframes bumpR{0%{transform:scale(1)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
+@keyframes shakeW{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+/* ── FEEDBACK ── */
+.fb{flex-shrink:0;display:none;align-items:center;gap:9px;padding:10px 15px;border-top:1.5px solid transparent}
+.fb.on{display:flex}
+.fb.ok{background:#071a0a;border-color:var(--green-bdr)}
+.fb.no{background:#190408;border-color:var(--red-bdr)}
+.fb-icon{font-size:24px;flex-shrink:0}
+.fb-txt{flex:1;min-width:0}
+.fb-head{font-size:13px;font-weight:900}
+.fb.ok .fb-head{color:var(--green)}
+.fb.no .fb-head{color:var(--red)}
+.fb-detail{font-size:11px;font-weight:600;color:#5a8a9a;line-height:1.4;margin-top:2px}
+.btn-cont{padding:8px 14px;border:none;border-radius:9px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .12s}
+.fb.ok .btn-cont{background:var(--green);color:#000;box-shadow:0 3px 0 var(--green2)}
+.fb.ok .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--green2)}
+.fb.no .btn-cont{background:var(--red);color:#fff;box-shadow:0 3px 0 var(--red2)}
+.fb.no .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--red2)}
+
+/* ── RESULTS ── */
+.res-card{background:var(--card);border-radius:22px;padding:28px 22px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.res-card::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(0,194,203,.07) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+.trophy{font-size:66px;display:block;animation:dropIn .7s cubic-bezier(.34,1.56,.64,1);position:relative;z-index:1;filter:drop-shadow(0 0 20px rgba(0,194,203,.4))}
+@keyframes dropIn{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.stars-row{display:flex;justify-content:center;gap:8px;margin:5px 0 12px;position:relative;z-index:1}
+.rstar{font-size:32px;opacity:0;filter:drop-shadow(0 0 8px rgba(0,194,203,.5))}
+.rstar.lit{animation:starIn .5s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes starIn{to{opacity:1;transform:scale(1) rotate(0)}from{opacity:0;transform:scale(0) rotate(-20deg)}}
+.res-title{font-size:clamp(20px,5vw,26px);font-weight:900;margin-bottom:3px;color:#fff;position:relative;z-index:1}
+.res-sub{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:18px;position:relative;z-index:1}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;position:relative;z-index:1}
+.res-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:12px 6px}
+.res-n{font-size:24px;font-weight:900;color:var(--teal)}
+.res-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.res-btns{display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
+.btn-again{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 7px 20px rgba(0,194,203,.2);transition:all .12s;letter-spacing:.3px}
+.btn-again:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--teal2),0 10px 24px rgba(0,194,203,.25)}
+.btn-again:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+.btn-home-sm{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;background:none;color:var(--muted);transition:all .15s}
+.btn-home-sm:hover{border-color:var(--teal2);color:var(--teal)}
+
+/* ── EFFECTS ── */
+.confetti{position:fixed;pointer-events:none;z-index:9999;animation:cfall linear forwards}
+@keyframes cfall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(110vh) rotate(700deg)}}
+.spark{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;animation:spark ease-out forwards}
+@keyframes spark{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}
+.floatxp{position:fixed;pointer-events:none;z-index:9999;font-size:16px;font-weight:900;color:var(--gold);text-shadow:0 0 12px rgba(255,200,0,.5);animation:fxp .9s ease-out forwards}
+@keyframes fxp{0%{opacity:1;transform:translateY(0) scale(.7)}20%{transform:translateY(-8px) scale(1.1)}100%{opacity:0;transform:translateY(-60px) scale(.9)}}
+.popbadge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;font-size:34px;font-weight:900;animation:pbadge 1s ease forwards;white-space:nowrap;text-shadow:0 0 30px rgba(0,194,203,.7),0 4px 20px rgba(0,0,0,.5)}
+@keyframes pbadge{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-55%) scale(.9)}}
+@keyframes heartBreak{0%{transform:scale(1)}30%{transform:scale(1.5)}100%{transform:scale(1)}}
+.hb{animation:heartBreak .35s ease}
+
+@media(max-width:400px){.topbar{padding:9px 11px}.q-body{padding:11px 11px 0}.opts{gap:5px}.opt{padding:9px 10px;font-size:12px}.fb{padding:9px 12px}.home-card,.res-card{padding:22px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ HOME ═══ -->
+<div id="home" class="screen on">
+<div class="home-card">
+  <span class="plane">✈️</span>
+  <div class="home-badge">A220 · ATA Chapter 46</div>
+  <h1 class="home-h1">A220 Information<br><span>Systems Quiz</span></h1>
+  <p class="home-sub">22 questions on IMS, ODL, APM, AFDX, HMU, AHMS, ANS, and tribal knowledge.</p>
+  <div class="home-pills">
+    <span class="pill">🧠 Core</span>
+    <span class="pill">💾 IMS</span>
+    <span class="pill">⚙️ ODL</span>
+    <span class="pill">📋 Config</span>
+    <span class="pill">🔐 Security</span>
+    <span class="pill">🔌 Hardware</span>
+    <span class="pill">🌐 Networks</span>
+    <span class="pill">❤️ AHMS</span>
+    <span class="pill">❤️ HMU</span>
+    <span class="pill">💥 Events</span>
+    <span class="pill">🌐 ANS</span>
+    <span class="pill">🧠 Tribal</span>
+  </div>
+  <div class="home-meta">
+    <div class="meta-box"><div class="meta-n">22</div><div class="meta-l">Questions</div></div>
+    <div class="meta-box"><div class="meta-n">3</div><div class="meta-l">Lives</div></div>
+    <div class="meta-box"><div class="meta-n">12</div><div class="meta-l">Topics</div></div>
+  </div>
+  <button class="btn-go" onclick="startGame()">✈️ Start Quiz</button>
+</div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div id="quiz" class="screen">
+<div class="q-shell">
+  <div class="topbar">
+    <button class="xbtn" onclick="confirmQuit()">✕</button>
+    <div class="prog-col">
+      <div class="prog-top">
+        <span class="prog-cat" id="cat-lbl">Core</span>
+        <span class="prog-n"><span id="qn">1</span>/<span id="qtot">22</span></span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+    </div>
+    <div class="topbar-r">
+      <div class="streak-tag">🔥<span id="streak-n">0</span></div>
+      <div class="hearts" id="hearts">
+        <span class="heart" id="h0">❤️</span><span class="heart" id="h1">❤️</span><span class="heart" id="h2">❤️</span>
+      </div>
+      <div class="xp-tag">⚡<span id="xpdis">0</span></div>
+    </div>
+  </div>
+  <div class="q-body" id="q-body">
+    <div class="q-cat"><div class="q-dot"></div><span id="q-cat">Core</span></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="opts" id="opts"></div>
+  </div>
+  <div class="fb" id="fb">
+    <span class="fb-icon" id="fb-icon">✅</span>
+    <div class="fb-txt">
+      <div class="fb-head" id="fb-head">Correct!</div>
+      <div class="fb-detail" id="fb-det"></div>
+    </div>
+    <button class="btn-cont" id="btn-cont" onclick="advance()">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ RESULT ═══ -->
+<div id="result" class="screen">
+<div class="res-card">
+  <span class="trophy" id="trophy">🏆</span>
+  <div class="stars-row">
+    <span class="rstar" id="rs0">⭐</span>
+    <span class="rstar" id="rs1">⭐</span>
+    <span class="rstar" id="rs2">⭐</span>
+  </div>
+  <div class="res-title" id="res-title">Session Complete!</div>
+  <div class="res-sub" id="res-sub">Great work!</div>
+  <div class="res-grid">
+    <div class="res-box"><div class="res-n" id="r-xp">0</div><div class="res-l">XP</div></div>
+    <div class="res-box"><div class="res-n" id="r-acc">0%</div><div class="res-l">Accuracy</div></div>
+    <div class="res-box"><div class="res-n" id="r-str">0</div><div class="res-l">Best Streak</div></div>
+  </div>
+  <div class="res-btns">
+    <button class="btn-again" onclick="startGame()">🔁 Play Again</button>
+    <button class="btn-home-sm" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ═══════════════ AUDIO ═══════════════
+const AC=window.AudioContext||window.webkitAudioContext;
+let actx=null;
+function ctx(){if(!actx)actx=new AC();return actx;}
+function playCorrect(){
+  try{const c=ctx();[523,659,784,1047].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.07;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.start(t);o.stop(t+.25);});}catch(e){}
+}
+function playWrong(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(280,c.currentTime);o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.35);g.gain.setValueAtTime(.13,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start();o.stop(c.currentTime+.45);}catch(e){}
+}
+function playCombo(){
+  try{const c=ctx();[880,1108,1320,1760].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='triangle';o.frequency.value=f;const t=c.currentTime+i*.05;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.start(t);o.stop(t+.3);});}catch(e){}
+}
+function playVictory(){
+  try{const c=ctx();[523,659,784,1047,1319,1568,2093].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.09;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.start(t);o.stop(t+.35);});}catch(e){}
+}
+function playClick(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=440;g.gain.setValueAtTime(.06,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.08);}catch(e){}
+}
+
+// ═══════════════ QUESTIONS ═══════════════
+const BANK=[
+{c:"🧠 Core",q:"ATA 46 on the A220 is BEST described as:",o:["Cabin entertainment streaming and audio system","Software loading + aircraft health management combined","Engine vibration monitoring and trend analysis","An emergency backup electrical distribution unit"],a:1,d:"ATA 46 = software + aircraft health management. Controls what software the airplane runs and tracks how healthy the airplane is. Two big pieces: IMS (software/data loading) and AHMS (monitoring and reporting)."},
+{c:"🧠 Core",q:"Most ATA 46 issues on the A220 are:",o:["Broken parts requiring LRU replacement promptly","Loading, configuration, or communication problems","Hydraulic pump issues affecting the IMS box","Cabin temperature affecting electronics performance"],a:1,d:"Most ATA 46 issues are NOT broken parts — they are loading, configuration, or communication problems. Think software, configuration, and data first before chasing hardware."},
+{c:"💾 IMS",q:"The Information Management System (IMS) is described as:",o:["The autopilot\'s primary processing unit","The software loading hub — USB → IMS → LRU","A spare avionics module kept in storage only","A passenger Wi-Fi network access point inside"],a:1,d:"IMS is the software loading HUB. USB or laptop data goes into IMS FIRST before being sent to LRUs/LRMs. Files are NOT loaded directly to aircraft computers — USB → IMS → LRU is the normal path."},
+{c:"💾 IMS",q:"IMS internal storage keeps which folder structure?",o:["Only a current/active folder is maintained","New / Installed / Backup — version history kept","Read/Write/Execute permissions only structure","Just a temporary cache cleared every flight cycle"],a:1,d:"IMS keeps New / Installed / Backup folders. New files become installed; older software moves to backup for version history. This gives rollback capability and traceability. Files are also encrypted to protect against unauthorized software."},
+{c:"⚙️ ODL",q:"What does ODL do in the A220 loading process?",o:["Stands for \'Off-line Diagnostic Logger\' only","Manages the load sequence and target identification","Powers the IMS independently from aircraft buses","Encrypts files before they leave the laptop"],a:1,d:"ODL (Onboard Data Loader) manages the load sequence. Identifies targets and loads software in the correct order. Preconditions matter: aircraft on ground, maintenance switch active, correct channel selected."},
+{c:"⚙️ ODL",q:"During a software load on the A220, what happens if you select the wrong channel?",o:["No load occurs — channel A/B selection matters","Both channels load simultaneously for safety","The aircraft accepts any channel automatically","The IMS reboots and loads to whichever is faster"],a:0,d:"Wrong channel = no load. Channel A/B selection controls which LRUs are updated and prevents system overload. Selecting the wrong channel doesn\'t damage anything — but the load simply won\'t proceed."},
+{c:"📋 Config",q:"On the A220, configuration manager compares:",o:["Engine performance vs published baseline data","Installed software vs expected software standard","Cabin temperature vs the crew-selected setpoint","Hydraulic pressure vs the system target value"],a:1,d:"Configuration manager compares INSTALLED vs EXPECTED software. It checks aircraft software against the aircraft personality/configuration standard (APM). A yellow configuration item means MISMATCH, not always failed hardware."},
+{c:"📋 Config",q:"What does APM stand for, and what does it do?",o:["Active Performance Monitor — tracks fuel use","Aircraft Personality Module — config standard","Auxiliary Power Management — APU controls","Approach Path Modulator — for autoland mode"],a:1,d:"APM = Aircraft Personality Module. Stores configuration data used to validate installations. THE aircraft reference standard. Mismatch with installed software = yellow config indication, often the root cause of \'random\' fault messages."},
+{c:"📋 Config",q:"A YELLOW configuration item on the A220 typically means:",o:["Failed hardware needing replacement","Software/config MISMATCH, not always failed hardware","Loading is in progress and not complete","A scheduled maintenance reminder for crew"],a:1,d:"YELLOW = mismatch. NOT always failed hardware. Could be: wrong software version, wrong configuration, partial load, or APM mismatch. Investigate the configuration before pulling LRUs — major clue."},
+{c:"🔐 Security",q:"A220 software files are encrypted because:",o:["Encryption speeds up the loading process","To prevent unauthorized or incorrect software","Encryption is required by federal IT regulations","To compress files for smaller storage usage"],a:1,d:"Encryption protects the airplane from unauthorized or incorrect software. Software control is a SAFETY system — ATA 46 protects the airplane by managing what data and software are allowed onboard. Wrong software on the right box = major aircraft problem."},
+{c:"🔐 Security",q:"IMS protects against cross-aircraft contamination by:",o:["Refusing all USB connections regardless of source","Detecting a new aircraft and deleting stored data","Comparing the laptop serial number to the airframe","Encrypting every USB stick when first connected"],a:1,d:"If IMS detects a NEW aircraft, stored data can be DELETED automatically. Prevents wrong-aircraft software/data use. Configuration integrity matters — software belongs to ONE specific airframe."},
+{c:"🔌 Hardware",q:"IMS hardware features include:",o:["Only a single fixed cockpit display interface","USB, Ethernet, and status LEDs for diagnosis","Hydraulic pressure ports for crew servicing","Wireless-only access — no physical connectors"],a:1,d:"IMS has USB, Ethernet, and status LEDs. LED behavior helps troubleshoot connection and data transfer issues. Access via display unit or laptop — laptop is preferred for larger loads."},
+{c:"🔌 Hardware",q:"If ODL freezes during a load on the A220:",o:["Continue waiting — the load will eventually finish","Reset cleanly and restart load from the beginning","Pull the USB and try a different IMS port quickly","Continue using the partially-loaded software"],a:1,d:"If ODL freezes, reset cleanly. Power cycle and restart the load from the beginning. DON\'T assume a partial load is safe. Partial software loads can leave the aircraft in an inconsistent state — start over."},
+{c:"🌐 Networks",q:"On the A220, AFDX networked systems and ARINC 429 systems differ in that:",o:["ARINC 429 is faster than AFDX overall","AFDX auto-checks config; ARINC 429 may need manual","Both auto-check configuration with no manual steps","Neither system supports configuration checking"],a:1,d:"AFDX systems can AUTO-CHECK configuration. ARINC 429 systems may need MANUAL verification (older-style data paths don\'t provide the same auto-check capability). Knowing which network type a system uses tells you the verification approach."},
+{c:"❤️ AHMS",q:"What is AHMS on the A220?",o:["Auxiliary Hydraulic Manifold System — pumps","Aircraft Health Management System — monitoring","Airframe Heating and Moisture System — defrost","Acoustic Hazard Mitigation Sensor — noise check"],a:1,d:"AHMS = Aircraft Health Management System. Monitors aircraft systems and engines. Generates reports and maintenance data for trend and fault review. Used for validation — confirm what actually happened, not just what was reported."},
+{c:"❤️ HMU",q:"The HMU (Health Management Unit) stores:",o:["Cabin attendant scheduling and roster data","Maintenance health data in non-volatile memory","Engine fuel consumption logs only","Pilot biometric data for authentication only"],a:1,d:"HMU records system and engine data in NON-VOLATILE memory. History tool — use HMU reports for validation rather than relying on memory or word-of-mouth. The recorded data doesn\'t lie."},
+{c:"💥 Events",q:"HMU automatically detects which events?",o:["Only routine takeoffs and landings","Hard landings and turbulence events","Only events the crew explicitly flagged","Cabin temperature deviations during cruise"],a:1,d:"HMU detects hard landing and turbulence events. These generate CAS messages and require maintenance action. Events can stay LATCHED — the system may require maintenance review/clearance before the event is gone."},
+{c:"🌐 ANS",q:"The ANS (Aircraft Network System) on the A220 is:",o:["The autopilot\'s path navigation system","An Ethernet switch routing data to systems","An air navigation system for nav radios","The cabin attendant intercom network only"],a:1,d:"ANS = aircraft Ethernet switch. Routes data only to the intended systems. VLANs separate network traffic — maintenance, EFB, and maintenance ports separated for security and reliability. Wrong network path = communication failure even if the system is fine."},
+{c:"🔧 Flow",q:"The recommended ATA 46 troubleshooting flow is:",o:["Replace IMS first, then check the LRUs","CAS/OMS → config (white/yellow) → IMS/APM → HMU","Reload all software from the most recent USB","Replace all LRUs as a precaution before flight"],a:1,d:"1) CAS/OMS faults first — find what the aircraft reports. 2) Verify configuration: WHITE (correct) vs YELLOW (mismatch). 3) Check IMS load status and APM configuration. 4) Use HMU reports for history and validation. Best order, every time."},
+{c:"🧠 Tribal",q:"TRIBAL: A \'YELLOW config\' after a software load on the A220. First action:",o:["Replace the affected LRU listed in the message","Verify APM, version, and load completeness first","Reset all the aircraft circuit breakers in order","Defer the aircraft until OEM tech rep arrives"],a:1,d:"YELLOW = mismatch. Verify: did the load complete? Is the APM version what you expect? Did the right software go to the right LRU? Major clue points at configuration, not hardware. Don\'t replace the LRU."},
+{c:"🧠 Tribal",q:"TRIBAL: After a software load, configuration appears correct but a fault persists. Likely cause:",o:["Verification timing — the check must complete first","Hardware failure of the LRU just loaded","The encryption was corrupted during transfer","Network bandwidth was too low for that load"],a:0,d:"The load may not be \'complete\' until configuration verification finishes through OMS/APM logic. Always VERIFY after loading — don\'t sign off until the system confirms a clean install. Premature sign-off creates persistent ghost faults."},
+{c:"🧠 Tribal",q:"TRIBAL: \'Hard landing\' CAS message after a normal-feeling landing. Smart investigation:",o:["Replace the landing gear assembly as a precaution","Pull HMU report — validate actual recorded event data","Reset OMS to clear the latched event message","Defuel the aircraft and inspect every gear sensor"],a:1,d:"HMU records the actual landing data — G loads, descent rates, sink rates. Use the HMU report to VALIDATE the event rather than relying on impression. \'Felt normal\' isn\'t data. The recorded numbers tell the truth — go to source."}
+];
+
+// ═══════════════ STATE ═══════════════
+const G={qs:[],idx:0,hearts:3,xp:0,streak:0,bestStreak:0,correct:0,done:false};
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on')}
+function goHome(){show('home')}
+function confirmQuit(){if(confirm('Quit this quiz?'))goHome();}
+
+function startGame(){
+  // Deep-copy BANK and shuffle both question order AND options within each question
+  G.qs=shuffle([...BANK]).map(q=>{
+    // Build [text, isCorrect] pairs, shuffle, then split back out and find new correct index
+    const pairs=q.o.map((txt,i)=>({txt,correct:i===q.a}));
+    shuffle(pairs);
+    return{
+      c:q.c,
+      q:q.q,
+      o:pairs.map(p=>p.txt),
+      a:pairs.findIndex(p=>p.correct),
+      d:q.d,
+    };
+  });
+  G.idx=0;G.hearts=3;G.xp=0;G.streak=0;G.bestStreak=0;G.correct=0;
+  updateHearts();
+  document.getElementById('xpdis').textContent='0';
+  document.getElementById('streak-n').textContent='0';
+  document.getElementById('qtot').textContent=G.qs.length;
+  show('quiz');
+  renderQ();
+}
+
+function renderQ(){
+  G.done=false;
+  const fb=document.getElementById('fb');
+  fb.className='fb';fb.style.display='none';
+  const q=G.qs[G.idx];
+  document.getElementById('cat-lbl').textContent=q.c;
+  document.getElementById('q-cat').textContent=q.c;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('qn').textContent=G.idx+1;
+  document.getElementById('bar').style.width=Math.round((G.idx/G.qs.length)*100)+'%';
+
+  const cont=document.getElementById('opts');
+  cont.innerHTML='';
+  const keys=['A','B','C','D'];
+  q.o.forEach((txt,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="opt-l">${keys[i]}</span><span>${txt}</span>`;
+    b.onclick=()=>pick(i);
+    cont.appendChild(b);
+    b.style.opacity='0';b.style.transform='translateX(-16px)';
+    setTimeout(()=>{b.style.transition='opacity .22s ease,transform .22s ease';b.style.opacity='1';b.style.transform='translateX(0)';},70+i*50);
+  });
+
+  // scroll q-body back to top on each new question
+  document.getElementById('q-body').scrollTop=0;
+}
+
+function pick(idx){
+  if(G.done)return;
+  G.done=true;
+  const q=G.qs[G.idx];
+  const correct=idx===q.a;
+  const btns=[...document.querySelectorAll('.opt')];
+  btns.forEach(b=>b.disabled=true);
+  btns[q.a].classList.add('reveal-right');
+  if(correct){
+    btns[idx].classList.remove('reveal-right');
+    btns[idx].classList.add('picked-right');
+    btns.forEach((b,i)=>{if(i!==idx)b.classList.add('faded');});
+    G.correct++;G.streak++;
+    if(G.streak>G.bestStreak)G.bestStreak=G.streak;
+    const xpGain=G.streak>=5?20:G.streak>=3?15:10;
+    G.xp+=xpGain;
+    document.getElementById('xpdis').textContent=G.xp;
+    document.getElementById('streak-n').textContent=G.streak;
+    showFeedback(true,q.d,xpGain);
+    spawnSparks(btns[idx]);
+    playCorrect();
+    if(G.streak===3){showPopBadge('🔥 3 Streak!');playCombo();}
+    if(G.streak===5){showPopBadge('⚡ 5 in a row!');playCombo();}
+    if(G.streak===10){showPopBadge('🌟 10 Streak!');playCombo();}
+  } else {
+    btns[idx].classList.add('picked-wrong');
+    btns.forEach((b,i)=>{if(i!==idx&&i!==q.a)b.classList.add('faded');});
+    G.streak=0;G.hearts--;
+    document.getElementById('streak-n').textContent=0;
+    updateHearts();
+    showFeedback(false,q.d,0);
+    playWrong();
+  }
+}
+
+function showFeedback(ok,detail,xp){
+  const fb=document.getElementById('fb');
+  fb.className='fb on '+(ok?'ok':'no');
+  fb.style.display='flex';
+  const icons=ok?['✅','🎉','🌟','⭐','🔥','💡','🎯','🏅']:['❌'];
+  const heads=ok?['Correct!','Great!','Well done!','Spot on!','Nailed it!','Right on!','Excellent!']:['Not quite!'];
+  document.getElementById('fb-icon').textContent=icons[Math.floor(Math.random()*icons.length)];
+  document.getElementById('fb-head').textContent=heads[Math.floor(Math.random()*heads.length)];
+  document.getElementById('fb-det').textContent=detail;
+  const cont=document.getElementById('btn-cont');
+  cont.textContent=(G.idx>=G.qs.length-1||G.hearts<=0)?'See Results →':'Continue →';
+  if(ok&&xp)floatXP('+'+xp+' XP',cont);
+}
+
+function advance(){
+  playClick();
+  G.idx++;
+  if(G.idx>=G.qs.length||G.hearts<=0)showResult();
+  else renderQ();
+}
+
+function updateHearts(){
+  [0,1,2].forEach(i=>{
+    const h=document.getElementById('h'+i);
+    h.classList.toggle('gone',i>=G.hearts);
+  });
+}
+
+function showResult(){
+  const acc=G.idx?Math.round((G.correct/G.idx)*100):0;
+  const stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
+  const trophies=['😅','🥉','🥈','🏆'];
+  const titles=['Keep Practicing!','Nice Try!','Well Done!','Outstanding! 🎯'];
+  const subs=['Review the ATA 21 manual and try again.','Good effort — study the explanations!','Strong Air Conditioning knowledge!','You are an ATA 21 expert! ✈️'];
+  document.getElementById('trophy').textContent=trophies[stars];
+  document.getElementById('res-title').textContent=titles[stars];
+  document.getElementById('res-sub').textContent=subs[stars];
+  document.getElementById('r-xp').textContent=G.xp;
+  document.getElementById('r-acc').textContent=acc+'%';
+  document.getElementById('r-str').textContent=G.bestStreak;
+  ['rs0','rs1','rs2'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.classList.remove('lit');el.style.animationDelay='0s';
+    if(i<stars)setTimeout(()=>{el.style.animationDelay=(i*.2)+'s';el.classList.add('lit');},500+i*120);
+  });
+  show('result');
+  if(acc>=60)setTimeout(()=>{launchConfetti(acc);playVictory();},300);
+}
+
+function launchConfetti(acc){
+  const cols=['#00c2cb','#1cb0f6','#58cc02','#ffc800','#ff9600','#ff4b4b','#fff'];
+  const shapes=['●','■','▲','◆','★','✦','✧'];
+  const count=Math.min(35+Math.floor(acc/4),70);
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti';
+      el.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+      el.style.cssText=`left:${Math.random()*100}vw;top:-20px;color:${cols[Math.floor(Math.random()*cols.length)]};font-size:${9+Math.random()*13}px;animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.4}s`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),4000);
+    },i*22);
+  }
+}
+
+function spawnSparks(btn){
+  const rect=btn.getBoundingClientRect();
+  const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+  const cols=['#00c2cb','#1cb0f6','#ffc800','#fff','#58cc02'];
+  for(let i=0;i<10;i++){
+    const el=document.createElement('div');
+    el.className='spark';
+    const a=(i/10)*Math.PI*2,d=28+Math.random()*44;
+    el.style.cssText=`left:${cx}px;top:${cy}px;width:${4+Math.random()*5}px;height:${4+Math.random()*5}px;background:${cols[i%cols.length]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;animation-duration:${.4+Math.random()*.25}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),800);
+  }
+}
+
+function floatXP(txt,refEl){
+  const rect=refEl.getBoundingClientRect();
+  const el=document.createElement('div');
+  el.className='floatxp';el.textContent=txt;
+  el.style.cssText=`left:${rect.left+rect.width*.5}px;top:${rect.top-10}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1000);
+}
+
+function showPopBadge(txt){
+  const el=document.createElement('div');
+  el.className='popbadge';el.textContent=txt;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1100);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('quiz').classList.contains('on'))return;
+  const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+  const k=e.key.toLowerCase();
+  if(!G.done&&map[k]!==undefined)pick(map[k]);
+  if(G.done&&(e.key==='Enter'||e.key===' ')){e.preventDefault();advance();}
+});
+</script>
+</body>
+</html>

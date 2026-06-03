@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A220 ATA 34 – Navigation Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1a1f;
+  --card:#0f2028;
+  --card2:#142530;
+  --teal:#00c2cb;
+  --teal2:#008f96;
+  --green:#58cc02;
+  --green2:#46a302;
+  --green-bg:#071a0a;
+  --green-bdr:#1a4d1a;
+  --red:#ff4b4b;
+  --red2:#cc2a2a;
+  --red-bg:#1f0a0a;
+  --red-bdr:#5c1212;
+  --blue:#1cb0f6;
+  --gold:#ffc800;
+  --gold2:#c89800;
+  --text:#e0f4f8;
+  --muted:#5a8a9a;
+  --border:#1e3a45;
+  --r:14px;
+}
+html,body{min-height:100vh;background:var(--bg);font-family:'Nunito',sans-serif;color:var(--text)}
+body{
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  background:
+    radial-gradient(ellipse at 15% 0%,rgba(0,194,203,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,rgba(28,176,246,0.04) 0%,transparent 50%),
+    var(--bg);
+}
+.wrap{width:100%;max-width:520px}
+.screen{display:none}
+.screen.on{display:block}
+
+/* ── HOME ── */
+.home-card{background:var(--card);border-radius:22px;padding:28px 24px;border:1px solid var(--border);box-shadow:0 0 0 1px #0a1a20,0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.home-card::before{content:'';position:absolute;top:-80px;left:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,194,203,.08) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.home-card::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(28,176,246,.05) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.plane{font-size:58px;display:block;animation:bob 3s ease-in-out infinite;margin-bottom:2px;filter:drop-shadow(0 0 18px rgba(0,194,203,.5))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-11px) rotate(4deg)}}
+.home-badge{display:inline-block;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:99px;margin-bottom:8px;border:1.5px solid var(--teal2);position:relative;z-index:1}
+.home-h1{font-size:clamp(20px,5vw,28px);font-weight:900;line-height:1.15;margin-bottom:6px;color:#fff;position:relative;z-index:1}
+.home-h1 span{color:var(--teal)}
+.home-sub{font-size:12px;color:var(--muted);font-weight:600;line-height:1.55;max-width:340px;margin:0 auto 16px;position:relative;z-index:1}
+.home-pills{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:16px;position:relative;z-index:1}
+.pill{background:#0a1e26;border:1.5px solid #1a3545;border-radius:99px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--teal2)}
+.home-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;position:relative;z-index:1}
+.meta-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:11px 6px}
+.meta-n{font-size:26px;font-weight:900;color:var(--teal)}
+.meta-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.btn-go{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 8px 24px rgba(0,194,203,.25);transition:transform .12s,box-shadow .12s;letter-spacing:.3px;position:relative;z-index:1}
+.btn-go:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--teal2),0 12px 28px rgba(0,194,203,.3)}
+.btn-go:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+
+/* ── QUIZ SHELL ── */
+.q-shell{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);overflow:hidden;max-height:490px;display:flex;flex-direction:column}
+.topbar{padding:10px 14px 9px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;flex-shrink:0;background:var(--card2)}
+.xbtn{width:27px;height:27px;border:1.5px solid var(--border);border-radius:7px;background:none;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.xbtn:hover{background:#1f0709;border-color:var(--red);color:var(--red)}
+.prog-col{flex:1}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.prog-cat{font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.prog-n{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap}
+.bar-bg{height:7px;background:#0a1820;border-radius:99px;overflow:hidden;border:1px solid #1a3040}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--teal2),var(--teal),var(--blue));border-radius:99px;transition:width .5s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 8px rgba(0,194,203,.4)}
+.topbar-r{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.hearts{display:flex;gap:1px;font-size:14px}
+.heart{transition:all .3s}
+.heart.gone{opacity:.15;filter:grayscale(1);transform:scale(.65)}
+.xp-tag{background:#0a1820;border:1.5px solid #1a3a28;border-radius:99px;padding:3px 9px;font-size:12px;font-weight:800;color:var(--gold);white-space:nowrap}
+.streak-tag{background:#0a1820;border:1.5px solid #2a1a00;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:800;color:#ff9600;white-space:nowrap}
+
+/* ── QUESTION BODY ── */
+.q-body{flex:1;overflow-y:auto;padding:13px 15px 0;scrollbar-width:thin;scrollbar-color:#1a3040 transparent}
+.q-body::-webkit-scrollbar{width:4px}
+.q-body::-webkit-scrollbar-thumb{background:#1a3040;border-radius:4px}
+.q-cat{font-size:11px;font-weight:800;color:var(--teal2);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.q-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;box-shadow:0 0 6px rgba(0,194,203,.7)}
+.q-text{font-size:clamp(13px,2.6vw,14.5px);font-weight:700;line-height:1.52;margin-bottom:12px;color:#ddf0f5}
+.opts{display:flex;flex-direction:column;gap:6px;padding-bottom:12px}
+.opt{width:100%;padding:10px 12px;background:#0a1820;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:9px;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:700;color:#b8d8e0;transition:all .13s;line-height:1.32;position:relative;overflow:hidden}
+.opt:hover:not(:disabled){border-color:var(--teal2);background:#0d2535;color:var(--teal);transform:translateX(3px)}
+.opt-l{width:24px;height:24px;border-radius:6px;background:#142530;border:1.5px solid #2a4055;font-size:11px;font-weight:900;color:#4a7a8a;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.opt.picked-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0;animation:bumpR .4s cubic-bezier(.34,1.56,.64,1)}
+.opt.picked-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.picked-wrong{border-color:var(--red);background:var(--red-bg);color:#ffaaaa;animation:shakeW .35s}
+.opt.picked-wrong .opt-l{background:var(--red);border-color:var(--red);color:#fff}
+.opt.reveal-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0}
+.opt.reveal-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.faded{opacity:.22}
+.opt:disabled{cursor:default;transform:none!important}
+@keyframes bumpR{0%{transform:scale(1)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
+@keyframes shakeW{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+/* ── FEEDBACK ── */
+.fb{flex-shrink:0;display:none;align-items:center;gap:9px;padding:10px 15px;border-top:1.5px solid transparent}
+.fb.on{display:flex}
+.fb.ok{background:#071a0a;border-color:var(--green-bdr)}
+.fb.no{background:#190408;border-color:var(--red-bdr)}
+.fb-icon{font-size:24px;flex-shrink:0}
+.fb-txt{flex:1;min-width:0}
+.fb-head{font-size:13px;font-weight:900}
+.fb.ok .fb-head{color:var(--green)}
+.fb.no .fb-head{color:var(--red)}
+.fb-detail{font-size:11px;font-weight:600;color:#5a8a9a;line-height:1.4;margin-top:2px}
+.btn-cont{padding:8px 14px;border:none;border-radius:9px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .12s}
+.fb.ok .btn-cont{background:var(--green);color:#000;box-shadow:0 3px 0 var(--green2)}
+.fb.ok .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--green2)}
+.fb.no .btn-cont{background:var(--red);color:#fff;box-shadow:0 3px 0 var(--red2)}
+.fb.no .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--red2)}
+
+/* ── RESULTS ── */
+.res-card{background:var(--card);border-radius:22px;padding:28px 22px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.res-card::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(0,194,203,.07) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+.trophy{font-size:66px;display:block;animation:dropIn .7s cubic-bezier(.34,1.56,.64,1);position:relative;z-index:1;filter:drop-shadow(0 0 20px rgba(0,194,203,.4))}
+@keyframes dropIn{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.stars-row{display:flex;justify-content:center;gap:8px;margin:5px 0 12px;position:relative;z-index:1}
+.rstar{font-size:32px;opacity:0;filter:drop-shadow(0 0 8px rgba(0,194,203,.5))}
+.rstar.lit{animation:starIn .5s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes starIn{to{opacity:1;transform:scale(1) rotate(0)}from{opacity:0;transform:scale(0) rotate(-20deg)}}
+.res-title{font-size:clamp(20px,5vw,26px);font-weight:900;margin-bottom:3px;color:#fff;position:relative;z-index:1}
+.res-sub{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:18px;position:relative;z-index:1}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;position:relative;z-index:1}
+.res-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:12px 6px}
+.res-n{font-size:24px;font-weight:900;color:var(--teal)}
+.res-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.res-btns{display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
+.btn-again{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 7px 20px rgba(0,194,203,.2);transition:all .12s;letter-spacing:.3px}
+.btn-again:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--teal2),0 10px 24px rgba(0,194,203,.25)}
+.btn-again:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+.btn-home-sm{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;background:none;color:var(--muted);transition:all .15s}
+.btn-home-sm:hover{border-color:var(--teal2);color:var(--teal)}
+
+/* ── EFFECTS ── */
+.confetti{position:fixed;pointer-events:none;z-index:9999;animation:cfall linear forwards}
+@keyframes cfall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(110vh) rotate(700deg)}}
+.spark{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;animation:spark ease-out forwards}
+@keyframes spark{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}
+.floatxp{position:fixed;pointer-events:none;z-index:9999;font-size:16px;font-weight:900;color:var(--gold);text-shadow:0 0 12px rgba(255,200,0,.5);animation:fxp .9s ease-out forwards}
+@keyframes fxp{0%{opacity:1;transform:translateY(0) scale(.7)}20%{transform:translateY(-8px) scale(1.1)}100%{opacity:0;transform:translateY(-60px) scale(.9)}}
+.popbadge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;font-size:34px;font-weight:900;animation:pbadge 1s ease forwards;white-space:nowrap;text-shadow:0 0 30px rgba(0,194,203,.7),0 4px 20px rgba(0,0,0,.5)}
+@keyframes pbadge{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-55%) scale(.9)}}
+@keyframes heartBreak{0%{transform:scale(1)}30%{transform:scale(1.5)}100%{transform:scale(1)}}
+.hb{animation:heartBreak .35s ease}
+
+@media(max-width:400px){.topbar{padding:9px 11px}.q-body{padding:11px 11px 0}.opts{gap:5px}.opt{padding:9px 10px;font-size:12px}.fb{padding:9px 12px}.home-card,.res-card{padding:22px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ HOME ═══ -->
+<div id="home" class="screen on">
+<div class="home-card">
+  <span class="plane">✈️</span>
+  <div class="home-badge">A220 · ATA Chapter 34</div>
+  <h1 class="home-h1">A220<br><span>Navigation Quiz</span></h1>
+  <p class="home-sub">22 questions on FMS, IRS, GNSS, air data, VHF NAV, DME, radio altimeter, TAWS, TCAS, weather radar, and tribal knowledge.</p>
+  <div class="home-pills">
+    <span class="pill">🧠 Core</span>
+    <span class="pill">🔧 Architecture</span>
+    <span class="pill">📡 Sources</span>
+    <span class="pill">🧠 FMS Modes</span>
+    <span class="pill">🧭 IRS</span>
+    <span class="pill">🛰️ GNSS</span>
+    <span class="pill">📡 Air Data</span>
+    <span class="pill">📻 VHF NAV</span>
+    <span class="pill">📏 DME</span>
+    <span class="pill">📡 RA</span>
+    <span class="pill">⚖️ Comparator</span>
+    <span class="pill">⛰️ TAWS</span>
+    <span class="pill">✈️ TCAS</span>
+    <span class="pill">🌩️ WX</span>
+    <span class="pill">🧠 Tribal</span>
+  </div>
+  <div class="home-meta">
+    <div class="meta-box"><div class="meta-n">22</div><div class="meta-l">Questions</div></div>
+    <div class="meta-box"><div class="meta-n">3</div><div class="meta-l">Lives</div></div>
+    <div class="meta-box"><div class="meta-n">15</div><div class="meta-l">Topics</div></div>
+  </div>
+  <button class="btn-go" onclick="startGame()">✈️ Start Quiz</button>
+</div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div id="quiz" class="screen">
+<div class="q-shell">
+  <div class="topbar">
+    <button class="xbtn" onclick="confirmQuit()">✕</button>
+    <div class="prog-col">
+      <div class="prog-top">
+        <span class="prog-cat" id="cat-lbl">Core</span>
+        <span class="prog-n"><span id="qn">1</span>/<span id="qtot">22</span></span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+    </div>
+    <div class="topbar-r">
+      <div class="streak-tag">🔥<span id="streak-n">0</span></div>
+      <div class="hearts" id="hearts">
+        <span class="heart" id="h0">❤️</span><span class="heart" id="h1">❤️</span><span class="heart" id="h2">❤️</span>
+      </div>
+      <div class="xp-tag">⚡<span id="xpdis">0</span></div>
+    </div>
+  </div>
+  <div class="q-body" id="q-body">
+    <div class="q-cat"><div class="q-dot"></div><span id="q-cat">Core</span></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="opts" id="opts"></div>
+  </div>
+  <div class="fb" id="fb">
+    <span class="fb-icon" id="fb-icon">✅</span>
+    <div class="fb-txt">
+      <div class="fb-head" id="fb-head">Correct!</div>
+      <div class="fb-detail" id="fb-det"></div>
+    </div>
+    <button class="btn-cont" id="btn-cont" onclick="advance()">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ RESULT ═══ -->
+<div id="result" class="screen">
+<div class="res-card">
+  <span class="trophy" id="trophy">🏆</span>
+  <div class="stars-row">
+    <span class="rstar" id="rs0">⭐</span>
+    <span class="rstar" id="rs1">⭐</span>
+    <span class="rstar" id="rs2">⭐</span>
+  </div>
+  <div class="res-title" id="res-title">Session Complete!</div>
+  <div class="res-sub" id="res-sub">Great work!</div>
+  <div class="res-grid">
+    <div class="res-box"><div class="res-n" id="r-xp">0</div><div class="res-l">XP</div></div>
+    <div class="res-box"><div class="res-n" id="r-acc">0%</div><div class="res-l">Accuracy</div></div>
+    <div class="res-box"><div class="res-n" id="r-str">0</div><div class="res-l">Best Streak</div></div>
+  </div>
+  <div class="res-btns">
+    <button class="btn-again" onclick="startGame()">🔁 Play Again</button>
+    <button class="btn-home-sm" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ═══════════════ AUDIO ═══════════════
+const AC=window.AudioContext||window.webkitAudioContext;
+let actx=null;
+function ctx(){if(!actx)actx=new AC();return actx;}
+function playCorrect(){
+  try{const c=ctx();[523,659,784,1047].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.07;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.start(t);o.stop(t+.25);});}catch(e){}
+}
+function playWrong(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(280,c.currentTime);o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.35);g.gain.setValueAtTime(.13,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start();o.stop(c.currentTime+.45);}catch(e){}
+}
+function playCombo(){
+  try{const c=ctx();[880,1108,1320,1760].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='triangle';o.frequency.value=f;const t=c.currentTime+i*.05;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.start(t);o.stop(t+.3);});}catch(e){}
+}
+function playVictory(){
+  try{const c=ctx();[523,659,784,1047,1319,1568,2093].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.09;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.start(t);o.stop(t+.35);});}catch(e){}
+}
+function playClick(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=440;g.gain.setValueAtTime(.06,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.08);}catch(e){}
+}
+
+// ═══════════════ QUESTIONS ═══════════════
+const BANK=[
+{c:"🧠 Core",q:"ATA 34 on the A220 is BEST described as:",o:["A single navigation computer with one source input","A data fusion system blending IRS, GNSS, air data, and radio nav","A purely satellite-based GPS positioning system","Mechanical compass and altimeter as primary instruments"],a:1,d:"ATA 34 = data fusion system for position, motion, and environment. Blends IRS, GNSS, air data, and radio navigation into one usable navigation solution. Navigation is NOT one box — it\'s multiple sensors blended together."},
+{c:"🔧 Architecture",q:"On the A220, the navigation \'decision-maker\' (creating position, flight path, and guidance) is:",o:["The IRS alone, with backup from GNSS","The FMS — Flight Management System","The PFCC fly-by-wire computer system","The autopilot servo controller block"],a:1,d:"FMS is the navigation decision-maker. It creates position, flight path, and guidance — blending IRS, GNSS, ADS, VHF NAV, and DME data. Outputs guidance to autopilot and position data to displays. The \'brain\' of A220 navigation."},
+{c:"📡 Sources",q:"Which navigation sources on the A220 are INDEPENDENT (don\'t need external signals)?",o:["VOR and DME radio navigation ground aids","IRS and GNSS — self-contained or satellite","ILS localizer and glide slope receivers","Radio altimeter and weather radar units"],a:1,d:"Independent sources: IRS (inertial — pure internal sensing) and GNSS (satellite — external but global). Dependent sources: VOR, DME, and other radio aids that need ground stations. Air data (separate category) provides flight environment."},
+{c:"🧠 FMS Modes",q:"What does FMS \'split mode\' mean on the A220?",o:["Both FMS working but NOT synchronized — data disagreement","One FMS failed completely and unavailable for use","Both FMS in agreement and operating normally as paired","Both FMS offline due to electrical failure"],a:0,d:"Split mode = both working but not synchronized. Usually a data disagreement, NOT a total failure. Synchronized mode = normal agreement. Single mode = one FMS failed. Split is a \'check the data sources\' state, not a \'replace FMS\' state."},
+{c:"🧭 IRS",q:"The IRS (Inertial Reference System) provides:",o:["Distance to nearest navigation aid only","Position, attitude, heading, and velocity","Engine performance and fuel consumption data","Weather radar imagery and turbulence prediction"],a:1,d:"IRS provides position, attitude, heading, and velocity. Uses accelerometers and gyros — needs no external signals. Self-contained. But IRS DRIFTS over time and is corrected by GNSS or radio navigation updates."},
+{c:"🧭 IRS",q:"Why is IRS alignment quality important on the A220?",o:["Alignment quality directly affects navigation accuracy","Alignment determines maximum cabin pressure setting","Alignment is just an FAA requirement with no real effect","Alignment quality affects only the autoland performance"],a:0,d:"Alignment quality directly affects navigation accuracy. Modes include stationary alignment, align-in-motion, navigation mode, and auto realign. A220 align-in-motion can recover navigation while moving when GNSS is available — important after IRS power interruptions."},
+{c:"🛰️ GNSS",q:"GNSS on the A220 normally needs how many satellites for a position fix?",o:["At least 4 satellites visible to the receiver","Only 1 satellite is required for basic operation","Exactly 12 satellites must always be in view","2 satellites in geosynchronous orbit are enough"],a:0,d:"GNSS needs at least 4 satellites normally (3 for position + 1 for time/error). Provides position, velocity, and time. Feeds FMS, IRS (correction), TAWS, TCAS, and other aircraft systems."},
+{c:"📡 Air Data",q:"The A220 Air Data System uses what to gather pressure data?",o:["Mechanical aneroid capsules connected by hydraulics","Air Data Smart Probes — sensor + computer in one probe","A single shared pitot probe for all four cockpit displays","Wireless pressure beacons mounted in the wing"],a:1,d:"A220 uses Air Data Smart Probes (ADSPs) — sensor and computer built INTO the probe. Provides airspeed, altitude, Mach, and temperature. Affects navigation, flight control, stall logic, and displayed flight info. 4 ADSPs + 2 static probes on the A220."},
+{c:"📡 Air Data",q:"Most ADS (Air Data System) faults trace back to:",o:["A failed PFD display unit in the cockpit","Sensor disagreement or bad data, not display failure","Hydraulic system pressure loss to the probes","Pilot incorrect altimeter setting on departure"],a:1,d:"Most problems are sensor disagreement or bad data, NOT a display failure. ADS FAULT or PROBE HEAT FAIL messages often surface as the symptom. The display shows what the system tells it — trace back upstream to find the bad data."},
+{c:"📻 VHF NAV",q:"The VHF NAV system on the A220 provides:",o:["VOR bearing and ILS localizer/glide slope","HF long-range voice and data communication","Cabin entertainment streaming to passenger devices","Engine FADEC vibration monitoring information"],a:0,d:"VHF NAV provides VOR bearing and ILS localizer/glide slope. Controlled through RIU (Radio Interface Unit), CTP (Control Tuning Panel), or RTSA paths. A good backup and correction source when satellite or inertial data needs comparison."},
+{c:"📏 DME",q:"DME (Distance Measuring Equipment) measures distance by:",o:["Counting drum rotation on a paper map","Signal time delay between aircraft and station","Triangulating from three known ground stations","Reading published distances from the FMS database"],a:1,d:"DME measures distance using signal time delay between aircraft and ground station. One channel can tie to VOR; other channels support FMS updates. Suppression pulses prevent interference with TCAS and ATC transmissions."},
+{c:"📡 RA",q:"The radio altimeter measures:",o:["Height above sea level via barometric pressure","Height above the ground (actual terrain below)","Distance to the nearest radio navigation station","Cabin altitude inside the pressurized fuselage area"],a:1,d:"Radio altimeter measures height ABOVE GROUND, NOT barometric altitude. Used by autopilot (autoland), TAWS, displays, and low-altitude logic. Failures often point to antenna, wiring, or receiver path issues."},
+{c:"⚖️ Comparator",q:"When the A220 system detects IRS vs GNSS data mismatch, it:",o:["Automatically declares immediate total navigation failure","Creates flags and messages so the crew can trace the bad source","Switches to manual dead reckoning without any warning","Continues normally and hides the data disagreement"],a:1,d:"Mismatch creates flags and messages, NOT always immediate failure. The system WARNS when data disagrees so the crew/MX can trace the bad source. The comparator is doing its job — telling you something is off so you can investigate."},
+{c:"⛰️ TAWS",q:"TAWS (Terrain Awareness Warning System) uses inputs from:",o:["Only weather radar reflections from terrain ahead","FMS, GNSS, IRS, air data, and radio altimeter","Only the radio altimeter and barometric altitude","Cabin pressure and engine power output settings"],a:1,d:"TAWS uses FMS (planned path), GNSS (position), IRS (attitude/heading), air data (altitude), and radio altimeter (terrain clearance). Provides terrain warnings and GPWS functions. Bad navigation data can create safety-system symptoms — trace nav before blaming TAWS."},
+{c:"✈️ TCAS",q:"TCAS (Traffic Collision Avoidance System) uses:",o:["Visual pilot scan with no data system input","Position, altitude, and heading for traffic awareness","Only the weather radar to detect nearby aircraft","Engine vibration patterns to detect close traffic"],a:1,d:"TCAS uses position, altitude, and heading to build traffic awareness. Provides traffic alerts and resolution advisories. Navigation data supports collision avoidance logic — bad nav data can degrade TCAS reliability."},
+{c:"🌩️ WX",q:"The weather radar on the A220 uses navigation inputs to:",o:["Reduce radio interference at higher altitudes","Stabilize the radar display using IRS / GNSS / air data","Automatically tune to the nearest VOR frequency","Calculate distance to the nearest thunderstorm cell"],a:1,d:"WX radar uses IRS attitude, GNSS position, and air data to STABILIZE the radar display (so the beam scans correctly relative to true ground even during banks). Bad nav or attitude data can make radar presentation look wrong. Cross-system dependency."},
+{c:"🔗 Integration",q:"A \'navigation\' write-up on the A220 may actually originate in:",o:["Only ATA 34 — navigation is fully self-contained","Another ATA — nav sits at the center of aircraft data flow","Only the cabin pressurization system","Only the hydraulic power distribution system"],a:1,d:"ATA 34 interacts with ATA 22 (autopilot), ATA 31 (displays), ATA 27 (flight controls), ATA 23 (radios), and safety systems. Navigation sits at the CENTER of aircraft data flow. A nav write-up may have its root cause in another ATA — trace the source."},
+{c:"🔧 Reality",q:"Most A220 ATA 34 faults trace back to:",o:["Total IRS or FMS hardware failure events","Sensors, data mismatch, antennas, or data paths","Crew incorrect entries in the FMS pre-departure","GNSS satellite outages over the flight area"],a:1,d:"Most faults are sensors, data mismatch, antennas, or data path issues. Full system failures are rare. Always compare sources before replacing hardware. The pattern repeats across ATAs: data-driven faults dominate modern integrated avionics."},
+{c:"🔧 Flow",q:"The recommended ATA 34 troubleshooting flow is:",o:["Replace the FMS first, then check the displays","PFD flags / CAS → identify bad data → compare sources","Reset all the navigation circuit breakers in order","Update the navigation database and try the flight again"],a:1,d:"1) Start with PFD flags and CAS messages. 2) Identify which data is bad (position/airspeed/altitude/radio nav/RA). 3) Compare IRS vs GNSS, ADS vs ADS. 4) Trace sensor → DMC → FMS → display. Don\'t fix the screen until you prove the data is good."},
+{c:"🧠 Tribal",q:"TRIBAL: \'NAV ACCY DEGRADED\' message during a flight over a remote area. Likely cause is:",o:["Failed IRS unit requiring shop maintenance now","GNSS signal degradation — IRS drift uncorrected for a while","Total FMS hardware failure in flight","Cabin pressurization affecting nav receivers"],a:1,d:"Over remote areas with poor satellite geometry or coverage gaps, GNSS may degrade. IRS then drifts uncorrected — degraded accuracy. Often resolves as GNSS recovers. Investigate satellite data and IRS hybrid solution before swapping hardware."},
+{c:"🧠 Tribal",q:"TRIBAL: \'AIRSPEED MISCOMPARE\' between captain and FO sides. First investigation should be:",o:["Replace both PFDs as a precaution before flight","Check probe heat, pitot drains, and ADSP source data","Replace the FMS and recalibrate it on the ground","Defuel the aircraft and check the fuel system pressure"],a:1,d:"Miscompare = source disagreement. Investigate at the SOURCE: probe heat operation, pitot drains (water/ice), ADSP data validity. Compare with the standby instrument to find the bad side. The displays themselves are rarely the issue."},
+{c:"🧠 Tribal",q:"TRIBAL: \'Parts cannon\' in ATA 34 is especially wasteful because:",o:["FMS, IRS, GNSS, and radio nav LRUs are all expensive","Navigation parts are easy to replace at the gate","ATA 34 has no LRUs — only software is involved","Crew training prevents all hardware faults reliably"],a:0,d:"FMS, IRS, GNSS, ADSPs, radio nav receivers — all expensive LRUs. Most ATA 34 faults are upstream data, antenna paths, or comparator-detected source disagreements. Use BITE, comparator data, and cross-check sources before pulling LRUs."}
+];
+
+// ═══════════════ STATE ═══════════════
+const G={qs:[],idx:0,hearts:3,xp:0,streak:0,bestStreak:0,correct:0,done:false};
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on')}
+function goHome(){show('home')}
+function confirmQuit(){if(confirm('Quit this quiz?'))goHome();}
+
+function startGame(){
+  // Deep-copy BANK and shuffle both question order AND options within each question
+  G.qs=shuffle([...BANK]).map(q=>{
+    // Build [text, isCorrect] pairs, shuffle, then split back out and find new correct index
+    const pairs=q.o.map((txt,i)=>({txt,correct:i===q.a}));
+    shuffle(pairs);
+    return{
+      c:q.c,
+      q:q.q,
+      o:pairs.map(p=>p.txt),
+      a:pairs.findIndex(p=>p.correct),
+      d:q.d,
+    };
+  });
+  G.idx=0;G.hearts=3;G.xp=0;G.streak=0;G.bestStreak=0;G.correct=0;
+  updateHearts();
+  document.getElementById('xpdis').textContent='0';
+  document.getElementById('streak-n').textContent='0';
+  document.getElementById('qtot').textContent=G.qs.length;
+  show('quiz');
+  renderQ();
+}
+
+function renderQ(){
+  G.done=false;
+  const fb=document.getElementById('fb');
+  fb.className='fb';fb.style.display='none';
+  const q=G.qs[G.idx];
+  document.getElementById('cat-lbl').textContent=q.c;
+  document.getElementById('q-cat').textContent=q.c;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('qn').textContent=G.idx+1;
+  document.getElementById('bar').style.width=Math.round((G.idx/G.qs.length)*100)+'%';
+
+  const cont=document.getElementById('opts');
+  cont.innerHTML='';
+  const keys=['A','B','C','D'];
+  q.o.forEach((txt,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="opt-l">${keys[i]}</span><span>${txt}</span>`;
+    b.onclick=()=>pick(i);
+    cont.appendChild(b);
+    b.style.opacity='0';b.style.transform='translateX(-16px)';
+    setTimeout(()=>{b.style.transition='opacity .22s ease,transform .22s ease';b.style.opacity='1';b.style.transform='translateX(0)';},70+i*50);
+  });
+
+  // scroll q-body back to top on each new question
+  document.getElementById('q-body').scrollTop=0;
+}
+
+function pick(idx){
+  if(G.done)return;
+  G.done=true;
+  const q=G.qs[G.idx];
+  const correct=idx===q.a;
+  const btns=[...document.querySelectorAll('.opt')];
+  btns.forEach(b=>b.disabled=true);
+  btns[q.a].classList.add('reveal-right');
+  if(correct){
+    btns[idx].classList.remove('reveal-right');
+    btns[idx].classList.add('picked-right');
+    btns.forEach((b,i)=>{if(i!==idx)b.classList.add('faded');});
+    G.correct++;G.streak++;
+    if(G.streak>G.bestStreak)G.bestStreak=G.streak;
+    const xpGain=G.streak>=5?20:G.streak>=3?15:10;
+    G.xp+=xpGain;
+    document.getElementById('xpdis').textContent=G.xp;
+    document.getElementById('streak-n').textContent=G.streak;
+    showFeedback(true,q.d,xpGain);
+    spawnSparks(btns[idx]);
+    playCorrect();
+    if(G.streak===3){showPopBadge('🔥 3 Streak!');playCombo();}
+    if(G.streak===5){showPopBadge('⚡ 5 in a row!');playCombo();}
+    if(G.streak===10){showPopBadge('🌟 10 Streak!');playCombo();}
+  } else {
+    btns[idx].classList.add('picked-wrong');
+    btns.forEach((b,i)=>{if(i!==idx&&i!==q.a)b.classList.add('faded');});
+    G.streak=0;G.hearts--;
+    document.getElementById('streak-n').textContent=0;
+    updateHearts();
+    showFeedback(false,q.d,0);
+    playWrong();
+  }
+}
+
+function showFeedback(ok,detail,xp){
+  const fb=document.getElementById('fb');
+  fb.className='fb on '+(ok?'ok':'no');
+  fb.style.display='flex';
+  const icons=ok?['✅','🎉','🌟','⭐','🔥','💡','🎯','🏅']:['❌'];
+  const heads=ok?['Correct!','Great!','Well done!','Spot on!','Nailed it!','Right on!','Excellent!']:['Not quite!'];
+  document.getElementById('fb-icon').textContent=icons[Math.floor(Math.random()*icons.length)];
+  document.getElementById('fb-head').textContent=heads[Math.floor(Math.random()*heads.length)];
+  document.getElementById('fb-det').textContent=detail;
+  const cont=document.getElementById('btn-cont');
+  cont.textContent=(G.idx>=G.qs.length-1||G.hearts<=0)?'See Results →':'Continue →';
+  if(ok&&xp)floatXP('+'+xp+' XP',cont);
+}
+
+function advance(){
+  playClick();
+  G.idx++;
+  if(G.idx>=G.qs.length||G.hearts<=0)showResult();
+  else renderQ();
+}
+
+function updateHearts(){
+  [0,1,2].forEach(i=>{
+    const h=document.getElementById('h'+i);
+    h.classList.toggle('gone',i>=G.hearts);
+  });
+}
+
+function showResult(){
+  const acc=G.idx?Math.round((G.correct/G.idx)*100):0;
+  const stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
+  const trophies=['😅','🥉','🥈','🏆'];
+  const titles=['Keep Practicing!','Nice Try!','Well Done!','Outstanding! 🎯'];
+  const subs=['Review the ATA 21 manual and try again.','Good effort — study the explanations!','Strong Air Conditioning knowledge!','You are an ATA 21 expert! ✈️'];
+  document.getElementById('trophy').textContent=trophies[stars];
+  document.getElementById('res-title').textContent=titles[stars];
+  document.getElementById('res-sub').textContent=subs[stars];
+  document.getElementById('r-xp').textContent=G.xp;
+  document.getElementById('r-acc').textContent=acc+'%';
+  document.getElementById('r-str').textContent=G.bestStreak;
+  ['rs0','rs1','rs2'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.classList.remove('lit');el.style.animationDelay='0s';
+    if(i<stars)setTimeout(()=>{el.style.animationDelay=(i*.2)+'s';el.classList.add('lit');},500+i*120);
+  });
+  show('result');
+  if(acc>=60)setTimeout(()=>{launchConfetti(acc);playVictory();},300);
+}
+
+function launchConfetti(acc){
+  const cols=['#00c2cb','#1cb0f6','#58cc02','#ffc800','#ff9600','#ff4b4b','#fff'];
+  const shapes=['●','■','▲','◆','★','✦','✧'];
+  const count=Math.min(35+Math.floor(acc/4),70);
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti';
+      el.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+      el.style.cssText=`left:${Math.random()*100}vw;top:-20px;color:${cols[Math.floor(Math.random()*cols.length)]};font-size:${9+Math.random()*13}px;animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.4}s`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),4000);
+    },i*22);
+  }
+}
+
+function spawnSparks(btn){
+  const rect=btn.getBoundingClientRect();
+  const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+  const cols=['#00c2cb','#1cb0f6','#ffc800','#fff','#58cc02'];
+  for(let i=0;i<10;i++){
+    const el=document.createElement('div');
+    el.className='spark';
+    const a=(i/10)*Math.PI*2,d=28+Math.random()*44;
+    el.style.cssText=`left:${cx}px;top:${cy}px;width:${4+Math.random()*5}px;height:${4+Math.random()*5}px;background:${cols[i%cols.length]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;animation-duration:${.4+Math.random()*.25}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),800);
+  }
+}
+
+function floatXP(txt,refEl){
+  const rect=refEl.getBoundingClientRect();
+  const el=document.createElement('div');
+  el.className='floatxp';el.textContent=txt;
+  el.style.cssText=`left:${rect.left+rect.width*.5}px;top:${rect.top-10}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1000);
+}
+
+function showPopBadge(txt){
+  const el=document.createElement('div');
+  el.className='popbadge';el.textContent=txt;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1100);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('quiz').classList.contains('on'))return;
+  const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+  const k=e.key.toLowerCase();
+  if(!G.done&&map[k]!==undefined)pick(map[k]);
+  if(G.done&&(e.key==='Enter'||e.key===' ')){e.preventDefault();advance();}
+});
+</script>
+</body>
+</html>

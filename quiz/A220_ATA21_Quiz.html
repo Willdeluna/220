@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A220 ATA 21 – Air Conditioning Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1a1f;
+  --card:#0f2028;
+  --card2:#142530;
+  --teal:#00c2cb;
+  --teal2:#008f96;
+  --green:#58cc02;
+  --green2:#46a302;
+  --green-bg:#071a0a;
+  --green-bdr:#1a4d1a;
+  --red:#ff4b4b;
+  --red2:#cc2a2a;
+  --red-bg:#1f0a0a;
+  --red-bdr:#5c1212;
+  --blue:#1cb0f6;
+  --gold:#ffc800;
+  --gold2:#c89800;
+  --text:#e0f4f8;
+  --muted:#5a8a9a;
+  --border:#1e3a45;
+  --r:14px;
+}
+html,body{min-height:100vh;background:var(--bg);font-family:'Nunito',sans-serif;color:var(--text)}
+body{
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  background:
+    radial-gradient(ellipse at 15% 0%,rgba(0,194,203,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,rgba(28,176,246,0.04) 0%,transparent 50%),
+    var(--bg);
+}
+.wrap{width:100%;max-width:520px}
+.screen{display:none}
+.screen.on{display:block}
+
+/* ── HOME ── */
+.home-card{background:var(--card);border-radius:22px;padding:28px 24px;border:1px solid var(--border);box-shadow:0 0 0 1px #0a1a20,0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.home-card::before{content:'';position:absolute;top:-80px;left:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,194,203,.08) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.home-card::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(28,176,246,.05) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.plane{font-size:58px;display:block;animation:bob 3s ease-in-out infinite;margin-bottom:2px;filter:drop-shadow(0 0 18px rgba(0,194,203,.5))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-11px) rotate(4deg)}}
+.home-badge{display:inline-block;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:99px;margin-bottom:8px;border:1.5px solid var(--teal2);position:relative;z-index:1}
+.home-h1{font-size:clamp(20px,5vw,28px);font-weight:900;line-height:1.15;margin-bottom:6px;color:#fff;position:relative;z-index:1}
+.home-h1 span{color:var(--teal)}
+.home-sub{font-size:12px;color:var(--muted);font-weight:600;line-height:1.55;max-width:340px;margin:0 auto 16px;position:relative;z-index:1}
+.home-pills{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:16px;position:relative;z-index:1}
+.pill{background:#0a1e26;border:1.5px solid #1a3545;border-radius:99px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--teal2)}
+.home-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;position:relative;z-index:1}
+.meta-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:11px 6px}
+.meta-n{font-size:26px;font-weight:900;color:var(--teal)}
+.meta-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.btn-go{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 8px 24px rgba(0,194,203,.25);transition:transform .12s,box-shadow .12s;letter-spacing:.3px;position:relative;z-index:1}
+.btn-go:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--teal2),0 12px 28px rgba(0,194,203,.3)}
+.btn-go:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+
+/* ── QUIZ SHELL ── */
+.q-shell{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);overflow:hidden;max-height:490px;display:flex;flex-direction:column}
+.topbar{padding:10px 14px 9px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;flex-shrink:0;background:var(--card2)}
+.xbtn{width:27px;height:27px;border:1.5px solid var(--border);border-radius:7px;background:none;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.xbtn:hover{background:#1f0709;border-color:var(--red);color:var(--red)}
+.prog-col{flex:1}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.prog-cat{font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.prog-n{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap}
+.bar-bg{height:7px;background:#0a1820;border-radius:99px;overflow:hidden;border:1px solid #1a3040}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--teal2),var(--teal),var(--blue));border-radius:99px;transition:width .5s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 8px rgba(0,194,203,.4)}
+.topbar-r{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.hearts{display:flex;gap:1px;font-size:14px}
+.heart{transition:all .3s}
+.heart.gone{opacity:.15;filter:grayscale(1);transform:scale(.65)}
+.xp-tag{background:#0a1820;border:1.5px solid #1a3a28;border-radius:99px;padding:3px 9px;font-size:12px;font-weight:800;color:var(--gold);white-space:nowrap}
+.streak-tag{background:#0a1820;border:1.5px solid #2a1a00;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:800;color:#ff9600;white-space:nowrap}
+
+/* ── QUESTION BODY ── */
+.q-body{flex:1;overflow-y:auto;padding:13px 15px 0;scrollbar-width:thin;scrollbar-color:#1a3040 transparent}
+.q-body::-webkit-scrollbar{width:4px}
+.q-body::-webkit-scrollbar-thumb{background:#1a3040;border-radius:4px}
+.q-cat{font-size:11px;font-weight:800;color:var(--teal2);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.q-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;box-shadow:0 0 6px rgba(0,194,203,.7)}
+.q-text{font-size:clamp(13px,2.6vw,14.5px);font-weight:700;line-height:1.52;margin-bottom:12px;color:#ddf0f5}
+.opts{display:flex;flex-direction:column;gap:6px;padding-bottom:12px}
+.opt{width:100%;padding:10px 12px;background:#0a1820;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:9px;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:700;color:#b8d8e0;transition:all .13s;line-height:1.32;position:relative;overflow:hidden}
+.opt:hover:not(:disabled){border-color:var(--teal2);background:#0d2535;color:var(--teal);transform:translateX(3px)}
+.opt-l{width:24px;height:24px;border-radius:6px;background:#142530;border:1.5px solid #2a4055;font-size:11px;font-weight:900;color:#4a7a8a;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.opt.picked-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0;animation:bumpR .4s cubic-bezier(.34,1.56,.64,1)}
+.opt.picked-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.picked-wrong{border-color:var(--red);background:var(--red-bg);color:#ffaaaa;animation:shakeW .35s}
+.opt.picked-wrong .opt-l{background:var(--red);border-color:var(--red);color:#fff}
+.opt.reveal-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0}
+.opt.reveal-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.faded{opacity:.22}
+.opt:disabled{cursor:default;transform:none!important}
+@keyframes bumpR{0%{transform:scale(1)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
+@keyframes shakeW{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+/* ── FEEDBACK ── */
+.fb{flex-shrink:0;display:none;align-items:center;gap:9px;padding:10px 15px;border-top:1.5px solid transparent}
+.fb.on{display:flex}
+.fb.ok{background:#071a0a;border-color:var(--green-bdr)}
+.fb.no{background:#190408;border-color:var(--red-bdr)}
+.fb-icon{font-size:24px;flex-shrink:0}
+.fb-txt{flex:1;min-width:0}
+.fb-head{font-size:13px;font-weight:900}
+.fb.ok .fb-head{color:var(--green)}
+.fb.no .fb-head{color:var(--red)}
+.fb-detail{font-size:11px;font-weight:600;color:#5a8a9a;line-height:1.4;margin-top:2px}
+.btn-cont{padding:8px 14px;border:none;border-radius:9px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .12s}
+.fb.ok .btn-cont{background:var(--green);color:#000;box-shadow:0 3px 0 var(--green2)}
+.fb.ok .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--green2)}
+.fb.no .btn-cont{background:var(--red);color:#fff;box-shadow:0 3px 0 var(--red2)}
+.fb.no .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--red2)}
+
+/* ── RESULTS ── */
+.res-card{background:var(--card);border-radius:22px;padding:28px 22px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.res-card::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(0,194,203,.07) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+.trophy{font-size:66px;display:block;animation:dropIn .7s cubic-bezier(.34,1.56,.64,1);position:relative;z-index:1;filter:drop-shadow(0 0 20px rgba(0,194,203,.4))}
+@keyframes dropIn{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.stars-row{display:flex;justify-content:center;gap:8px;margin:5px 0 12px;position:relative;z-index:1}
+.rstar{font-size:32px;opacity:0;filter:drop-shadow(0 0 8px rgba(0,194,203,.5))}
+.rstar.lit{animation:starIn .5s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes starIn{to{opacity:1;transform:scale(1) rotate(0)}from{opacity:0;transform:scale(0) rotate(-20deg)}}
+.res-title{font-size:clamp(20px,5vw,26px);font-weight:900;margin-bottom:3px;color:#fff;position:relative;z-index:1}
+.res-sub{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:18px;position:relative;z-index:1}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;position:relative;z-index:1}
+.res-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:12px 6px}
+.res-n{font-size:24px;font-weight:900;color:var(--teal)}
+.res-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.res-btns{display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
+.btn-again{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 7px 20px rgba(0,194,203,.2);transition:all .12s;letter-spacing:.3px}
+.btn-again:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--teal2),0 10px 24px rgba(0,194,203,.25)}
+.btn-again:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+.btn-home-sm{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;background:none;color:var(--muted);transition:all .15s}
+.btn-home-sm:hover{border-color:var(--teal2);color:var(--teal)}
+
+/* ── EFFECTS ── */
+.confetti{position:fixed;pointer-events:none;z-index:9999;animation:cfall linear forwards}
+@keyframes cfall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(110vh) rotate(700deg)}}
+.spark{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;animation:spark ease-out forwards}
+@keyframes spark{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}
+.floatxp{position:fixed;pointer-events:none;z-index:9999;font-size:16px;font-weight:900;color:var(--gold);text-shadow:0 0 12px rgba(255,200,0,.5);animation:fxp .9s ease-out forwards}
+@keyframes fxp{0%{opacity:1;transform:translateY(0) scale(.7)}20%{transform:translateY(-8px) scale(1.1)}100%{opacity:0;transform:translateY(-60px) scale(.9)}}
+.popbadge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;font-size:34px;font-weight:900;animation:pbadge 1s ease forwards;white-space:nowrap;text-shadow:0 0 30px rgba(0,194,203,.7),0 4px 20px rgba(0,0,0,.5)}
+@keyframes pbadge{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-55%) scale(.9)}}
+@keyframes heartBreak{0%{transform:scale(1)}30%{transform:scale(1.5)}100%{transform:scale(1)}}
+.hb{animation:heartBreak .35s ease}
+
+@media(max-width:400px){.topbar{padding:9px 11px}.q-body{padding:11px 11px 0}.opts{gap:5px}.opt{padding:9px 10px;font-size:12px}.fb{padding:9px 12px}.home-card,.res-card{padding:22px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ HOME ═══ -->
+<div id="home" class="screen on">
+<div class="home-card">
+  <span class="plane">✈️</span>
+  <div class="home-badge">A220 · ATA Chapter 21</div>
+  <h1 class="home-h1">A220 Air<br><span>Conditioning Quiz</span></h1>
+  <p class="home-sub">44 questions on the integrated A220 ECS — IASC architecture, packs, pressurization, trim air, BALODS, troubleshooting &amp; tribal knowledge.</p>
+  <div class="home-pills">
+    <span class="pill">🧠 IASC</span>
+    <span class="pill">🌬️ Bleed Air</span>
+    <span class="pill">❄️ Packs</span>
+    <span class="pill">🌡️ Temp / Zones</span>
+    <span class="pill">🔥 Trim Air</span>
+    <span class="pill">⚠️ Pressurization</span>
+    <span class="pill">⚙️ Outflow Valve</span>
+    <span class="pill">🛡️ Protection</span>
+    <span class="pill">📡 Sensors / BITE</span>
+    <span class="pill">🔧 Troubleshooting</span>
+  </div>
+  <div class="home-meta">
+    <div class="meta-box"><div class="meta-n">44</div><div class="meta-l">Questions</div></div>
+    <div class="meta-box"><div class="meta-n">3</div><div class="meta-l">Lives</div></div>
+    <div class="meta-box"><div class="meta-n">10</div><div class="meta-l">Topics</div></div>
+  </div>
+  <button class="btn-go" onclick="startGame()">✈️ Start Quiz</button>
+</div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div id="quiz" class="screen">
+<div class="q-shell">
+  <div class="topbar">
+    <button class="xbtn" onclick="confirmQuit()">✕</button>
+    <div class="prog-col">
+      <div class="prog-top">
+        <span class="prog-cat" id="cat-lbl">IASC</span>
+        <span class="prog-n"><span id="qn">1</span>/<span id="qtot">40</span></span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+    </div>
+    <div class="topbar-r">
+      <div class="streak-tag">🔥<span id="streak-n">0</span></div>
+      <div class="hearts" id="hearts">
+        <span class="heart" id="h0">❤️</span><span class="heart" id="h1">❤️</span><span class="heart" id="h2">❤️</span>
+      </div>
+      <div class="xp-tag">⚡<span id="xpdis">0</span></div>
+    </div>
+  </div>
+  <div class="q-body" id="q-body">
+    <div class="q-cat"><div class="q-dot"></div><span id="q-cat">IASC</span></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="opts" id="opts"></div>
+  </div>
+  <div class="fb" id="fb">
+    <span class="fb-icon" id="fb-icon">✅</span>
+    <div class="fb-txt">
+      <div class="fb-head" id="fb-head">Correct!</div>
+      <div class="fb-detail" id="fb-det"></div>
+    </div>
+    <button class="btn-cont" id="btn-cont" onclick="advance()">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ RESULT ═══ -->
+<div id="result" class="screen">
+<div class="res-card">
+  <span class="trophy" id="trophy">🏆</span>
+  <div class="stars-row">
+    <span class="rstar" id="rs0">⭐</span>
+    <span class="rstar" id="rs1">⭐</span>
+    <span class="rstar" id="rs2">⭐</span>
+  </div>
+  <div class="res-title" id="res-title">Session Complete!</div>
+  <div class="res-sub" id="res-sub">Great work!</div>
+  <div class="res-grid">
+    <div class="res-box"><div class="res-n" id="r-xp">0</div><div class="res-l">XP</div></div>
+    <div class="res-box"><div class="res-n" id="r-acc">0%</div><div class="res-l">Accuracy</div></div>
+    <div class="res-box"><div class="res-n" id="r-str">0</div><div class="res-l">Best Streak</div></div>
+  </div>
+  <div class="res-btns">
+    <button class="btn-again" onclick="startGame()">🔁 Play Again</button>
+    <button class="btn-home-sm" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ═══════════════ AUDIO ═══════════════
+const AC=window.AudioContext||window.webkitAudioContext;
+let actx=null;
+function ctx(){if(!actx)actx=new AC();return actx;}
+function playCorrect(){
+  try{const c=ctx();[523,659,784,1047].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.07;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.start(t);o.stop(t+.25);});}catch(e){}
+}
+function playWrong(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(280,c.currentTime);o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.35);g.gain.setValueAtTime(.13,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start();o.stop(c.currentTime+.45);}catch(e){}
+}
+function playCombo(){
+  try{const c=ctx();[880,1108,1320,1760].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='triangle';o.frequency.value=f;const t=c.currentTime+i*.05;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.start(t);o.stop(t+.3);});}catch(e){}
+}
+function playVictory(){
+  try{const c=ctx();[523,659,784,1047,1319,1568,2093].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.09;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.start(t);o.stop(t+.35);});}catch(e){}
+}
+function playClick(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=440;g.gain.setValueAtTime(.06,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.08);}catch(e){}
+}
+
+// ═══════════════ QUESTIONS ═══════════════
+const BANK=[
+{c:"🧠 IASC",q:"The A220\'s air conditioning, ventilation, and pressurization logic is primarily managed by:",o:["The CPC alone — IASCs only handle bleed","Two Integrated Air System Controllers (IASC 1 and IASC 2)","A single Air Conditioning Accessory Unit (ACAU)","The DCAU module exclusively"],a:1,d:"Two IASCs (IASC 1 and IASC 2) are the brains of the A220 ECS, handling air conditioning, ventilation, and pressurization logic together as one managed system."},
+{c:"🧠 IASC",q:"How many channels does each IASC contain, and how many are active at any time?",o:["2 channels (A and B), both active simultaneously","3 channels (A, B, and Safety), only 1 active at a time","4 channels with majority voting logic","1 channel only — redundancy is at the IASC unit level"],a:1,d:"Each IASC has 3 channels: A, B, and Safety. Only ONE channel is active at a time. The active channel alternates daily, so unused channels are kept fresh."},
+{c:"🧠 IASC",q:"Which bleed valves does IASC 1 control?",o:["Right engine bleed, APU bleed, and right wing anti-ice","Left engine bleed valve, APU bleed valve, cross-bleed valve, and left wing anti-ice","Only the APU bleed valve","Both engine bleed valves but no anti-ice valves"],a:1,d:"IASC 1 controls the LEFT engine bleed valve, APU bleed valve, cross-bleed valve, and LEFT wing anti-ice valve. IASC 2 handles the right engine bleed and right wing anti-ice."},
+{c:"🧠 IASC",q:"If IASC 1 fails completely, what happens to bleed valve control?",o:["Both packs shut down to avoid uncontrolled bleed","IASC 2 assumes control of all bleed valves except the left engine bleed, which closes automatically","All bleed valves freeze in their last commanded position","The flight crew must take over via manual switches"],a:1,d:"On IASC 1 failure, IASC 2 takes over all bleed valves EXCEPT the failed side\'s engine bleed (left), which closes automatically. This protects against uncontrolled bleed extraction."},
+{c:"🧠 IASC",q:"Why does each IASC channel alternate every day?",o:["To meet FAA scheduled maintenance requirements","So unused channels are exercised regularly and faults are detected early","To save power on the active channel","The crew manually selects the channel each flight"],a:1,d:"Daily channel rotation exercises each channel so latent faults are detected before they\'re needed in a failover. A dormant channel that has silently failed for months helps no one."},
+{c:"🌬️ Bleed Air",q:"The A220 ECS sources its hot pneumatic air from:",o:["Engines, APU, or High Pressure Ground Connection (HPGC)","Engines only — APU bleed is unavailable","The APU exclusively on the ground","A dedicated air compressor in the wing root"],a:0,d:"Bleed air comes from the engines, APU, or High Pressure Ground Connection (HPGC). Because of this, ATA 36 (Pneumatic) problems often show up as ATA 21 (Air Conditioning) symptoms — they\'re tightly coupled."},
+{c:"🌬️ Bleed Air",q:"After the engine bleed valve (PRSOV), bleed air is cooled by:",o:["Direct contact with ram air via a precooler using engine fan air","A liquid coolant loop","Refrigerant gas in a closed system","Cabin recirculation air ducted up to the engine"],a:0,d:"Bleed air from the PRSOV is cooled in the precooler using engine fan air. Hot bleed gets tempered before entering the packs and manifolds."},
+{c:"🌬️ Bleed Air",q:"BALODS stands for:",o:["Bleed Air Load and Outlet Distribution System","Bleed Air Leak and Overheat Detection System","Backup Air Logic and Override Display Software","Bypass Air Limit Override Detection Sensor"],a:1,d:"BALODS = Bleed Air Leak and Overheat Detection System. It monitors for hot air leaks along the bleed ducts and triggers protective shutdowns to prevent fire or structural damage."},
+{c:"🌬️ Bleed Air",q:"The bleed valve (PRSOV) is described as:",o:["Electrically actuated, controlled by the CPC","Pneumatically operated by the Bleed Temperature Sensor (BTS) and electrically controlled by the IASC","A purely mechanical pressure-relief valve","Hydraulically actuated by the green system"],a:1,d:"The PRSOV is pneumatically OPERATED by the Bleed Temperature Sensor (BTS) signal but electrically CONTROLLED by the IASC. This split design means losing electrical power leaves the valve in a known safe state."},
+{c:"❄️ Packs",q:"The A220 still uses an Air Cycle Machine (ACM) for cooling. What is different about the A220\'s pack operation compared to older designs?",o:["The ACM is electric, not turbine-driven","Packs MODULATE output rather than just being on/off","Packs only operate above 10,000 ft","The A220 uses two ACMs per pack for redundancy"],a:1,d:"Same basic ACM cooling cycle as legacy aircraft, but A220 packs MODULATE — they don\'t just run at one fixed flow. Partial pack operation can be entirely normal behavior."},
+{c:"❄️ Packs",q:"Pack flow on the A220 is driven by:",o:["A fixed schedule based only on altitude","Cabin demand, flight phase, and temperature needs","The crew, who manually sets flow on every leg","Outside air temperature alone"],a:1,d:"Pack output is DEMAND-DRIVEN. The IASC modulates flow based on cabin demand, flight phase, and temperature. Output is not a fixed value — it\'s calculated continuously."},
+{c:"❄️ Packs",q:"On the ground with engines off, what creates airflow through the pack heat exchangers?",o:["Natural convection through the ram scoops","The ACM impeller fan creates a low pressure zone, pulling air through the heat exchangers","A separate electric ground cooling fan","No cooling occurs until engine start"],a:1,d:"On the ground the ACM impeller fan creates a low-pressure zone that pulls air through the heat exchangers and up through the plenum. Without this fan there is no meaningful pack cooling on the ground — a frequent root cause when packs trip during ground ops."},
+{c:"❄️ Packs",q:"If the FMS has no cabin occupancy data entered, the A220 system assumes:",o:["The cabin is empty — reducing bleed flow demand","The cabin is full — maximizing bleed flow as a default","Half cabin — splitting the difference","The system requires manual flow selection from the crew"],a:1,d:"With no FMS passenger count, the system assumes a FULL cabin. Entering an accurate (lower) number reduces bleed flow consumption when max cooling/heating isn\'t needed — a fuel-saving feature often missed by line crews."},
+{c:"❄️ Packs",q:"To reactivate the impeller fan in flight, the crew must:",o:["Switch the affected PACK off and back on","Select the PACK FLOW switch on the AIR panel to HI","Manually open the ram air door","Reset the IASC circuit breakers"],a:1,d:"Selecting PACK FLOW to HI on the AIR panel reactivates the impeller fan in flight, useful for boosting cooling when needed."},
+{c:"🌡️ Temp Zones",q:"The A220 cabin temperature control is organized into how many zones?",o:["One — the entire cabin is treated as one zone","Two — cockpit and cabin","Four — cockpit, forward cabin, mid cabin, and aft cabin","Eight — one per row group"],a:2,d:"The A220 has four temperature zones: cockpit, forward cabin, mid cabin, and aft cabin. Each is independently managed via trim air and temperature sensors."},
+{c:"🌡️ Temp Zones",q:"The \'coldest zone\' logic on the A220 means:",o:["The pack always cools to the coldest selected/sensed zone demand; warmer zones get trim air added","The pack temperature is averaged across all zones","The warmest zone determines pack output","Zones cycle their demand priority every minute"],a:0,d:"Packs cool the supply air to satisfy the COLDEST zone\'s demand. All warmer zones then get trim air added downstream to bring them up. Averaging does not happen — the coldest zone always wins."},
+{c:"🌡️ Temp Zones",q:"What color are the DESIRED temperatures shown in on the AIR synoptic page?",o:["White","Green","Cyan / blue","Amber"],a:1,d:"Desired temperatures are shown in GREEN on the AIR synoptic page, distinguishing them from actual cabin temperatures and other status colors."},
+{c:"🌡️ Temp Zones",q:"A passenger complaint about uneven cabin temperatures should first lead a technician to suspect:",o:["The ACM bearings — they affect overall pack output","Trim air valves or zone temperature sensors","The outflow valve actuator","Both engines\' bleed valves simultaneously"],a:1,d:"Uneven zone temperatures (hot/cold complaints) point most often to trim air valve or zone sensor issues. The pack itself is usually fine — the downstream trim/sensor logic is where things go wrong."},
+{c:"🔥 Trim Air",q:"Trim air on the A220 is:",o:["Cold recirculated cabin air added to reduce zone temperature","Hot bleed air added downstream of the packs to fine-tune individual zone temperatures","Engine fan air ducted directly to the cabin","APU air used only on the ground"],a:1,d:"Trim air is HOT bleed air added DOWNSTREAM of the packs. It warms specific zones above the cold pack output, allowing each zone to reach its desired setpoint independently."},
+{c:"🔥 Trim Air",q:"TASOV stands for:",o:["Total Air Supply Override Valve","Trim Air Shut-Off Valve","Temperature Auto-Selection Override Valve","Turbine Air Source Operating Valve"],a:1,d:"TASOV = Trim Air Shut-Off Valve. It\'s the master valve isolating trim air from the cabin distribution system. Closing it removes all zone-warming capability."},
+{c:"🔥 Trim Air",q:"When TRIM AIR OFF is annunciated, what happens automatically?",o:["The packs shut down to prevent overcooling","The OFF message illuminates, the TASOV closes, and zone modulation via trim air is lost","Recirc fans switch off","Cabin pressure dumps to ambient"],a:1,d:"TRIM AIR OFF triggers the OFF message and the TASOV closes. Zone temperatures can no longer be individually trimmed — the cabin will reach whatever the pack delivers (the coldest zone\'s demand)."},
+{c:"⚠️ Pressurization",q:"The A220 cabin pressure is controlled by:",o:["A manual lever in the cockpit — pilot-controlled","The CPC (Cabin Pressure Controller) working with IASC integration, fully automatic","The IASCs alone — there is no separate CPC","A pressure relief valve only — no active control"],a:1,d:"The CPC (Cabin Pressure Controller) controls cabin pressure, working in integration with the IASCs. The A220 system is fully automatic — very little manual pilot control compared to older aircraft."},
+{c:"⚠️ Pressurization",q:"How many Cabin Pressure Controllers (CPCs) does the A220 have?",o:["One — single computer","Two — redundancy for the pressurization function","Three — A, B, and Safety","Four — one per pack and one per outflow valve"],a:1,d:"Two CPCs provide redundancy for cabin pressurization. Loss of one CPC = loss of redundant/non-critical function, but pressurization still works."},
+{c:"⚙️ Outflow Valve",q:"The A220\'s main outflow valve (OFV) is:",o:["A pneumatically operated poppet valve at the tail","An electrically actuated butterfly valve on the aft pressure bulkhead of the forward cargo compartment","A hydraulically operated gate valve at the wing root","A passive spring-loaded relief valve"],a:1,d:"The OFV is a butterfly valve, electrically operated by an actuator, located on the aft pressure bulkhead of the forward cargo compartment. It meters air OUT of the aircraft to maintain cabin pressure."},
+{c:"⚙️ Outflow Valve",q:"In simple terms: opening the OFV further results in:",o:["HIGHER cabin pressure — more air retained","LOWER cabin pressure — more air escapes","No effect on cabin pressure — packs compensate","Higher cabin altitude warning automatically"],a:1,d:"Easy mental model: open the OFV more → more air escapes → LOWER cabin pressure (higher cabin altitude). Inflow from packs + outflow via OFV = pressure balance."},
+{c:"🛡️ Protection",q:"On the A220, an unexpected pack shutdown, flow reduction, or temperature limiting is BEST interpreted as:",o:["Definite hardware failure — replace components","Often a PROTECTIVE action commanded by the IASC; find the cause before resetting","An indication error — ignore unless it repeats","A test routine running automatically"],a:1,d:"Many \'failures\' on the A220 are protective actions commanded on purpose. Pack shutdowns, flow reductions, and temperature limits are often the system protecting itself. Don\'t reset-and-forget — find WHY the protection activated."},
+{c:"🛡️ Protection",q:"How does A220 ECS typically degrade?",o:["Sudden total loss — usually all or nothing","In LEVELS: reduced performance, backup channel control, or limited function","Random component failures with no predictable pattern","Only at altitudes above FL350"],a:1,d:"The system degrades in levels. Reduced performance, backup channel takeover, or limited function is more common than total loss. Redundancy means full ECS loss is rare."},
+{c:"🛡️ Protection",q:"Which conditions can cause a bleed valve (PRSOV) failure annunciation?",o:["Only mechanical failure of the valve itself","PRSOV failure, dual loss of Bleed Temperature Sensor (BTS) sensing elements, or IASC 1/2 failure","Only software corruption in the IASC","Engine N1 below 30%"],a:1,d:"A PRSOV fault can come from the valve itself, dual BTS sensor element loss, or IASC failure. The annunciation is the SYMPTOM, not the diagnosis — always check IASC BITE and sensor health."},
+{c:"🛡️ Protection",q:"After a protective ECS shutdown, the correct technician action is to:",o:["Immediately reset the system and dispatch the aircraft","Use BITE and fault history to understand WHY the system degraded","Replace the IASC as a precaution","Defer the system via MEL without further investigation"],a:1,d:"BITE FIRST. Look at controller status, channel faults, history, and real-time values before any action. Resetting without understanding the cause is a recipe for the same fault to return at altitude."},
+{c:"🌬️ Ventilation",q:"The A220 avionics cooling is:",o:["A completely separate system from the ECS","Integrated with ECS airflow — ECS issues can trigger avionics cooling warnings","Powered by the hydraulic system","Only active when the aircraft is on the ground"],a:1,d:"Avionics cooling ties into the ECS airflow. A failed pack, bleed fault, or recirc issue can cascade and trigger avionics cooling warnings — don\'t isolate AC, pressurization, and ventilation too quickly."},
+{c:"🔄 Recirc",q:"What is the operational purpose of cabin air recirculation on the A220?",o:["Comfort only — passengers prefer recirculated air","To reduce how much fresh bleed air the engines must supply, improving efficiency","To bring outside air into the cabin via separate intakes","Required by FAA — no operational benefit"],a:1,d:"Recirculation is an EFFICIENCY system, not just comfort. Filtered recirc air reduces bleed demand from the engines, saving fuel and reducing pack load. Often missed by technicians."},
+{c:"🔄 Recirc",q:"If a recirculation fan fails, what symptom may appear?",o:["No symptom — recirc is non-essential","Pack performance symptoms — the packs have to supply more flow to compensate","Cabin lights dim","Pressurization fails immediately"],a:1,d:"Recirc failure increases bleed demand on the packs. Pack performance symptoms (slow cooling, high flow) can appear even when the packs themselves are healthy. Trace the source."},
+{c:"💧 Moisture",q:"Water extraction in the A220 pack serves what purpose?",o:["To collect water for cabin drinking systems","To prevent fogging, icing, and moisture-related problems in the ducts and ACM","To increase cooling efficiency by adding moisture downstream","To balance cabin humidity at exactly 60%"],a:1,d:"Water extraction removes moisture to prevent fogging, ice formation in ducts, and damage to ACM components. Extracted water is sprayed into the ram air stream for evaporative cooling — a clever reuse."},
+{c:"📡 Sensors",q:"The A220 ECS is described as \'data-driven\'. The biggest practical implication for line maintenance is:",o:["You can ignore mechanical components — only software matters","Bad sensor data can make good hardware look broken; trace inputs before changing parts","All faults can be resolved by replacing the IASC","Sensor calibration is required every flight"],a:1,d:"Bad sensor = bad behavior. The hardware may be fine, but the computer reacts to incorrect data. Trace data inputs before changing parts — a \'parts cannon\' approach is expensive and rarely solves data-driven faults."},
+{c:"📡 Sensors",q:"Common A220 ECS sensors that drive control logic include:",o:["Only cabin temperature sensors","Temperature, pressure, and flow sensors throughout the system","Only engine N1 sensors","Wing fuel level sensors"],a:1,d:"Temperature, pressure, and flow sensors throughout the system drive IASC logic. The PDTS, PDPS, CDTS, MIXTS, ATS, BTS, and many others all feed the controllers. Sensors ARE a major troubleshooting area."},
+{c:"🔧 Troubleshooting",q:"What is the FIRST thing a technician should check on any ECS write-up on the A220?",o:["The pack — it\'s the most expensive component","IASC BITE: controller status, channel faults, history, and real-time values","The outflow valve actuator","Cabin temperature selector knobs"],a:1,d:"Always check IASC BITE first. Controller status, channel faults, fault history, and real-time parameter values reveal whether the issue is mechanical, sensor-driven, or a protective action. Skipping BITE = \'parts cannon warning\'."},
+{c:"🔧 Troubleshooting",q:"On A220 ATA 21, which related ATA chapters are most likely to cause cascading ECS symptoms?",o:["ATA 32 (Landing Gear) and ATA 27 (Flight Controls)","ATA 36 (Pneumatic), ATA 24 (Electrical), and ATA 31 (Indicating)","ATA 49 (APU) only","ATA 28 (Fuel) and ATA 29 (Hydraulic)"],a:1,d:"ATA 21 depends heavily on ATA 36 (bleed source), ATA 24 (electrical power to controllers/valves), and ATA 31 (indicating). One root cause can show up in multiple cockpit messages — trace the source, don\'t chase messages."},
+{c:"🔧 Troubleshooting",q:"To reset the IASC thermal circuit breakers, a technician must access:",o:["The forward avionics bay only — single CB","IASC 1A: EPC1-H7, IASC 1B: EPC2-E6, IASC 2A: EPC2-E7, IASC 2B: R-CBP-D1","The flight deck overhead CB panel","A single MASTER ECS reset button"],a:1,d:"The IASC thermal CBs are distributed across the EPCs (Electrical Power Centres). Knowing the exact CB locations (IASC 1A: EPC1-H7, 1B: EPC2-E6, 2A: EPC2-E7, 2B: R-CBP-D1) saves time during powered IASC resets."},
+{c:"🧠 Tribal",q:"TRIBAL: A pilot reports the cabin felt cold throughout a 4-hour leg. BITE shows no pack faults. The MOST likely first thing to check is:",o:["Pack ACM bearings — it\'s worn","Trim air system — TASOV position, trim air valves, and zone temperature sensors","Replace both IASCs","Outflow valve actuator"],a:1,d:"A whole-cabin-cold complaint with healthy packs points at trim air. The packs cool to the coldest zone; if trim air isn\'t adding heat back to the warmer zones, the WHOLE cabin feels under-heated. Don\'t replace healthy packs."},
+{c:"🧠 Tribal",q:"TRIBAL: Pack performance complaints AND a recirc fan fault both present. The recirc fan is likely:",o:["A red herring — replace the pack first","The root cause — fix recirc and the pack symptoms often resolve","Unrelated — they require two separate work cards","An IASC software bug, not a hardware issue"],a:1,d:"Recirc failure forces packs to supply more flow, which often presents as pack performance complaints. Fix the recirc fan first — pack \'symptoms\' frequently resolve without touching the pack. Saves hours and parts."},
+{c:"🧠 Tribal",q:"TRIBAL: APU bleed air is being used at FL230. The crew asks if this is a nuisance message. The correct response is:",o:["Always a nuisance — ignore","Always a real fault — defer the aircraft immediately","Maintenance action required to confirm if nuisance or real","Reset the IASC and continue"],a:2,d:"APU bleed being used at FL230 (above normal APU bleed envelope) requires maintenance action to determine if it\'s a nuisance or a real symptom of an engine bleed issue. Don\'t dismiss it without checking."},
+{c:"🧠 Tribal",q:"TRIBAL: \'No fixed system state\' is a key A220 concept. The practical takeaway is:",o:["Don\'t compare current values to a fixed reference — compare to current demand and conditions","The system has no documentation","Every flight should be treated as a unique system","Only the manufacturer can troubleshoot ECS faults"],a:0,d:"The A220 constantly recalculates the best operating mode based on altitude, OAT, and demand. Weak cooling at high cruise may be COMMANDED behavior, not a fault. Compare actuals against current demand and controller status, not a memorized \'normal\' table."},
+{c:"🧠 Tribal",q:"TRIBAL: A \'parts cannon\' approach on the A220 ECS typically fails because:",o:["A220 parts are too expensive — economics","Most ECS issues are sensor, controller logic, or software-driven, not purely mechanical","All replacement parts must be programmed by the manufacturer","Three sequential part swaps are required to resolve any fault"],a:1,d:"Most ECS faults are NOT purely mechanical. Common causes are sensors, controller logic, and software faults. Throwing parts at a fault without using BITE is the classic A220 trap — expensive and ineffective."},
+{c:"🧠 Tribal",q:"TRIBAL: Single isolated ECS faults that don\'t repeat after a successful reset are MOST often caused by:",o:["A failing pack — always change the ACM","Transient airflow, thermal events, or sensor glitches — investigate, don\'t auto-replace","An IASC software bug requiring a full reload","Cabin pressure sensor drift requiring full calibration"],a:1,d:"Single, non-repeating ECS faults are usually transient: a brief airflow disturbance, a thermal excursion, or a sensor glitch. Investigate (review history, check related systems) before changing expensive parts — the no-repeat pattern is itself a clue."}
+];
+
+// ═══════════════ STATE ═══════════════
+const G={qs:[],idx:0,hearts:3,xp:0,streak:0,bestStreak:0,correct:0,done:false};
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on')}
+function goHome(){show('home')}
+function confirmQuit(){if(confirm('Quit this quiz?'))goHome();}
+
+function startGame(){
+  // Deep-copy BANK and shuffle both question order AND options within each question
+  G.qs=shuffle([...BANK]).map(q=>{
+    // Build [text, isCorrect] pairs, shuffle, then split back out and find new correct index
+    const pairs=q.o.map((txt,i)=>({txt,correct:i===q.a}));
+    shuffle(pairs);
+    return{
+      c:q.c,
+      q:q.q,
+      o:pairs.map(p=>p.txt),
+      a:pairs.findIndex(p=>p.correct),
+      d:q.d,
+    };
+  });
+  G.idx=0;G.hearts=3;G.xp=0;G.streak=0;G.bestStreak=0;G.correct=0;
+  updateHearts();
+  document.getElementById('xpdis').textContent='0';
+  document.getElementById('streak-n').textContent='0';
+  document.getElementById('qtot').textContent=G.qs.length;
+  show('quiz');
+  renderQ();
+}
+
+function renderQ(){
+  G.done=false;
+  const fb=document.getElementById('fb');
+  fb.className='fb';fb.style.display='none';
+  const q=G.qs[G.idx];
+  document.getElementById('cat-lbl').textContent=q.c;
+  document.getElementById('q-cat').textContent=q.c;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('qn').textContent=G.idx+1;
+  document.getElementById('bar').style.width=Math.round((G.idx/G.qs.length)*100)+'%';
+
+  const cont=document.getElementById('opts');
+  cont.innerHTML='';
+  const keys=['A','B','C','D'];
+  q.o.forEach((txt,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="opt-l">${keys[i]}</span><span>${txt}</span>`;
+    b.onclick=()=>pick(i);
+    cont.appendChild(b);
+    b.style.opacity='0';b.style.transform='translateX(-16px)';
+    setTimeout(()=>{b.style.transition='opacity .22s ease,transform .22s ease';b.style.opacity='1';b.style.transform='translateX(0)';},70+i*50);
+  });
+
+  // scroll q-body back to top on each new question
+  document.getElementById('q-body').scrollTop=0;
+}
+
+function pick(idx){
+  if(G.done)return;
+  G.done=true;
+  const q=G.qs[G.idx];
+  const correct=idx===q.a;
+  const btns=[...document.querySelectorAll('.opt')];
+  btns.forEach(b=>b.disabled=true);
+  btns[q.a].classList.add('reveal-right');
+  if(correct){
+    btns[idx].classList.remove('reveal-right');
+    btns[idx].classList.add('picked-right');
+    btns.forEach((b,i)=>{if(i!==idx)b.classList.add('faded');});
+    G.correct++;G.streak++;
+    if(G.streak>G.bestStreak)G.bestStreak=G.streak;
+    const xpGain=G.streak>=5?20:G.streak>=3?15:10;
+    G.xp+=xpGain;
+    document.getElementById('xpdis').textContent=G.xp;
+    document.getElementById('streak-n').textContent=G.streak;
+    showFeedback(true,q.d,xpGain);
+    spawnSparks(btns[idx]);
+    playCorrect();
+    if(G.streak===3){showPopBadge('🔥 3 Streak!');playCombo();}
+    if(G.streak===5){showPopBadge('⚡ 5 in a row!');playCombo();}
+    if(G.streak===10){showPopBadge('🌟 10 Streak!');playCombo();}
+  } else {
+    btns[idx].classList.add('picked-wrong');
+    btns.forEach((b,i)=>{if(i!==idx&&i!==q.a)b.classList.add('faded');});
+    G.streak=0;G.hearts--;
+    document.getElementById('streak-n').textContent=0;
+    updateHearts();
+    showFeedback(false,q.d,0);
+    playWrong();
+  }
+}
+
+function showFeedback(ok,detail,xp){
+  const fb=document.getElementById('fb');
+  fb.className='fb on '+(ok?'ok':'no');
+  fb.style.display='flex';
+  const icons=ok?['✅','🎉','🌟','⭐','🔥','💡','🎯','🏅']:['❌'];
+  const heads=ok?['Correct!','Great!','Well done!','Spot on!','Nailed it!','Right on!','Excellent!']:['Not quite!'];
+  document.getElementById('fb-icon').textContent=icons[Math.floor(Math.random()*icons.length)];
+  document.getElementById('fb-head').textContent=heads[Math.floor(Math.random()*heads.length)];
+  document.getElementById('fb-det').textContent=detail;
+  const cont=document.getElementById('btn-cont');
+  cont.textContent=(G.idx>=G.qs.length-1||G.hearts<=0)?'See Results →':'Continue →';
+  if(ok&&xp)floatXP('+'+xp+' XP',cont);
+}
+
+function advance(){
+  playClick();
+  G.idx++;
+  if(G.idx>=G.qs.length||G.hearts<=0)showResult();
+  else renderQ();
+}
+
+function updateHearts(){
+  [0,1,2].forEach(i=>{
+    const h=document.getElementById('h'+i);
+    h.classList.toggle('gone',i>=G.hearts);
+  });
+}
+
+function showResult(){
+  const acc=G.idx?Math.round((G.correct/G.idx)*100):0;
+  const stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
+  const trophies=['😅','🥉','🥈','🏆'];
+  const titles=['Keep Practicing!','Nice Try!','Well Done!','Outstanding! 🎯'];
+  const subs=['Review the ATA 21 manual and try again.','Good effort — study the explanations!','Strong Air Conditioning knowledge!','You are an ATA 21 expert! ✈️'];
+  document.getElementById('trophy').textContent=trophies[stars];
+  document.getElementById('res-title').textContent=titles[stars];
+  document.getElementById('res-sub').textContent=subs[stars];
+  document.getElementById('r-xp').textContent=G.xp;
+  document.getElementById('r-acc').textContent=acc+'%';
+  document.getElementById('r-str').textContent=G.bestStreak;
+  ['rs0','rs1','rs2'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.classList.remove('lit');el.style.animationDelay='0s';
+    if(i<stars)setTimeout(()=>{el.style.animationDelay=(i*.2)+'s';el.classList.add('lit');},500+i*120);
+  });
+  show('result');
+  if(acc>=60)setTimeout(()=>{launchConfetti(acc);playVictory();},300);
+}
+
+function launchConfetti(acc){
+  const cols=['#00c2cb','#1cb0f6','#58cc02','#ffc800','#ff9600','#ff4b4b','#fff'];
+  const shapes=['●','■','▲','◆','★','✦','✧'];
+  const count=Math.min(35+Math.floor(acc/4),70);
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti';
+      el.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+      el.style.cssText=`left:${Math.random()*100}vw;top:-20px;color:${cols[Math.floor(Math.random()*cols.length)]};font-size:${9+Math.random()*13}px;animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.4}s`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),4000);
+    },i*22);
+  }
+}
+
+function spawnSparks(btn){
+  const rect=btn.getBoundingClientRect();
+  const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+  const cols=['#00c2cb','#1cb0f6','#ffc800','#fff','#58cc02'];
+  for(let i=0;i<10;i++){
+    const el=document.createElement('div');
+    el.className='spark';
+    const a=(i/10)*Math.PI*2,d=28+Math.random()*44;
+    el.style.cssText=`left:${cx}px;top:${cy}px;width:${4+Math.random()*5}px;height:${4+Math.random()*5}px;background:${cols[i%cols.length]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;animation-duration:${.4+Math.random()*.25}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),800);
+  }
+}
+
+function floatXP(txt,refEl){
+  const rect=refEl.getBoundingClientRect();
+  const el=document.createElement('div');
+  el.className='floatxp';el.textContent=txt;
+  el.style.cssText=`left:${rect.left+rect.width*.5}px;top:${rect.top-10}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1000);
+}
+
+function showPopBadge(txt){
+  const el=document.createElement('div');
+  el.className='popbadge';el.textContent=txt;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1100);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('quiz').classList.contains('on'))return;
+  const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+  const k=e.key.toLowerCase();
+  if(!G.done&&map[k]!==undefined)pick(map[k]);
+  if(G.done&&(e.key==='Enter'||e.key===' ')){e.preventDefault();advance();}
+});
+</script>
+</body>
+</html>

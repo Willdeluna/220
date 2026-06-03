@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A220 ATA 26 – Fire Protection Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1a1f;
+  --card:#0f2028;
+  --card2:#142530;
+  --teal:#00c2cb;
+  --teal2:#008f96;
+  --green:#58cc02;
+  --green2:#46a302;
+  --green-bg:#071a0a;
+  --green-bdr:#1a4d1a;
+  --red:#ff4b4b;
+  --red2:#cc2a2a;
+  --red-bg:#1f0a0a;
+  --red-bdr:#5c1212;
+  --blue:#1cb0f6;
+  --gold:#ffc800;
+  --gold2:#c89800;
+  --text:#e0f4f8;
+  --muted:#5a8a9a;
+  --border:#1e3a45;
+  --r:14px;
+}
+html,body{min-height:100vh;background:var(--bg);font-family:'Nunito',sans-serif;color:var(--text)}
+body{
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  background:
+    radial-gradient(ellipse at 15% 0%,rgba(0,194,203,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,rgba(28,176,246,0.04) 0%,transparent 50%),
+    var(--bg);
+}
+.wrap{width:100%;max-width:520px}
+.screen{display:none}
+.screen.on{display:block}
+
+/* ── HOME ── */
+.home-card{background:var(--card);border-radius:22px;padding:28px 24px;border:1px solid var(--border);box-shadow:0 0 0 1px #0a1a20,0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.home-card::before{content:'';position:absolute;top:-80px;left:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,194,203,.08) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.home-card::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(28,176,246,.05) 0%,transparent 70%);pointer-events:none;border-radius:50%}
+.plane{font-size:58px;display:block;animation:bob 3s ease-in-out infinite;margin-bottom:2px;filter:drop-shadow(0 0 18px rgba(0,194,203,.5))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-11px) rotate(4deg)}}
+.home-badge{display:inline-block;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:99px;margin-bottom:8px;border:1.5px solid var(--teal2);position:relative;z-index:1}
+.home-h1{font-size:clamp(20px,5vw,28px);font-weight:900;line-height:1.15;margin-bottom:6px;color:#fff;position:relative;z-index:1}
+.home-h1 span{color:var(--teal)}
+.home-sub{font-size:12px;color:var(--muted);font-weight:600;line-height:1.55;max-width:340px;margin:0 auto 16px;position:relative;z-index:1}
+.home-pills{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:16px;position:relative;z-index:1}
+.pill{background:#0a1e26;border:1.5px solid #1a3545;border-radius:99px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--teal2)}
+.home-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;position:relative;z-index:1}
+.meta-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:11px 6px}
+.meta-n{font-size:26px;font-weight:900;color:var(--teal)}
+.meta-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.btn-go{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 8px 24px rgba(0,194,203,.25);transition:transform .12s,box-shadow .12s;letter-spacing:.3px;position:relative;z-index:1}
+.btn-go:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--teal2),0 12px 28px rgba(0,194,203,.3)}
+.btn-go:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+
+/* ── QUIZ SHELL ── */
+.q-shell{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);overflow:hidden;max-height:490px;display:flex;flex-direction:column}
+.topbar{padding:10px 14px 9px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;flex-shrink:0;background:var(--card2)}
+.xbtn{width:27px;height:27px;border:1.5px solid var(--border);border-radius:7px;background:none;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.xbtn:hover{background:#1f0709;border-color:var(--red);color:var(--red)}
+.prog-col{flex:1}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.prog-cat{font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.prog-n{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap}
+.bar-bg{height:7px;background:#0a1820;border-radius:99px;overflow:hidden;border:1px solid #1a3040}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--teal2),var(--teal),var(--blue));border-radius:99px;transition:width .5s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 8px rgba(0,194,203,.4)}
+.topbar-r{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.hearts{display:flex;gap:1px;font-size:14px}
+.heart{transition:all .3s}
+.heart.gone{opacity:.15;filter:grayscale(1);transform:scale(.65)}
+.xp-tag{background:#0a1820;border:1.5px solid #1a3a28;border-radius:99px;padding:3px 9px;font-size:12px;font-weight:800;color:var(--gold);white-space:nowrap}
+.streak-tag{background:#0a1820;border:1.5px solid #2a1a00;border-radius:99px;padding:3px 9px;font-size:11px;font-weight:800;color:#ff9600;white-space:nowrap}
+
+/* ── QUESTION BODY ── */
+.q-body{flex:1;overflow-y:auto;padding:13px 15px 0;scrollbar-width:thin;scrollbar-color:#1a3040 transparent}
+.q-body::-webkit-scrollbar{width:4px}
+.q-body::-webkit-scrollbar-thumb{background:#1a3040;border-radius:4px}
+.q-cat{font-size:11px;font-weight:800;color:var(--teal2);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.q-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;box-shadow:0 0 6px rgba(0,194,203,.7)}
+.q-text{font-size:clamp(13px,2.6vw,14.5px);font-weight:700;line-height:1.52;margin-bottom:12px;color:#ddf0f5}
+.opts{display:flex;flex-direction:column;gap:6px;padding-bottom:12px}
+.opt{width:100%;padding:10px 12px;background:#0a1820;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:9px;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:700;color:#b8d8e0;transition:all .13s;line-height:1.32;position:relative;overflow:hidden}
+.opt:hover:not(:disabled){border-color:var(--teal2);background:#0d2535;color:var(--teal);transform:translateX(3px)}
+.opt-l{width:24px;height:24px;border-radius:6px;background:#142530;border:1.5px solid #2a4055;font-size:11px;font-weight:900;color:#4a7a8a;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.opt.picked-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0;animation:bumpR .4s cubic-bezier(.34,1.56,.64,1)}
+.opt.picked-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.picked-wrong{border-color:var(--red);background:var(--red-bg);color:#ffaaaa;animation:shakeW .35s}
+.opt.picked-wrong .opt-l{background:var(--red);border-color:var(--red);color:#fff}
+.opt.reveal-right{border-color:var(--green);background:var(--green-bg);color:#a0ffe0}
+.opt.reveal-right .opt-l{background:var(--green);border-color:var(--green);color:#000}
+.opt.faded{opacity:.22}
+.opt:disabled{cursor:default;transform:none!important}
+@keyframes bumpR{0%{transform:scale(1)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
+@keyframes shakeW{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+/* ── FEEDBACK ── */
+.fb{flex-shrink:0;display:none;align-items:center;gap:9px;padding:10px 15px;border-top:1.5px solid transparent}
+.fb.on{display:flex}
+.fb.ok{background:#071a0a;border-color:var(--green-bdr)}
+.fb.no{background:#190408;border-color:var(--red-bdr)}
+.fb-icon{font-size:24px;flex-shrink:0}
+.fb-txt{flex:1;min-width:0}
+.fb-head{font-size:13px;font-weight:900}
+.fb.ok .fb-head{color:var(--green)}
+.fb.no .fb-head{color:var(--red)}
+.fb-detail{font-size:11px;font-weight:600;color:#5a8a9a;line-height:1.4;margin-top:2px}
+.btn-cont{padding:8px 14px;border:none;border-radius:9px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .12s}
+.fb.ok .btn-cont{background:var(--green);color:#000;box-shadow:0 3px 0 var(--green2)}
+.fb.ok .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--green2)}
+.fb.no .btn-cont{background:var(--red);color:#fff;box-shadow:0 3px 0 var(--red2)}
+.fb.no .btn-cont:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--red2)}
+
+/* ── RESULTS ── */
+.res-card{background:var(--card);border-radius:22px;padding:28px 22px;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.8);text-align:center;position:relative;overflow:hidden}
+.res-card::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(0,194,203,.07) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+.trophy{font-size:66px;display:block;animation:dropIn .7s cubic-bezier(.34,1.56,.64,1);position:relative;z-index:1;filter:drop-shadow(0 0 20px rgba(0,194,203,.4))}
+@keyframes dropIn{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.stars-row{display:flex;justify-content:center;gap:8px;margin:5px 0 12px;position:relative;z-index:1}
+.rstar{font-size:32px;opacity:0;filter:drop-shadow(0 0 8px rgba(0,194,203,.5))}
+.rstar.lit{animation:starIn .5s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes starIn{to{opacity:1;transform:scale(1) rotate(0)}from{opacity:0;transform:scale(0) rotate(-20deg)}}
+.res-title{font-size:clamp(20px,5vw,26px);font-weight:900;margin-bottom:3px;color:#fff;position:relative;z-index:1}
+.res-sub{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:18px;position:relative;z-index:1}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;position:relative;z-index:1}
+.res-box{background:#0a1820;border:1.5px solid var(--border);border-radius:12px;padding:12px 6px}
+.res-n{font-size:24px;font-weight:900;color:var(--teal)}
+.res-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.res-btns{display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
+.btn-again{width:100%;padding:14px;background:var(--teal);color:#000;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 var(--teal2),0 7px 20px rgba(0,194,203,.2);transition:all .12s;letter-spacing:.3px}
+.btn-again:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--teal2),0 10px 24px rgba(0,194,203,.25)}
+.btn-again:active{transform:translateY(3px);box-shadow:0 2px 0 var(--teal2)}
+.btn-home-sm{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;background:none;color:var(--muted);transition:all .15s}
+.btn-home-sm:hover{border-color:var(--teal2);color:var(--teal)}
+
+/* ── EFFECTS ── */
+.confetti{position:fixed;pointer-events:none;z-index:9999;animation:cfall linear forwards}
+@keyframes cfall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(110vh) rotate(700deg)}}
+.spark{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;animation:spark ease-out forwards}
+@keyframes spark{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}
+.floatxp{position:fixed;pointer-events:none;z-index:9999;font-size:16px;font-weight:900;color:var(--gold);text-shadow:0 0 12px rgba(255,200,0,.5);animation:fxp .9s ease-out forwards}
+@keyframes fxp{0%{opacity:1;transform:translateY(0) scale(.7)}20%{transform:translateY(-8px) scale(1.1)}100%{opacity:0;transform:translateY(-60px) scale(.9)}}
+.popbadge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;font-size:34px;font-weight:900;animation:pbadge 1s ease forwards;white-space:nowrap;text-shadow:0 0 30px rgba(0,194,203,.7),0 4px 20px rgba(0,0,0,.5)}
+@keyframes pbadge{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-55%) scale(.9)}}
+@keyframes heartBreak{0%{transform:scale(1)}30%{transform:scale(1.5)}100%{transform:scale(1)}}
+.hb{animation:heartBreak .35s ease}
+
+@media(max-width:400px){.topbar{padding:9px 11px}.q-body{padding:11px 11px 0}.opts{gap:5px}.opt{padding:9px 10px;font-size:12px}.fb{padding:9px 12px}.home-card,.res-card{padding:22px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ HOME ═══ -->
+<div id="home" class="screen on">
+<div class="home-card">
+  <span class="plane">✈️</span>
+  <div class="home-badge">A220 · ATA Chapter 26</div>
+  <h1 class="home-h1">A220 Fire<br><span>Protection Quiz</span></h1>
+  <p class="home-sub">29 questions on FIDEX, dual-loop logic, engine/APU/cargo/lav fire, bottles, troubleshooting, and tribal knowledge.</p>
+  <div class="home-pills">
+    <span class="pill">🧠 Core</span>
+    <span class="pill">🧩 FIDEX</span>
+    <span class="pill">🔁 Dual-Loop</span>
+    <span class="pill">📍 Zones</span>
+    <span class="pill">🌡️ Physics</span>
+    <span class="pill">✈️ Engine</span>
+    <span class="pill">🧯 Bottles</span>
+    <span class="pill">⚙️ APU</span>
+    <span class="pill">📦 Cargo</span>
+    <span class="pill">⏱️ HRD/LRD</span>
+    <span class="pill">🚻 Lav</span>
+    <span class="pill">🔧 BITE</span>
+    <span class="pill">🧠 Tribal</span>
+  </div>
+  <div class="home-meta">
+    <div class="meta-box"><div class="meta-n">29</div><div class="meta-l">Questions</div></div>
+    <div class="meta-box"><div class="meta-n">3</div><div class="meta-l">Lives</div></div>
+    <div class="meta-box"><div class="meta-n">13</div><div class="meta-l">Topics</div></div>
+  </div>
+  <button class="btn-go" onclick="startGame()">✈️ Start Quiz</button>
+</div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div id="quiz" class="screen">
+<div class="q-shell">
+  <div class="topbar">
+    <button class="xbtn" onclick="confirmQuit()">✕</button>
+    <div class="prog-col">
+      <div class="prog-top">
+        <span class="prog-cat" id="cat-lbl">Core</span>
+        <span class="prog-n"><span id="qn">1</span>/<span id="qtot">29</span></span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+    </div>
+    <div class="topbar-r">
+      <div class="streak-tag">🔥<span id="streak-n">0</span></div>
+      <div class="hearts" id="hearts">
+        <span class="heart" id="h0">❤️</span><span class="heart" id="h1">❤️</span><span class="heart" id="h2">❤️</span>
+      </div>
+      <div class="xp-tag">⚡<span id="xpdis">0</span></div>
+    </div>
+  </div>
+  <div class="q-body" id="q-body">
+    <div class="q-cat"><div class="q-dot"></div><span id="q-cat">Core</span></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="opts" id="opts"></div>
+  </div>
+  <div class="fb" id="fb">
+    <span class="fb-icon" id="fb-icon">✅</span>
+    <div class="fb-txt">
+      <div class="fb-head" id="fb-head">Correct!</div>
+      <div class="fb-detail" id="fb-det"></div>
+    </div>
+    <button class="btn-cont" id="btn-cont" onclick="advance()">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ RESULT ═══ -->
+<div id="result" class="screen">
+<div class="res-card">
+  <span class="trophy" id="trophy">🏆</span>
+  <div class="stars-row">
+    <span class="rstar" id="rs0">⭐</span>
+    <span class="rstar" id="rs1">⭐</span>
+    <span class="rstar" id="rs2">⭐</span>
+  </div>
+  <div class="res-title" id="res-title">Session Complete!</div>
+  <div class="res-sub" id="res-sub">Great work!</div>
+  <div class="res-grid">
+    <div class="res-box"><div class="res-n" id="r-xp">0</div><div class="res-l">XP</div></div>
+    <div class="res-box"><div class="res-n" id="r-acc">0%</div><div class="res-l">Accuracy</div></div>
+    <div class="res-box"><div class="res-n" id="r-str">0</div><div class="res-l">Best Streak</div></div>
+  </div>
+  <div class="res-btns">
+    <button class="btn-again" onclick="startGame()">🔁 Play Again</button>
+    <button class="btn-home-sm" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ═══════════════ AUDIO ═══════════════
+const AC=window.AudioContext||window.webkitAudioContext;
+let actx=null;
+function ctx(){if(!actx)actx=new AC();return actx;}
+function playCorrect(){
+  try{const c=ctx();[523,659,784,1047].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.07;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.start(t);o.stop(t+.25);});}catch(e){}
+}
+function playWrong(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.setValueAtTime(280,c.currentTime);o.frequency.exponentialRampToValueAtTime(80,c.currentTime+.35);g.gain.setValueAtTime(.13,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start();o.stop(c.currentTime+.45);}catch(e){}
+}
+function playCombo(){
+  try{const c=ctx();[880,1108,1320,1760].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='triangle';o.frequency.value=f;const t=c.currentTime+i*.05;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.start(t);o.stop(t+.3);});}catch(e){}
+}
+function playVictory(){
+  try{const c=ctx();[523,659,784,1047,1319,1568,2093].forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;const t=c.currentTime+i*.09;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.start(t);o.stop(t+.35);});}catch(e){}
+}
+function playClick(){
+  try{const c=ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=440;g.gain.setValueAtTime(.06,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.07);o.start();o.stop(c.currentTime+.08);}catch(e){}
+}
+
+// ═══════════════ QUESTIONS ═══════════════
+const BANK=[
+{c:"🧠 Core",q:"What\'s the BEST description of the A220 ATA 26 system?",o:["Cabin air conditioning only","A centralized DETECTION and PROTECTION system: detects fire, smoke, overheat — then alerts AND protects the aircraft","Just a fire extinguisher rack","Only the bottle squibs"],a:1,d:"ATA 26 is centralized detection + protection. It detects fire, smoke, and overheat conditions AND then alerts the crew and isolates/protects the aircraft. Protection first, alert second — the goal is preventing damage."},
+{c:"🧠 Core",q:"The A220 fire protection logic flow is:",o:["Crew → bottle → done","Sensors → FIDEX → logic → action","Crew alarm → manual response only","Random discharge protection"],a:1,d:"Flow: Sensors → FIDEX → logic → action. Always follow the logic path before blaming hardware. A \'fire\' indication might be a sensor or loop fault upstream of FIDEX — not an actual fire."},
+{c:"🧩 FIDEX",q:"What is FIDEX on the A220?",o:["A pressure switch","The Fire Detection & Extinguishing controller — the brain of ATA 26 that monitors loops, smoke detectors, bottles, pressure, panels, and outputs","An engine bleed valve","A type of fire extinguisher"],a:1,d:"FIDEX = Fire Detection & Extinguishing controller. It\'s the brain of ATA 26 — monitors detection loops, smoke detectors, bottle pressure, panels, and commands outputs. Replacing FIDEX is a big-deal action; troubleshoot the inputs first."},
+{c:"🧩 FIDEX",q:"How is FIDEX architected for reliability?",o:["Single channel — simple is best","Dual-channel, self-monitoring, with separate power sources","Mechanical clockwork backup","Single hot spare in a box"],a:1,d:"FIDEX uses dual channels, self-monitoring, and separate power sources. This means protection remains available after MANY failures. A single channel/power loss usually degrades, not eliminates, the system."},
+{c:"🧩 FIDEX",q:"FIDEX sends data to:",o:["Only the captain\'s microphone","EICAS and OMS — CAS messages are clues to where the logic found the issue","Only the cabin PA","The hydraulic system"],a:1,d:"FIDEX outputs to EICAS (crew alerting) and OMS (Onboard Maintenance System). CAS messages tell you WHERE in the system FIDEX detected the issue — start your investigation at the message location, not randomly."},
+{c:"🔁 Dual-Loop",q:"Normal A220 engine/APU fire detection uses what loop logic?",o:["OR logic — either loop alone triggers a fire warning","AND logic — BOTH loops must agree before a fire warning is triggered","Voting between 3 loops","Single loop with timer"],a:1,d:"Normal mode uses AND logic — BOTH loops must agree before triggering. This dramatically reduces false fire warnings. Both loops sense the same heat source; if only one alarms, it\'s more likely a loop fault than a real fire."},
+{c:"🔁 Dual-Loop",q:"If ONE detection loop fails on an A220 engine, what happens to the protection logic?",o:["Protection is completely lost","System can switch to OR logic — protection remains, but with the higher false-alarm risk inherent to single-loop","Both engines auto-shutdown","The aircraft cannot be dispatched"],a:1,d:"Single loop failure → system can switch to OR logic. Protection is maintained, but the decision logic changes (a single loop now triggers a warning). This is testable knowledge — know that protection isn\'t lost on a single loop failure."},
+{c:"🔁 Dual-Loop",q:"If BOTH detection loops fail for the same zone:",o:["The aircraft auto-extinguishes that zone","Detection is lost for that zone — becomes a caution and changes what protection is available","Nothing happens","The autopilot disengages"],a:1,d:"Both loops failed = detection LOST for that zone. A caution illuminates and the crew/maintenance must understand that fire protection in that zone is compromised. Dispatch may be limited per MEL."},
+{c:"📍 Zones",q:"Which of these are FIRE/OVERHEAT-monitored zones (using heat sensing loops)?",o:["Cabin and lavatories","Engines, APU, and main wheel well","Avionics bay and cargo","Cockpit only"],a:1,d:"Fire/overheat heat-sensing LOOPS are used in: engines, APU, and main wheel well. These are high-temperature mechanical zones. Different from smoke-detector zones — don\'t troubleshoot the same way."},
+{c:"📍 Zones",q:"Which of these zones use SMOKE detection (not heat loops)?",o:["Engines and APU","Cargo compartments, equipment bays, avionics areas, and lavatories","Wheel wells","Wing leading edge"],a:1,d:"Smoke detection: cargo, equipment bays, avionics areas, lavatories. These are enclosed spaces where smoke accumulates before high heat develops — smoke detection gives earlier warning."},
+{c:"🌡️ Physics",q:"How do fire detection LOOPS sense fire?",o:["They detect smoke","Heat changes loop resistance — the system interprets the resistance change","They detect flame UV","They detect oxygen depletion"],a:1,d:"Fire loops sense temperature via resistance change in the loop. Heat → resistance change → FIDEX interprets the change. Rate-of-change logic helps separate true fire from electrical shorts. Loop FAULTS are common write-ups, not fires."},
+{c:"🌡️ Physics",q:"Loops can detect three different fault conditions. Which is NOT one of them?",o:["Overheat (real heat signature)","Open (loop broken / disconnected)","Short (loop electrically shorted)","Vibration"],a:3,d:"Loops detect overheat, open, and short. Vibration is not a loop fault mode. Open and short are most often wiring/connector issues — NOT automatic fire events. Investigate before assuming the worst."},
+{c:"✈️ Engine",q:"On the A220, pressing the engine FIRE pushbutton (PBA) commands:",o:["Bottle discharge only","Engine isolation — fuel, bleed, hydraulics, generator, and FADEC shutdown actions","Cabin depressurization","Autopilot disengage"],a:1,d:"FIRE PBA isolates the engine: fuel (closes), bleed (closes), hydraulics (depressurizes), generator (trips), FADEC (commanded shutdown). The FIRE button is the ISOLATION step. The BOTTLE button is separate."},
+{c:"✈️ Engine",q:"What\'s the difference between the FIRE PBA and the BTL PBA?",o:["They do the same thing","FIRE = isolates the engine (shutoff valves, etc.); BTL = discharges the extinguishing bottle","FIRE is for cargo; BTL is for engines","FIRE is for ground; BTL is for in-flight"],a:1,d:"FIRE PBA = ISOLATE (cut off the fire\'s sources: fuel, bleed, hydraulics, gen). BTL PBA = DISCHARGE the bottle. Distinct functions, distinct steps — and they\'re done in that order: isolate first, then suppress."},
+{c:"🧯 Bottles",q:"What extinguishing agent do A220 engine/APU bottles use?",o:["Water mist","Halon 1301, with nitrogen pressure to drive discharge","CO2","Foam"],a:1,d:"Engine/APU bottles use Halon 1301 (a clean-agent halocarbon). Nitrogen pressure drives the discharge — when the squib fires, nitrogen pressure forces the Halon out through the discharge line."},
+{c:"🧯 Bottles",q:"What does an AMBER (or low) bottle indication mean?",o:["The bottle is fully charged and ready","Pressure or bottle fault — pressure switch reading low or fault detected","The bottle just discharged in flight","Normal operating state"],a:1,d:"GREEN/Available = ready. AMBER or low = pressure or bottle fault. Pressure switches are continuously monitored — temperature compensation matters too (cold weather can drop pressure into the warning range)."},
+{c:"⚙️ APU",q:"A unique feature of the A220 APU fire protection is:",o:["Manual-only discharge in all cases","On the ground, the system can AUTOMATICALLY shut down the APU and may auto-discharge the bottle after a timer if no crew action","No fire protection on the APU","The APU has no extinguishing bottle"],a:1,d:"On the ground, the APU fire system can auto-shutdown the APU and, after a timer with no crew action, automatically discharge the bottle. This protects against unattended ground APU fires — a unique feature worth knowing."},
+{c:"📦 Cargo",q:"Cargo compartment fire detection uses:",o:["Heat sensing loops","Smoke detection — NOT a heat loop system","Pressure sensing","Manual visual inspection only"],a:1,d:"Cargo uses SMOKE detection — not heat loops. Don\'t troubleshoot a smoke detector like a fire loop. Different physics, different fault modes, different replacement procedures."},
+{c:"📦 Cargo",q:"Why does cargo fire logic typically use \'timer confirmation\' before declaring a fire?",o:["To delay the response intentionally","One detector may start a timer; confirmation from another detector (or sustained signal) helps reduce false alarms from dust or transient smoke","The system is slow on purpose","Crew preference"],a:1,d:"Timer confirmation logic reduces false alarms. One detector starts a timer; another detector or sustained signal must confirm before declaring a real fire. Dust, condensation, or brief smoke spikes don\'t trigger unnecessary discharge."},
+{c:"📦 Cargo",q:"During a confirmed cargo fire, what does ATA 21 (Air Conditioning) automatically do?",o:["Increases ventilation to clear smoke","Shuts off ventilation to contain smoke and maintain agent concentration","Cycles cargo bay air rapidly","Ignores the event"],a:1,d:"Cargo ventilation shuts off during cargo fire. This contains the smoke AND maintains Halon concentration so the agent can suppress the fire effectively. ATA 21 cross-talks with ATA 26 for fire containment."},
+{c:"⏱️ HRD/LRD",q:"Cargo extinguishing uses TWO bottle types: HRD and LRD. What\'s the difference?",o:["They\'re identical","HRD = High Rate Discharge (knocks fire down fast). LRD = Low Rate Discharge (maintains concentration over time to prevent re-ignition)","HRD is for ground only","LRD is the backup if HRD fails"],a:1,d:"HRD = High Rate Discharge — quick initial knockdown. LRD = Low Rate Discharge — sustained concentration. Together they cover the diversion phase: knock down fast, then keep suppressed long enough to land."},
+{c:"🚻 Lav",q:"A220 lavatory fire protection includes:",o:["Only a smoke detector — no extinguisher","A smoke detector PLUS an automatic extinguisher (releases when heat melts a thermal plug in the waste bin)","Manual extinguisher only","No fire protection in lavs"],a:1,d:"Lavs have detector + automatic extinguisher in the waste bin. A thermal plug melts at high temperature, releasing extinguishing agent directly into the waste bin where in-lav fires typically start. Passive and reliable — no crew action needed."},
+{c:"🚻 Lav",q:"Why is dual-wavelength optical smoke detection better in lavs?",o:["It\'s cheaper","Two wavelengths help DIFFERENTIATE smoke from dust, steam, or aerosols — reducing false alarms","Required by regulation only","Looks more modern"],a:1,d:"Dual-wavelength optical detection compares light scattering at two wavelengths — smoke scatters differently than dust/aerosol/steam. Fewer false alarms in the most-falsed-out cabin location. Smart detector design."},
+{c:"🔧 BITE",q:"For an ATA 26 write-up, the FIRST diagnostic action should be:",o:["Replace FIDEX immediately","Run the FIDEX test — checks loops, detectors, FIDEX, bottles, and panels","Replace both bottles","Disconnect all loops"],a:1,d:"Run the FIDEX test EARLY. It checks loops, detectors, FIDEX itself, bottles, and panels — telling you WHICH element is at fault. Replacing parts without running BITE = \'parts cannon\' on expensive components."},
+{c:"🔧 BITE",q:"What does a \'DET FAIL\' CAS message most likely indicate?",o:["A real fire — discharge immediately","A detection loop or sensor fault (loop open, short, contamination, calibration drift) — investigate the loop/sensor, NOT a real fire","Engine fire","APU overheat"],a:1,d:"DET FAIL = detection (loop/sensor) fault. NOT a fire. Most CAS messages in ATA 26 point at the affected area: FIRE = real condition; DET FAIL / BTL LOW / SYSTEM FAULT = component/loop issue. Read the message, don\'t panic."},
+{c:"🧠 Tribal",q:"TRIBAL: A \'FIRE\' indication that clears immediately during taxi, never repeated. The MOST likely cause is:",o:["Real transient fire — investigate the engine","A loop or detector transient (e.g., loop temperature gradient, vibration-induced loop contact). Investigate the loop, BITE history — don\'t assume real fire","Bottle leak","FIDEX failure"],a:1,d:"Transient FIRE indications that don\'t repeat are almost always loop/detector transients — not real fire. Investigate loop continuity, vibration mounts, BITE history. Real fires don\'t clear themselves quietly."},
+{c:"🧠 Tribal",q:"TRIBAL: \'BTL LOW\' message every cold morning, clears on warm-up. The likely cause is:",o:["Bottle is failing","Temperature-related pressure indication — Halon bottle pressure DROPS with cold OAT; this is normal physics, NOT a fault","FIDEX needs replacement","Discharge has occurred"],a:1,d:"Cold-weather BTL LOW that clears on warm-up = temperature/pressure normal physics. Halon bottle pressure follows ideal gas behavior — drops in cold. Pressure switches usually have temperature compensation, but cold soaks can still trigger nuisance indications. Verify per AMM thresholds before replacing the bottle."},
+{c:"🧠 Tribal",q:"TRIBAL: \'Parts cannon\' is especially expensive in ATA 26 because:",o:["FIDEX is cheap","Bottles, FIDEX, and detection loops are all costly LRUs — and 80%+ of write-ups are loop/sensor/contamination issues, not the controllers or bottles","ATA 26 has no LRUs","Bottles can be repaired in-house"],a:1,d:"FIDEX, bottles, and harnesses are all expensive LRUs. Most write-ups trace to loop faults, detector contamination, or pressure switch issues — NOT the big-ticket boxes. Use BITE, follow the CAS message, fix the cheap root cause first."},
+{c:"🧠 Tribal",q:"TRIBAL: After ANY discharge (real or test) of a fire bottle, the discipline is:",o:["Quickly replace the bottle, sign off, and dispatch","Bottle replacement, discharge line inspection, squib replacement, BITE verification, and squib firing circuit check — and document everything","Just reset FIDEX","Defer the aircraft permanently"],a:1,d:"After discharge: replace the bottle, inspect discharge lines (for residue/contamination), replace squib(s), verify BITE, and check squib firing circuits. Document thoroughly — discharge records are important for incident investigation and trend analysis."}
+];
+
+// ═══════════════ STATE ═══════════════
+const G={qs:[],idx:0,hearts:3,xp:0,streak:0,bestStreak:0,correct:0,done:false};
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on')}
+function goHome(){show('home')}
+function confirmQuit(){if(confirm('Quit this quiz?'))goHome();}
+
+function startGame(){
+  // Deep-copy BANK and shuffle both question order AND options within each question
+  G.qs=shuffle([...BANK]).map(q=>{
+    // Build [text, isCorrect] pairs, shuffle, then split back out and find new correct index
+    const pairs=q.o.map((txt,i)=>({txt,correct:i===q.a}));
+    shuffle(pairs);
+    return{
+      c:q.c,
+      q:q.q,
+      o:pairs.map(p=>p.txt),
+      a:pairs.findIndex(p=>p.correct),
+      d:q.d,
+    };
+  });
+  G.idx=0;G.hearts=3;G.xp=0;G.streak=0;G.bestStreak=0;G.correct=0;
+  updateHearts();
+  document.getElementById('xpdis').textContent='0';
+  document.getElementById('streak-n').textContent='0';
+  document.getElementById('qtot').textContent=G.qs.length;
+  show('quiz');
+  renderQ();
+}
+
+function renderQ(){
+  G.done=false;
+  const fb=document.getElementById('fb');
+  fb.className='fb';fb.style.display='none';
+  const q=G.qs[G.idx];
+  document.getElementById('cat-lbl').textContent=q.c;
+  document.getElementById('q-cat').textContent=q.c;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('qn').textContent=G.idx+1;
+  document.getElementById('bar').style.width=Math.round((G.idx/G.qs.length)*100)+'%';
+
+  const cont=document.getElementById('opts');
+  cont.innerHTML='';
+  const keys=['A','B','C','D'];
+  q.o.forEach((txt,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="opt-l">${keys[i]}</span><span>${txt}</span>`;
+    b.onclick=()=>pick(i);
+    cont.appendChild(b);
+    b.style.opacity='0';b.style.transform='translateX(-16px)';
+    setTimeout(()=>{b.style.transition='opacity .22s ease,transform .22s ease';b.style.opacity='1';b.style.transform='translateX(0)';},70+i*50);
+  });
+
+  // scroll q-body back to top on each new question
+  document.getElementById('q-body').scrollTop=0;
+}
+
+function pick(idx){
+  if(G.done)return;
+  G.done=true;
+  const q=G.qs[G.idx];
+  const correct=idx===q.a;
+  const btns=[...document.querySelectorAll('.opt')];
+  btns.forEach(b=>b.disabled=true);
+  btns[q.a].classList.add('reveal-right');
+  if(correct){
+    btns[idx].classList.remove('reveal-right');
+    btns[idx].classList.add('picked-right');
+    btns.forEach((b,i)=>{if(i!==idx)b.classList.add('faded');});
+    G.correct++;G.streak++;
+    if(G.streak>G.bestStreak)G.bestStreak=G.streak;
+    const xpGain=G.streak>=5?20:G.streak>=3?15:10;
+    G.xp+=xpGain;
+    document.getElementById('xpdis').textContent=G.xp;
+    document.getElementById('streak-n').textContent=G.streak;
+    showFeedback(true,q.d,xpGain);
+    spawnSparks(btns[idx]);
+    playCorrect();
+    if(G.streak===3){showPopBadge('🔥 3 Streak!');playCombo();}
+    if(G.streak===5){showPopBadge('⚡ 5 in a row!');playCombo();}
+    if(G.streak===10){showPopBadge('🌟 10 Streak!');playCombo();}
+  } else {
+    btns[idx].classList.add('picked-wrong');
+    btns.forEach((b,i)=>{if(i!==idx&&i!==q.a)b.classList.add('faded');});
+    G.streak=0;G.hearts--;
+    document.getElementById('streak-n').textContent=0;
+    updateHearts();
+    showFeedback(false,q.d,0);
+    playWrong();
+  }
+}
+
+function showFeedback(ok,detail,xp){
+  const fb=document.getElementById('fb');
+  fb.className='fb on '+(ok?'ok':'no');
+  fb.style.display='flex';
+  const icons=ok?['✅','🎉','🌟','⭐','🔥','💡','🎯','🏅']:['❌'];
+  const heads=ok?['Correct!','Great!','Well done!','Spot on!','Nailed it!','Right on!','Excellent!']:['Not quite!'];
+  document.getElementById('fb-icon').textContent=icons[Math.floor(Math.random()*icons.length)];
+  document.getElementById('fb-head').textContent=heads[Math.floor(Math.random()*heads.length)];
+  document.getElementById('fb-det').textContent=detail;
+  const cont=document.getElementById('btn-cont');
+  cont.textContent=(G.idx>=G.qs.length-1||G.hearts<=0)?'See Results →':'Continue →';
+  if(ok&&xp)floatXP('+'+xp+' XP',cont);
+}
+
+function advance(){
+  playClick();
+  G.idx++;
+  if(G.idx>=G.qs.length||G.hearts<=0)showResult();
+  else renderQ();
+}
+
+function updateHearts(){
+  [0,1,2].forEach(i=>{
+    const h=document.getElementById('h'+i);
+    h.classList.toggle('gone',i>=G.hearts);
+  });
+}
+
+function showResult(){
+  const acc=G.idx?Math.round((G.correct/G.idx)*100):0;
+  const stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
+  const trophies=['😅','🥉','🥈','🏆'];
+  const titles=['Keep Practicing!','Nice Try!','Well Done!','Outstanding! 🎯'];
+  const subs=['Review the ATA 21 manual and try again.','Good effort — study the explanations!','Strong Air Conditioning knowledge!','You are an ATA 21 expert! ✈️'];
+  document.getElementById('trophy').textContent=trophies[stars];
+  document.getElementById('res-title').textContent=titles[stars];
+  document.getElementById('res-sub').textContent=subs[stars];
+  document.getElementById('r-xp').textContent=G.xp;
+  document.getElementById('r-acc').textContent=acc+'%';
+  document.getElementById('r-str').textContent=G.bestStreak;
+  ['rs0','rs1','rs2'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.classList.remove('lit');el.style.animationDelay='0s';
+    if(i<stars)setTimeout(()=>{el.style.animationDelay=(i*.2)+'s';el.classList.add('lit');},500+i*120);
+  });
+  show('result');
+  if(acc>=60)setTimeout(()=>{launchConfetti(acc);playVictory();},300);
+}
+
+function launchConfetti(acc){
+  const cols=['#00c2cb','#1cb0f6','#58cc02','#ffc800','#ff9600','#ff4b4b','#fff'];
+  const shapes=['●','■','▲','◆','★','✦','✧'];
+  const count=Math.min(35+Math.floor(acc/4),70);
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti';
+      el.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+      el.style.cssText=`left:${Math.random()*100}vw;top:-20px;color:${cols[Math.floor(Math.random()*cols.length)]};font-size:${9+Math.random()*13}px;animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.4}s`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),4000);
+    },i*22);
+  }
+}
+
+function spawnSparks(btn){
+  const rect=btn.getBoundingClientRect();
+  const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+  const cols=['#00c2cb','#1cb0f6','#ffc800','#fff','#58cc02'];
+  for(let i=0;i<10;i++){
+    const el=document.createElement('div');
+    el.className='spark';
+    const a=(i/10)*Math.PI*2,d=28+Math.random()*44;
+    el.style.cssText=`left:${cx}px;top:${cy}px;width:${4+Math.random()*5}px;height:${4+Math.random()*5}px;background:${cols[i%cols.length]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;animation-duration:${.4+Math.random()*.25}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),800);
+  }
+}
+
+function floatXP(txt,refEl){
+  const rect=refEl.getBoundingClientRect();
+  const el=document.createElement('div');
+  el.className='floatxp';el.textContent=txt;
+  el.style.cssText=`left:${rect.left+rect.width*.5}px;top:${rect.top-10}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1000);
+}
+
+function showPopBadge(txt){
+  const el=document.createElement('div');
+  el.className='popbadge';el.textContent=txt;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1100);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('quiz').classList.contains('on'))return;
+  const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+  const k=e.key.toLowerCase();
+  if(!G.done&&map[k]!==undefined)pick(map[k]);
+  if(G.done&&(e.key==='Enter'||e.key===' ')){e.preventDefault();advance();}
+});
+</script>
+</body>
+</html>
